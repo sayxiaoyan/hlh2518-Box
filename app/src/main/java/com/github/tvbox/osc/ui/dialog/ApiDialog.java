@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
@@ -43,19 +44,7 @@ public class ApiDialog extends BaseDialog {
     private final EditText inputApi;
     private final EditText inputLive;
     private final EditText inputEPG;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refresh(RefreshEvent event) {
-        if (event.type == RefreshEvent.TYPE_API_URL_CHANGE) {
-            inputApi.setText((String) event.obj);
-        }
-        if (event.type == RefreshEvent.TYPE_LIVE_URL_CHANGE) {
-            inputLive.setText((String) event.obj);
-        }
-        if (event.type == RefreshEvent.TYPE_EPG_URL_CHANGE) {
-            inputEPG.setText((String) event.obj);
-        }
-    }
+    OnListener listener = null;
 
     public ApiDialog(@NonNull @NotNull Context context) {
         super(context);
@@ -86,12 +75,28 @@ public class ApiDialog extends BaseDialog {
                 }
                 if (!newApi.isEmpty()) {
                     ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+                    ArrayList<String> nameHistory = Hawk.get(HawkConfig.API_NAME_HISTORY, new ArrayList<>());
+                    HashMap<String, String> map = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
                     if (!history.contains(newApi))
                         history.add(0, newApi);
                     if (history.size() > 20)
                         history.remove(20);
                     Hawk.put(HawkConfig.API_HISTORY, history);
                     listener.onchange(newApi);
+                    if (!map.containsValue(newApi)) {
+                        Hawk.put(HawkConfig.API_URL, newApi);
+                        Hawk.put(HawkConfig.API_NAME, newApi);
+                        nameHistory.add(0, newApi);
+                        map.put(newApi, newApi);
+
+                        listener.onchange(newApi);
+                    }
+                    if (map.size() > 30) {
+                        map.remove(nameHistory.get(30));
+                        nameHistory.remove(30);
+                    }
+                    Hawk.put(HawkConfig.API_NAME_HISTORY, nameHistory);
+                    Hawk.put(HawkConfig.API_MAP, map);
                     dismiss();
                 }
                 // Capture Live input into Settings & Live History (max 20)
@@ -232,6 +237,19 @@ public class ApiDialog extends BaseDialog {
         refreshQRCode();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refresh(RefreshEvent event) {
+        if (event.type == RefreshEvent.TYPE_API_URL_CHANGE) {
+            inputApi.setText((String) event.obj);
+        }
+        if (event.type == RefreshEvent.TYPE_LIVE_URL_CHANGE) {
+            inputLive.setText((String) event.obj);
+        }
+        if (event.type == RefreshEvent.TYPE_EPG_URL_CHANGE) {
+            inputEPG.setText((String) event.obj);
+        }
+    }
+
     private void refreshQRCode() {
         String address = ControlManager.get().getAddress(false);
         tvAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
@@ -241,8 +259,6 @@ public class ApiDialog extends BaseDialog {
     public void setOnListener(OnListener listener) {
         this.listener = listener;
     }
-
-    OnListener listener = null;
 
     public interface OnListener {
         void onchange(String api);

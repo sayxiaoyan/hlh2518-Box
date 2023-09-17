@@ -42,12 +42,12 @@ public class SourceBean {
         this.api = api;
     }
 
-    public void setPlayerUrl(String playerUrl) {
-        this.playerUrl = playerUrl;
-    }
-
     public String getPlayerUrl() {
         return playerUrl;
+    }
+
+    public void setPlayerUrl(String playerUrl) {
+        this.playerUrl = playerUrl;
     }
 
     public int getType() {

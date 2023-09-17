@@ -14,8 +14,8 @@ import java.util.UUID;
 public class SpiderJS extends Spider {
 
     private final String key;
-    private String js;
     private final String ext;
+    private String js;
     private JSObject jsObject = null;
     private JSEngine.JSThread jsThread = null;
 

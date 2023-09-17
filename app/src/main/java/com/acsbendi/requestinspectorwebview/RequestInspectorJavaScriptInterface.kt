@@ -1,5 +1,6 @@
 package com.acsbendi.requestinspectorwebview
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -58,14 +59,17 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
                 headerMap["content-type"] = enctype
                 getUrlEncodedFormBody(formParameterJsonArray)
             }
+
             "multipart/form-data" -> {
                 headerMap["content-type"] = "multipart/form-data; boundary=$MULTIPART_FORM_BOUNDARY"
                 getMultiPartFormBody(formParameterJsonArray)
             }
+
             "text/plain" -> {
                 headerMap["content-type"] = enctype
                 getPlainTextFormBody(formParameterJsonArray)
             }
+
             else -> {
                 Log.e(LOG_TAG, "Incorrect encoding received from JavaScript: $enctype")
                 ""
@@ -283,6 +287,7 @@ window.navigator.sendBeacon = function (url, arguments) {
 }
         """
 
+        @SuppressLint("NewApi")
         fun enabledRequestInspection(webView: WebView, extraJavaScriptToInject: String) {
             webView.evaluateJavascript(
                 "javascript: $JAVASCRIPT_INTERCEPTION_CODE\n$extraJavaScriptToInject",

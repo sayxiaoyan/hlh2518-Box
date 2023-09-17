@@ -280,6 +280,7 @@ public abstract class BaseLazyFragment extends Fragment implements CustomAdapt {
 
     /**
      * 跳转页面.
+     *
      * @param clazz
      * @param bundle
      */

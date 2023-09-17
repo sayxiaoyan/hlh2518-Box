@@ -37,7 +37,6 @@
             android:padding="@dimen/vs_15">
 
             <ImageView
-                android:id="@+id/hm_history"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
@@ -55,8 +54,8 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_hist"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
+                android:textColor="@color/color_0CADE2"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -75,7 +74,6 @@
             android:padding="@dimen/vs_15">
 
             <ImageView
-                android:id="@+id/hm_live"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
@@ -93,49 +91,12 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_live"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
+                android:textColor="@color/color_CBF46A"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="normal" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/tvSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/vs_100"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_home"
-            android:clickable="false"
-            android:focusable="true"
-            android:minWidth="@dimen/vs_150"
-            android:orientation="horizontal"
-            android:padding="@dimen/vs_15">
-
-            <ImageView
-                android:id="@+id/hm_search"
-                android:layout_width="@dimen/vs_40"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/vs_3"
-                android:alpha="0.9"
-                app:srcCompat="@drawable/hm_search" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center"
-                android:padding="@dimen/vs_3"
-                android:text="@string/hm_search"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
-                android:textStyle="normal" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tvFavorite"
@@ -151,7 +112,6 @@
             android:padding="@dimen/vs_15">
 
             <ImageView
-                android:id="@+id/hm_fav"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
@@ -169,46 +129,8 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_fav"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tvPush"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/vs_100"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_home"
-            android:clickable="false"
-            android:focusable="true"
-            android:minWidth="@dimen/vs_150"
-            android:orientation="horizontal"
-            android:padding="@dimen/vs_15">
-
-            <ImageView
-                android:id="@+id/hm_push"
-                android:layout_width="@dimen/vs_40"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/vs_3"
-                android:alpha="0.9"
-                app:srcCompat="@drawable/hm_push" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center"
-                android:padding="@dimen/vs_3"
-                android:text="@string/hm_push"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
+                android:textColor="@color/color_1890FF"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -227,7 +149,6 @@
             android:padding="@dimen/vs_15">
 
             <ImageView
-                android:id="@+id/hm_drive"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
@@ -245,10 +166,82 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_file"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
+                android:textColor="@color/color_CBF46A"
+                android:textSize="@dimen/ts_26"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tvPush"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/vs_100"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/vs_5"
+            android:background="@drawable/shape_user_home"
+            android:clickable="false"
+            android:focusable="true"
+            android:minWidth="@dimen/vs_150"
+            android:orientation="horizontal"
+            android:padding="@dimen/vs_15">
+
+            <ImageView
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/vs_3"
+                android:alpha="0.9"
+                app:srcCompat="@drawable/icon_push" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:padding="@dimen/vs_3"
+                android:text="@string/hm_push"
+                android:textColor="@color/color_0CADE2"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="normal" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tvSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/vs_100"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/vs_5"
+            android:background="@drawable/shape_user_home"
+            android:clickable="false"
+            android:focusable="true"
+            android:minWidth="@dimen/vs_150"
+            android:orientation="horizontal"
+            android:padding="@dimen/vs_15">
+
+            <ImageView
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/vs_3"
+                android:alpha="0.9"
+                app:srcCompat="@drawable/hm_search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:padding="@dimen/vs_3"
+                android:text="@string/hm_search"
+                android:textColor="@color/color_CBF46A"
+                android:textSize="@dimen/ts_26"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -265,12 +258,11 @@
             android:padding="@dimen/vs_15">
 
             <ImageView
-                android:id="@+id/hm_settings"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
                 android:alpha="0.9"
-                app:srcCompat="@drawable/hm_settings" />
+                app:srcCompat="@drawable/icon_settings" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -283,8 +275,8 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_setting"
-                android:textColor="@color/color_FFFFFF_90"
-                android:textSize="@dimen/ts_24"
+                android:textColor="@color/color_0CADE2"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -313,7 +305,7 @@
     <com.owen.tvrecyclerview.widget.TvRecyclerView
         android:id="@+id/tvHotListForLine"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/vs_440"
+        android:layout_height="@dimen/vs_0"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"

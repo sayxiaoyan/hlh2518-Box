@@ -15,6 +15,9 @@
  */
 package okhttp3;
 
+import static com.lzy.okgo.https.HttpsUtils.UnSafeHostnameVerifier;
+import static okhttp3.internal.Util.checkDuration;
+
 import android.annotation.SuppressLint;
 
 import androidx.annotation.Nullable;
@@ -48,28 +51,28 @@ import okhttp3.internal.tls.OkHostnameVerifier;
 import okio.Sink;
 import okio.Source;
 
-import static com.lzy.okgo.https.HttpsUtils.UnSafeHostnameVerifier;
-import static okhttp3.internal.Util.checkDuration;
-
 public class OkHttpClientReplace extends OkHttpClient {
 
     public static final class Builder {
+        final List<Interceptor> interceptors = new ArrayList<>();
+        final List<Interceptor> networkInterceptors = new ArrayList<>();
         Dispatcher dispatcher;
         @Nullable
         Proxy proxy;
         List<Protocol> protocols;
         List<ConnectionSpec> connectionSpecs;
-        final List<Interceptor> interceptors = new ArrayList<>();
-        final List<Interceptor> networkInterceptors = new ArrayList<>();
         EventListener.Factory eventListenerFactory;
         ProxySelector proxySelector;
         CookieJar cookieJar;
-        @Nullable Cache cache;
+        @Nullable
+        Cache cache;
         @Nullable
         InternalCache internalCache;
         SocketFactory socketFactory;
-        @Nullable SSLSocketFactory sslSocketFactory;
-        @Nullable CertificateChainCleaner certificateChainCleaner;
+        @Nullable
+        SSLSocketFactory sslSocketFactory;
+        @Nullable
+        CertificateChainCleaner certificateChainCleaner;
         HostnameVerifier hostnameVerifier;
         CertificatePinner certificatePinner;
         Authenticator proxyAuthenticator;
@@ -330,13 +333,17 @@ public class OkHttpClientReplace extends OkHttpClient {
             return this;
         }
 
-        /** Sets the response cache to be used to read and write cached responses. */
+        /**
+         * Sets the response cache to be used to read and write cached responses.
+         */
         void setInternalCache(@Nullable InternalCache internalCache) {
             this.internalCache = internalCache;
             this.cache = null;
         }
 
-        /** Sets the response cache to be used to read and write cached responses. */
+        /**
+         * Sets the response cache to be used to read and write cached responses.
+         */
         public OkHttpClientReplace.Builder cache(@Nullable Cache cache) {
             this.cache = cache;
             this.internalCache = null;
@@ -373,12 +380,13 @@ public class OkHttpClientReplace extends OkHttpClient {
          * be used.
          *
          * @deprecated {@code SSLSocketFactory} does not expose its {@link X509TrustManager}, which is
-         *     a field that OkHttp needs to build a clean certificate chain. This method instead must
-         *     use reflection to extract the trust manager. Applications should prefer to call {@link
-         *     #sslSocketFactory(SSLSocketFactory, X509TrustManager)}, which avoids such reflection.
+         * a field that OkHttp needs to build a clean certificate chain. This method instead must
+         * use reflection to extract the trust manager. Applications should prefer to call {@link
+         * #sslSocketFactory(SSLSocketFactory, X509TrustManager)}, which avoids such reflection.
          */
         public OkHttpClientReplace.Builder sslSocketFactory(SSLSocketFactory sslSocketFactory) {
-            if (sslSocketFactory == null) throw new NullPointerException("sslSocketFactory == null");
+            if (sslSocketFactory == null)
+                throw new NullPointerException("sslSocketFactory == null");
             this.sslSocketFactory = sslSocketFactory;
             this.certificateChainCleaner = Platform.get().buildCertificateChainCleaner(sslSocketFactory);
             return this;
@@ -416,7 +424,8 @@ public class OkHttpClientReplace extends OkHttpClient {
          */
         public OkHttpClientReplace.Builder sslSocketFactory(
                 SSLSocketFactory sslSocketFactory, X509TrustManager trustManager) {
-            if (sslSocketFactory == null) throw new NullPointerException("sslSocketFactory == null");
+            if (sslSocketFactory == null)
+                throw new NullPointerException("sslSocketFactory == null");
             if (trustManager == null) throw new NullPointerException("trustManager == null");
             this.sslSocketFactory = sslSocketFactory;
             this.certificateChainCleaner = CertificateChainCleaner.get(trustManager);
@@ -430,7 +439,8 @@ public class OkHttpClientReplace extends OkHttpClient {
          * <p>If unset, a default hostname verifier will be used.
          */
         public OkHttpClientReplace.Builder hostnameVerifier(HostnameVerifier hostnameVerifier) {
-            if (hostnameVerifier == null) throw new NullPointerException("hostnameVerifier == null");
+            if (hostnameVerifier == null)
+                throw new NullPointerException("hostnameVerifier == null");
             this.hostnameVerifier = hostnameVerifier;
             return this;
         }
@@ -441,7 +451,8 @@ public class OkHttpClientReplace extends OkHttpClient {
          * Pinning certificates avoids the need to trust certificate authorities.
          */
         public OkHttpClientReplace.Builder certificatePinner(CertificatePinner certificatePinner) {
-            if (certificatePinner == null) throw new NullPointerException("certificatePinner == null");
+            if (certificatePinner == null)
+                throw new NullPointerException("certificatePinner == null");
             this.certificatePinner = certificatePinner;
             return this;
         }
@@ -465,7 +476,8 @@ public class OkHttpClientReplace extends OkHttpClient {
          * <p>If unset, the {@linkplain Authenticator#NONE no authentication will be attempted}.
          */
         public OkHttpClientReplace.Builder proxyAuthenticator(Authenticator proxyAuthenticator) {
-            if (proxyAuthenticator == null) throw new NullPointerException("proxyAuthenticator == null");
+            if (proxyAuthenticator == null)
+                throw new NullPointerException("proxyAuthenticator == null");
             this.proxyAuthenticator = proxyAuthenticator;
             return this;
         }
@@ -492,7 +504,9 @@ public class OkHttpClientReplace extends OkHttpClient {
             return this;
         }
 
-        /** Configure this client to follow redirects. If unset, redirects will be followed. */
+        /**
+         * Configure this client to follow redirects. If unset, redirects will be followed.
+         */
         public OkHttpClientReplace.Builder followRedirects(boolean followRedirects) {
             this.followRedirects = followRedirects;
             return this;
@@ -512,7 +526,7 @@ public class OkHttpClientReplace extends OkHttpClient {
          *       attempt multiple proxy servers in sequence, eventually falling back to a direct
          *       connection.
          * </ul>
-         *
+         * <p>
          * Set this to false to avoid retrying requests when doing so is destructive. In this case the
          * calling application should do its own recovery of connectivity failures.
          */
@@ -557,9 +571,9 @@ public class OkHttpClientReplace extends OkHttpClient {
          * Response#protocol()}.
          *
          * @param protocols the protocols to use, in order of preference. If the list contains {@link
-         *     Protocol#H2_PRIOR_KNOWLEDGE} then that must be the only protocol and HTTPS URLs will not
-         *     be supported. Otherwise the list must contain {@link Protocol#HTTP_1_1}. The list must
-         *     not contain null or {@link Protocol#HTTP_1_0}.
+         *                  Protocol#H2_PRIOR_KNOWLEDGE} then that must be the only protocol and HTTPS URLs will not
+         *                  be supported. Otherwise the list must contain {@link Protocol#HTTP_1_1}. The list must
+         *                  not contain null or {@link Protocol#HTTP_1_0}.
          */
         public OkHttpClientReplace.Builder protocols(List<Protocol> protocols) {
             // Create a private copy of the list.

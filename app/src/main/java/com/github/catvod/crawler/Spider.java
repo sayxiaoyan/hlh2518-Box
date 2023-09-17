@@ -17,6 +17,10 @@ public abstract class Spider {
 
     protected static Context mContext;
 
+    public static Dns safeDns() {
+        return OkGoHelper.dnsOverHttps;
+    }
+
     public void init(Context context) {
         mContext = context;
     }
@@ -106,9 +110,5 @@ public abstract class Spider {
      */
     public boolean manualVideoCheck() {
         return false;
-    }
-
-    public static Dns safeDns() {
-        return OkGoHelper.dnsOverHttps;
     }
 }

@@ -20,14 +20,6 @@ public class XWalkUtils {
 
     private static XWalkInitializer xWalkInitializer = null;
 
-    public interface XWalkState {
-        void success();
-
-        void fail();
-
-        void ignore();
-    }
-
     public static String downUrl() {
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
 //        return String.format("https://xwalk.herokuapp.com/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
@@ -205,6 +197,14 @@ public class XWalkUtils {
     static String libExtractPath(Context context) {
         // XWalkEnvironment.getExtractedCoreDir
         return context.getDir(/*XWALK_CORE_EXTRACTED_DIR*/"extracted_xwalkcore", Context.MODE_PRIVATE).getAbsolutePath();
+    }
+
+    public interface XWalkState {
+        void success();
+
+        void fail();
+
+        void ignore();
     }
 
 }

@@ -8,7 +8,6 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.orhanobut.hawk.Hawk;
-import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -34,20 +33,25 @@ public class OkGoHelper {
     public static final long DEFAULT_MILLISECONDS = 10000;      //默认的超时时间
 
     //https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
-    public static HashMap<Integer, String > httpPhaseMap  = new HashMap<Integer, String>(){{
-        put(200,"OK");
-        put(301,"Moved Permanently");
-        put(302,"Found");
-        put(400,"Bad Request");
-        put(401,"Unauthorized");
-        put(403,"Forbidden");
-        put(404,"Not Found");
-        put(429,"Too Many Requests");
-        put(500,"Internal Server Error");
-        put(502,"Bad Gateway");
-        put(503,"Service Unavailable");
-        put(504,"Gateway Timeout");
+    public static HashMap<Integer, String> httpPhaseMap = new HashMap<Integer, String>() {{
+        put(200, "OK");
+        put(301, "Moved Permanently");
+        put(302, "Found");
+        put(400, "Bad Request");
+        put(401, "Unauthorized");
+        put(403, "Forbidden");
+        put(404, "Not Found");
+        put(429, "Too Many Requests");
+        put(500, "Internal Server Error");
+        put(502, "Bad Gateway");
+        put(503, "Service Unavailable");
+        put(504, "Gateway Timeout");
     }};
+    public static DnsOverHttps dnsOverHttps = null;
+    public static ArrayList<String> dnsHttpsList = new ArrayList<>();
+    static OkHttpClient defaultClient = null;
+    static OkHttpClient noRedirectClient = null;
+    static OkHttpClient cacheClient = null;
 
     static void initExoOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -76,11 +80,6 @@ public class OkGoHelper {
 
         ExoMediaSourceHelper.getInstance(App.getInstance()).setOkClient(builder.build());
     }
-
-    public static DnsOverHttps dnsOverHttps = null;
-
-    public static ArrayList<String> dnsHttpsList = new ArrayList<>();
-
 
     public static String getDohUrl(int type) {
         switch (type) {
@@ -136,9 +135,6 @@ public class OkGoHelper {
         dnsOverHttps = new DnsOverHttps.Builder().client(dohClient).url(dohUrl.isEmpty() ? null : HttpUrl.get(dohUrl)).build();
     }
 
-    static OkHttpClient defaultClient = null;
-    static OkHttpClient noRedirectClient = null;
-
     public static OkHttpClient getDefaultClient() {
         return defaultClient;
     }
@@ -175,6 +171,7 @@ public class OkGoHelper {
         }
 
         HttpHeaders.setUserAgent(Version.userAgent());
+     //   builder.cache(new okhttp3.Cache(new File(FileUtils.getCachePath() + "/pic/"), 100 * 1024 * 1024)); // 缓存 100 MB
 
         OkHttpClient okHttpClient = builder.build();
         OkGo.getInstance().setOkHttpClient(okHttpClient);
@@ -184,14 +181,17 @@ public class OkGoHelper {
         builder.followRedirects(false);
         builder.followSslRedirects(false);
         noRedirectClient = builder.build();
-
+        builder.cache(new okhttp3.Cache(new File(FileUtils.getCachePath() + "/pic/"), 100 * 1024 * 1024)); // 缓存 100 MB
+        cacheClient = builder.followRedirects(true).followSslRedirects(true).build();
         initExoOkHttpClient();
-        initPicasso(okHttpClient);
+       // initPicasso(okHttpClient);
+        initPicasso(cacheClient);
     }
 
     static void initPicasso(OkHttpClient client) {
 //        OkHttp3Downloader downloader = new OkHttp3Downloader(client);
         CustomImageDownloader downloader = new CustomImageDownloader();
+      //  CustomImageDownloader downloader = new CustomImageDownloader(client);
         Picasso picasso = new Picasso.Builder(App.getInstance()).downloader(downloader).build();
         Picasso.setSingletonInstance(picasso);
     }

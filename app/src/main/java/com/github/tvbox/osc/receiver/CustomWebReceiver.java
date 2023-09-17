@@ -21,10 +21,6 @@ public class CustomWebReceiver extends BroadcastReceiver {
 
     public static List<Callback> callback = new ArrayList<>();
 
-    public interface Callback {
-        void onChange(String action, Object obj);
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (action.equals(intent.getAction()) && intent.getExtras() != null) {
@@ -45,5 +41,9 @@ public class CustomWebReceiver extends BroadcastReceiver {
                 }
             }*/
         }
+    }
+
+    public interface Callback {
+        void onChange(String action, Object obj);
     }
 }

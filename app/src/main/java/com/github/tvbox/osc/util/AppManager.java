@@ -15,10 +15,6 @@ public class AppManager {
     private AppManager() {
     }
 
-    private static class SingleHolder {
-        private static AppManager instance = new AppManager();
-    }
-
     public static AppManager getInstance() {
         return SingleHolder.instance;
     }
@@ -64,7 +60,6 @@ public class AppManager {
     public void finishActivity(Activity activity) {
         activityStack.remove(activity);
     }
-
 
     /**
      * 结束指定类名的Activity
@@ -132,5 +127,9 @@ public class AppManager {
             activityStack.clear();
             e.printStackTrace();
         }
+    }
+
+    private static class SingleHolder {
+        private static AppManager instance = new AppManager();
     }
 }

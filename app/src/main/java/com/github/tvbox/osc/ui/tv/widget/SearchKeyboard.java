@@ -102,6 +102,14 @@ public class SearchKeyboard extends FrameLayout {
         });
     }
 
+    public void setOnSearchKeyListener(OnSearchKeyListener listener) {
+        searchKeyListener = listener;
+    }
+
+    public interface OnSearchKeyListener {
+        void onSearchKey(int pos, String key);
+    }
+
     static class Keyboard implements MultiItemEntity {
         private int itemType;
         private String key;
@@ -140,13 +148,5 @@ public class SearchKeyboard extends FrameLayout {
                     break;
             }
         }
-    }
-
-    public void setOnSearchKeyListener(OnSearchKeyListener listener) {
-        searchKeyListener = listener;
-    }
-
-    public interface OnSearchKeyListener {
-        void onSearchKey(int pos, String key);
     }
 }

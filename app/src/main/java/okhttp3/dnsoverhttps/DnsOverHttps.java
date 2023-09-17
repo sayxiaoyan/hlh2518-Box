@@ -62,11 +62,11 @@ public class DnsOverHttps implements Dns {
     public static final MediaType DNS_MESSAGE = MediaType.get("application/dns-message");
     public static final int MAX_RESPONSE_SIZE = 64 * 1024;
     private final OkHttpClient client;
-    private HttpUrl url;
     private final boolean includeIPv6;
     private final boolean post;
     private final boolean resolvePrivateAddresses;
     private final boolean resolvePublicAddresses;
+    private HttpUrl url;
 
     DnsOverHttps(Builder builder) {
         if (builder.client == null) {
@@ -84,10 +84,6 @@ public class DnsOverHttps implements Dns {
         this.client = builder.client.newBuilder().dns(buildBootstrapClient(builder)).build();
     }
 
-    public void setUrl(HttpUrl newUrl) {
-        this.url = newUrl;
-    }
-
     private static Dns buildBootstrapClient(Builder builder) {
         List<InetAddress> hosts = builder.bootstrapDnsHosts;
 
@@ -96,6 +92,14 @@ public class DnsOverHttps implements Dns {
         } else {
             return builder.systemDns;
         }
+    }
+
+    static boolean isPrivateHost(String host) {
+        return PublicSuffixDatabase.get().getEffectiveTldPlusOne(host) == null;
+    }
+
+    public void setUrl(HttpUrl newUrl) {
+        this.url = newUrl;
     }
 
     public HttpUrl url() {
@@ -295,10 +299,6 @@ public class DnsOverHttps implements Dns {
         }
 
         return requestBuilder.build();
-    }
-
-    static boolean isPrivateHost(String host) {
-        return PublicSuffixDatabase.get().getEffectiveTldPlusOne(host) == null;
     }
 
     public static final class Builder {

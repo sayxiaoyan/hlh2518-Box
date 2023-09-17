@@ -16,6 +16,7 @@ public class LiveController extends BaseController {
     protected ProgressBar mLoading;
     private int minFlingDistance = 100;             //最小识别距离
     private int minFlingVelocity = 10;              //最小识别速度
+    private LiveController.LiveControlListener listener = null;
 
     public LiveController(@NotNull Context context) {
         super(context);
@@ -31,18 +32,6 @@ public class LiveController extends BaseController {
         super.initView();
         mLoading = findViewById(R.id.loading);
     }
-
-    public interface LiveControlListener {
-        boolean singleTap(MotionEvent e);
-
-        void longPress();
-
-        void playStateChanged(int playState);
-
-        void changeSource(int direction);
-    }
-
-    private LiveController.LiveControlListener listener = null;
 
     public void setListener(LiveController.LiveControlListener listener) {
         this.listener = listener;
@@ -77,5 +66,15 @@ public class LiveController extends BaseController {
         } else if (e2.getY() - e1.getY() > minFlingDistance && Math.abs(velocityY) > minFlingVelocity) {
         }
         return false;
+    }
+
+    public interface LiveControlListener {
+        boolean singleTap(MotionEvent e);
+
+        void longPress();
+
+        void playStateChanged(int playState);
+
+        void changeSource(int direction);
     }
 }

@@ -33,7 +33,7 @@ public class AlistDriveDialog extends BaseDialog {
     public AlistDriveDialog(@NonNull @NotNull Context context, StorageDrive drive) {
         super(context);
         setContentView(R.layout.dialog_alistdrive);
-        if(drive != null)
+        if (drive != null)
             this.drive = drive;
     }
 
@@ -46,14 +46,15 @@ public class AlistDriveDialog extends BaseDialog {
         etPassword = findViewById(R.id.etPassword);
         etName.setFocusableInTouchMode(true);
         etName.requestFocus();
-        if(drive != null) {
+        if (drive != null) {
             etName.setText(drive.name);
             try {
                 JsonObject config = JsonParser.parseString(drive.configJson).getAsJsonObject();
                 initSavedData(etUrl, config, "url");
                 initSavedData(etInitPath, config, "initPath");
                 initSavedData(etPassword, config, "password");
-            }catch (Exception ex) { }
+            } catch (Exception ex) {
+            }
         }
         findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,27 +63,25 @@ public class AlistDriveDialog extends BaseDialog {
                 String url = etUrl.getText().toString();
                 String initPath = etInitPath.getText().toString();
                 String password = etPassword.getText().toString();
-                if(name == null || name.length() == 0)
-                {
+                if (name == null || name.length() == 0) {
                     Toast.makeText(AlistDriveDialog.this.getContext(), "请赋予一个空间名称", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(url == null || url.length() == 0)
-                {
+                if (url == null || url.length() == 0) {
                     Toast.makeText(AlistDriveDialog.this.getContext(), "请务必填入Alist网页地址", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!url.endsWith("/"))
+                if (!url.endsWith("/"))
                     url += "/";
                 JsonObject config = new JsonObject();
                 config.addProperty("url", url);
-                if(initPath.length() > 0 && initPath.startsWith("/"))
+                if (initPath.length() > 0 && initPath.startsWith("/"))
                     initPath = initPath.substring(1);
-                if(initPath.length() > 0 && initPath.endsWith("/"))
+                if (initPath.length() > 0 && initPath.endsWith("/"))
                     initPath = initPath.substring(0, initPath.length() - 1);
                 config.addProperty("initPath", initPath);
                 config.addProperty("password", password);
-                if(drive != null) {
+                if (drive != null) {
                     drive.name = name;
                     drive.configJson = config.toString();
                     RoomDataManger.updateDriveRecord(drive);
@@ -102,15 +101,14 @@ public class AlistDriveDialog extends BaseDialog {
     }
 
     private void initSavedData(EditText etField, JsonObject config, String fieldName) {
-        if(config.has(fieldName))
+        if (config.has(fieldName))
             etField.setText(config.get(fieldName).getAsString());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInputMsgEvent(InputMsgEvent inputMsgEvent) {
         View vFocus = this.getWindow().getDecorView().findFocus();
-        if(vFocus instanceof EditText)
-        {
+        if (vFocus instanceof EditText) {
             ((EditText) vFocus).setText(inputMsgEvent.getText());
         }
     }

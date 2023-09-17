@@ -56,6 +56,7 @@ import java.util.concurrent.TimeoutException;
  * @description:
  */
 public class SourceViewModel extends ViewModel {
+    public static final ExecutorService spThreadPool = Executors.newSingleThreadExecutor();
     public MutableLiveData<AbsSortXml> sortResult;
     public MutableLiveData<AbsXml> listResult;
     public MutableLiveData<AbsXml> searchResult;
@@ -71,8 +72,6 @@ public class SourceViewModel extends ViewModel {
         detailResult = new MutableLiveData<>();
         playResult = new MutableLiveData<>();
     }
-
-    public static final ExecutorService spThreadPool = Executors.newSingleThreadExecutor();
 
     // homeContent
     public void getSort(String sourceKey) {
@@ -332,10 +331,6 @@ public class SourceViewModel extends ViewModel {
         }
     }
 
-    interface HomeRecCallback {
-        void done(List<Movie.Video> videos);
-    }
-
     //    homeVideoContent
     void getHomeRecList(SourceBean sourceBean, ArrayList<String> ids, HomeRecCallback callback) {
         int type = sourceBean.getType();
@@ -426,8 +421,8 @@ public class SourceViewModel extends ViewModel {
     // detailContent
     public void getDetail(String sourceKey, String id) {
         SourceBean sourceBean = ApiConfig.get().getSource(sourceKey);
-		if (sourceBean == null)
-			detailResult.postValue(null);
+        if (sourceBean == null)
+            detailResult.postValue(null);
         int type = sourceBean.getType();
         if (type == 3) {
             spThreadPool.execute(new Runnable() {
@@ -1001,5 +996,9 @@ public class SourceViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+    }
+
+    interface HomeRecCallback {
+        void done(List<Movie.Video> videos);
     }
 }

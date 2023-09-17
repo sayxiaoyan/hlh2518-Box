@@ -55,14 +55,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @description:
  */
 public class FastSearchActivity extends BaseActivity {
+    private final List<String> quickSearchWord = new ArrayList<>();
+    private final AtomicInteger allRunCount = new AtomicInteger(0);
+    SourceViewModel sourceViewModel;
     private LinearLayout llLayout;
     private TextView mSearchTitle;
     private TvRecyclerView mGridView;
     private TvRecyclerView mGridViewFilter;
     private TvRecyclerView mGridViewWord;
     private TvRecyclerView mGridViewWordFenci;
-    SourceViewModel sourceViewModel;
-
     private SearchWordAdapter searchWordAdapter;
     private FastSearchAdapter searchAdapter;
     private FastSearchAdapter searchAdapterFilter;
@@ -72,10 +73,6 @@ public class FastSearchActivity extends BaseActivity {
     private boolean isFilterMode = false;
     private String searchFilterKey = "";    // 过滤的key
     private HashMap<String, ArrayList<Movie.Video>> resultVods; // 搜索结果
-    private int finishedCount = 0;
-    private final List<String> quickSearchWord = new ArrayList<>();
-    private HashMap<String, String> mCheckSources = null;
-
     private final View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View itemView, boolean hasFocus) {
@@ -94,6 +91,10 @@ public class FastSearchActivity extends BaseActivity {
             }
         }
     };
+    private int finishedCount = 0;
+    private HashMap<String, String> mCheckSources = null;
+    private List<Runnable> pauseRunnable = null;
+    private ExecutorService searchExecutorService = null;
 
     @Override
     protected int getLayoutResID() {
@@ -108,8 +109,6 @@ public class FastSearchActivity extends BaseActivity {
         initViewModel();
         initData();
     }
-
-    private List<Runnable> pauseRunnable = null;
 
     @Override
     protected void onResume() {
@@ -366,9 +365,6 @@ public class FastSearchActivity extends BaseActivity {
 
         searchResult();
     }
-
-    private ExecutorService searchExecutorService = null;
-    private final AtomicInteger allRunCount = new AtomicInteger(0);
 
     private void searchResult() {
         try {

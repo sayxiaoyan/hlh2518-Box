@@ -5,11 +5,11 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.github.tvbox.osc.api.ApiConfig;
-import com.github.tvbox.osc.util.HawkConfig;
-import com.github.tvbox.osc.util.HistoryHelper;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.data.AppDataManager;
+import com.github.tvbox.osc.util.HawkConfig;
+import com.github.tvbox.osc.util.HistoryHelper;
 import com.github.tvbox.osc.util.StorageDriveType;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -93,7 +93,7 @@ public class RoomDataManger {
         //}
         Integer index = Hawk.get(HawkConfig.HOME_NUM, 0);
         Integer hisNum = HistoryHelper.getHisNum(index);
-        if ( count > hisNum ) {
+        if (count > hisNum) {
             AppDataManager.get().getVodRecordDao().reserver(hisNum);
         }
 
@@ -158,6 +158,7 @@ public class RoomDataManger {
         VodCollect record = AppDataManager.get().getVodCollectDao().getVodCollect(sourceKey, vodId);
         return record != null;
     }
+
     public static List<VodCollect> getAllVodCollect() {
         return AppDataManager.get().getVodCollectDao().getAll();
     }

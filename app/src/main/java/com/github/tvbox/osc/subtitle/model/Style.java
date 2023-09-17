@@ -29,17 +29,27 @@ package com.github.tvbox.osc.subtitle.model;
 public class Style {
 
     private static int styleCounter;
-
+    /* ATTRIBUTES */
+    public String iD;
+    public String font;
+    public String fontSize;
+    /**
+     * colors are stored as 8 chars long RGBA
+     */
+    public String color;
+    public String backgroundColor;
+    public String textAlign = "";
+    public boolean italic;
+    public boolean bold;
+    public boolean underline;
     /**
      * Constructor that receives a String to use a its identifier
      *
-     * @param styleName
-     *            = identifier of this style
+     * @param styleName = identifier of this style
      */
     public Style(String styleName) {
         this.iD = styleName;
     }
-
     /**
      * Constructor that receives a String with the new styleName and a style to
      * copy
@@ -60,30 +70,15 @@ public class Style {
 
     }
 
-    /* ATTRIBUTES */
-    public String iD;
-    public String font;
-    public String fontSize;
-    /** colors are stored as 8 chars long RGBA */
-    public String color;
-    public String backgroundColor;
-    public String textAlign = "";
-
-    public boolean italic;
-    public boolean bold;
-    public boolean underline;
-
     /* METHODS */
 
     /**
      * To get the string containing the hex value to put into color or
      * background color
      *
-     * @param format
-     *            supported: "name", "&HBBGGRR", "&HAABBGGRR",
-     *            "decimalCodedBBGGRR", "decimalCodedAABBGGRR"
-     * @param value
-     *            RRGGBBAA string
+     * @param format supported: "name", "&HBBGGRR", "&HAABBGGRR",
+     *               "decimalCodedBBGGRR", "decimalCodedAABBGGRR"
+     * @param value  RRGGBBAA string
      * @return
      */
     public static String getRGBValue(String format, String value) {

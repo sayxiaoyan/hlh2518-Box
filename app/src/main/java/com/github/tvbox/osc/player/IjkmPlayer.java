@@ -7,9 +7,7 @@ import android.text.TextUtils;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.bean.IJKCode;
 import com.github.tvbox.osc.util.FileUtils;
-import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.MD5;
-import com.orhanobut.hawk.Hawk;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -57,7 +55,7 @@ public class IjkmPlayer extends IjkPlayer {
         mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "subtitle", 1);
         mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1);
         mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", -1);
-        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT,"safe",0);
+        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "safe", 0);
         super.setOptions();
     }
 
@@ -65,25 +63,25 @@ public class IjkmPlayer extends IjkPlayer {
     public void setDataSource(String path, Map<String, String> headers) {
         try {
             if (path != null && !TextUtils.isEmpty(path)) {
-                if(path.startsWith("rtsp")){
+                if (path.startsWith("rtsp")) {
                     mMediaPlayer.setOption(1, "infbuf", 1);
                     mMediaPlayer.setOption(1, "rtsp_transport", "tcp");
                     mMediaPlayer.setOption(1, "rtsp_flags", "prefer_tcp");
                 } else if (!path.contains(".m3u8") && (path.contains(".mp4") || path.contains(".mkv") || path.contains(".avi"))) {
 //                    if (Hawk.get(HawkConfig.IJK_CACHE_PLAY, false)) {
-                        String cachePath = FileUtils.getExternalCachePath() + "/ijkcaches/";
-                        String cacheMapPath = cachePath;
-                        File cacheFile = new File(cachePath);
-                        if (!cacheFile.exists()) cacheFile.mkdirs();
-                        String tmpMd5 = MD5.string2MD5(path);
-                        cachePath += tmpMd5 + ".file";
-                        cacheMapPath += tmpMd5 + ".map";
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_path", cachePath);
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_map_path", cacheMapPath);
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 1);
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 1);
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_max_capacity", 60 * 1024 * 1024);
-                        path = "ijkio:cache:ffio:" + path;
+                    String cachePath = FileUtils.getExternalCachePath() + "/ijkcaches/";
+                    String cacheMapPath = cachePath;
+                    File cacheFile = new File(cachePath);
+                    if (!cacheFile.exists()) cacheFile.mkdirs();
+                    String tmpMd5 = MD5.string2MD5(path);
+                    cachePath += tmpMd5 + ".file";
+                    cacheMapPath += tmpMd5 + ".map";
+                    mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_path", cachePath);
+                    mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_map_path", cacheMapPath);
+                    mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 1);
+                    mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 1);
+                    mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_max_capacity", 60 * 1024 * 1024);
+                    path = "ijkio:cache:ffio:" + path;
 //                    }
                 }
             }
@@ -119,6 +117,7 @@ public class IjkmPlayer extends IjkPlayer {
             mPlayerEventListener.onError();
         }
     }
+
     private void setDataSourceHeader(Map<String, String> headers) {
         if (headers != null && !headers.isEmpty()) {
             String userAgent = headers.get("User-Agent");
@@ -141,6 +140,7 @@ public class IjkmPlayer extends IjkPlayer {
             }
         }
     }
+
     public TrackInfo getTrackInfo() {
         IjkTrackInfo[] trackInfo = mMediaPlayer.getTrackInfo();
         if (trackInfo == null) return null;

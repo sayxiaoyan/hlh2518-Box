@@ -19,6 +19,29 @@ public class AbsJson implements Serializable {
     public int pagecount;   // : 209
     public int total;   // : 4166
 
+    public AbsXml toAbsXml() {
+        AbsXml xml = new AbsXml();
+        Movie movie = new Movie();
+        movie.page = page;
+        movie.pagecount = pagecount;
+        try {
+            movie.pagesize = Integer.parseInt(limit);
+        } catch (Throwable th) {
+            movie.pagesize = 0;
+        }
+        movie.recordcount = total;
+        List<Movie.Video> videoList = new ArrayList<>();
+        for (AbsJsonVod vod : list) {
+            try {
+                videoList.add(vod.toXmlVideo());
+            } catch (Throwable th) {
+                movie.pagesize = 0;
+            }
+        }
+        movie.videoList = videoList;
+        xml.movie = movie;
+        return xml;
+    }
 
     public class AbsJsonVod implements Serializable {
         public int group_id; //: 0
@@ -148,29 +171,5 @@ public class AbsJson implements Serializable {
             video.tag = vod_tag;
             return video;
         }
-    }
-
-    public AbsXml toAbsXml() {
-        AbsXml xml = new AbsXml();
-        Movie movie = new Movie();
-        movie.page = page;
-        movie.pagecount = pagecount;
-        try {
-            movie.pagesize = Integer.parseInt(limit);
-        } catch (Throwable th) {
-            movie.pagesize = 0;
-        }
-        movie.recordcount = total;
-        List<Movie.Video> videoList = new ArrayList<>();
-        for (AbsJsonVod vod : list) {
-            try {
-                videoList.add(vod.toXmlVideo());
-            } catch (Throwable th) {
-                movie.pagesize = 0;
-            }
-        }
-        movie.videoList = videoList;
-        xml.movie = movie;
-        return xml;
     }
 }

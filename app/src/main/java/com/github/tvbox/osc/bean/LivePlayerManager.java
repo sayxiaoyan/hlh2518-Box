@@ -1,18 +1,13 @@
 package com.github.tvbox.osc.bean;
 
 import androidx.annotation.NonNull;
-import androidx.exifinterface.media.ExifInterface;
 
-import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.PlayerHelper;
 import com.orhanobut.hawk.Hawk;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 import xyz.doikki.videoplayer.player.VideoView;
 
@@ -134,7 +129,7 @@ public class LivePlayerManager {
         currentPlayerConfig = playerConfig;
     }
 
-    public void changeLivePlayerScale(@NonNull VideoView videoView, int playerScale, String channelName){
+    public void changeLivePlayerScale(@NonNull VideoView videoView, int playerScale, String channelName) {
         videoView.setScreenScaleType(playerScale);
 
         JSONObject playerConfig = currentPlayerConfig;

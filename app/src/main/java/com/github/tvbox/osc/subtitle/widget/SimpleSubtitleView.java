@@ -2,10 +2,11 @@ package com.github.tvbox.osc.subtitle.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.subtitle.DefaultSubtitleEngine;
@@ -27,12 +28,9 @@ public class SimpleSubtitleView extends TextView
         SubtitleEngine.OnSubtitlePreparedListener {
 
     private static final String EMPTY_TEXT = "";
-
-    private SubtitleEngine mSubtitleEngine;
-
     public boolean isInternal = false;
-
     public boolean hasInternal = false;
+    private SubtitleEngine mSubtitleEngine;
 
     public SimpleSubtitleView(final Context context) {
         super(context);
@@ -86,12 +84,12 @@ public class SimpleSubtitleView extends TextView
         mSubtitleEngine.setSubtitleDelay(mseconds);
     }
 
-    public void setPlaySubtitleCacheKey(String cacheKey) {
-        mSubtitleEngine.setPlaySubtitleCacheKey(cacheKey);
-    }
-
     public String getPlaySubtitleCacheKey() {
         return mSubtitleEngine.getPlaySubtitleCacheKey();
+    }
+
+    public void setPlaySubtitleCacheKey(String cacheKey) {
+        mSubtitleEngine.setPlaySubtitleCacheKey(cacheKey);
     }
 
     public void clearSubtitleCache() {

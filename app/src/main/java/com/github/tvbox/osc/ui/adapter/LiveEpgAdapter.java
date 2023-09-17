@@ -17,7 +17,7 @@ import java.util.Date;
 public class LiveEpgAdapter extends BaseQuickAdapter<Epginfo, BaseViewHolder> {
     private int selectedEpgIndex = -1;
     private int focusedEpgIndex = -1;
-//    public static float fontSize = 20;
+    //    public static float fontSize = 20;
 //    private final int defaultShiyiSelection = 0;
     private boolean ShiyiSelection = false;
     private boolean source_include_back = false;

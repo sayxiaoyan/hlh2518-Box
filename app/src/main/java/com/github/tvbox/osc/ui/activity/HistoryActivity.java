@@ -32,11 +32,11 @@ import java.util.List;
  * @description:
  */
 public class HistoryActivity extends BaseActivity {
+    public static HistoryAdapter historyAdapter;
     private TextView tvDelTip;
     private ImageView tvDelete;
     private ImageView tvClear;
     private TvRecyclerView mGridView;
-    public static HistoryAdapter historyAdapter;
     private boolean delMode = false;
 
     @Override

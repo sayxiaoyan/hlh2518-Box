@@ -198,10 +198,6 @@ public class SearchSubtitleDialog extends BaseDialog {
         mSubtitleLoader = subtitleLoader;
     }
 
-    public interface SubtitleLoader {
-        void loadSubtitle(Subtitle subtitle);
-    }
-
     @Override
     public void onBackPressed() {
         if (!isSearchPag) {
@@ -213,6 +209,10 @@ public class SearchSubtitleDialog extends BaseDialog {
             return;
         }
         dismiss();
+    }
+
+    public interface SubtitleLoader {
+        void loadSubtitle(Subtitle subtitle);
     }
 
 }

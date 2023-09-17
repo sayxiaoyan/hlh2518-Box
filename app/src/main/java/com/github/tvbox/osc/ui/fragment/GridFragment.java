@@ -39,6 +39,7 @@ import java.util.Stack;
  * @description:
  */
 public class GridFragment extends BaseLazyFragment {
+    Stack<GridInfo> mGrids = new Stack<GridInfo>(); //ui栈
     private MovieSort.SortData sortData = null;
     private TvRecyclerView mGridView;
     private SourceViewModel sourceViewModel;
@@ -49,18 +50,6 @@ public class GridFragment extends BaseLazyFragment {
     private boolean isLoad = false;
     private boolean isTop = true;
     private View focusedView = null;
-
-    private class GridInfo {
-        public String sortID = "";
-        public TvRecyclerView mGridView;
-        public GridAdapter gridAdapter;
-        public int page = 1;
-        public int maxPage = 1;
-        public boolean isLoad = false;
-        public View focusedView = null;
-    }
-
-    Stack<GridInfo> mGrids = new Stack<GridInfo>(); //ui栈
 
     public static GridFragment newInstance(MovieSort.SortData sortData) {
         return new GridFragment().setArguments(sortData);
@@ -335,5 +324,15 @@ public class GridFragment extends BaseLazyFragment {
     public void forceRefresh() {
         page = 1;
         initData();
+    }
+
+    private class GridInfo {
+        public String sortID = "";
+        public TvRecyclerView mGridView;
+        public GridAdapter gridAdapter;
+        public int page = 1;
+        public int maxPage = 1;
+        public boolean isLoad = false;
+        public View focusedView = null;
     }
 }

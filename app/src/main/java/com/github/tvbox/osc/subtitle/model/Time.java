@@ -28,6 +28,9 @@ package com.github.tvbox.osc.subtitle.model;
 
 public class Time {
 
+    // in an integer we can store 24 days worth of milliseconds, no need for a long
+    public int mseconds;
+
     /**
      * Constructor to create a time object.
      *
@@ -69,16 +72,13 @@ public class Time {
         }
     }
 
-    // in an integer we can store 24 days worth of milliseconds, no need for a long
-    public int mseconds;
-
 
     /* METHODS */
 
     /**
      * Method to return a formatted value of the time stored
      *
-     * @param  format supported formats: "hh:mm:ss,ms", "h:mm:ss.cs" and "hhmmssff/fps"
+     * @param format supported formats: "hh:mm:ss,ms", "h:mm:ss.cs" and "hhmmssff/fps"
      * @return formatted time in a string
      */
     public String getTime(String format) {

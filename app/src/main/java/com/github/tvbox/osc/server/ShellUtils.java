@@ -90,7 +90,7 @@ public class ShellUtils {
      * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
-    public static CommandResult execCommand(List<String> commands,boolean isRoot, boolean isNeedResultMsg) {
+    public static CommandResult execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg) {
         return execCommand(commands == null ? null : commands.toArray(new String[]{}),
                 isRoot, isNeedResultMsg);
     }
@@ -167,7 +167,7 @@ public class ShellUtils {
                 process.destroy();
             }
         }
-        return new CommandResult(result, successMsg == null ? null: successMsg.toString(), errorMsg == null ? null
+        return new CommandResult(result, successMsg == null ? null : successMsg.toString(), errorMsg == null ? null
                 : errorMsg.toString());
     }
 

@@ -44,10 +44,23 @@ import xyz.doikki.videoplayer.util.CutoutUtil;
  * @description:
  */
 public abstract class BaseActivity extends AppCompatActivity implements CustomAdapt {
+    protected static BitmapDrawable globalWp = null;
+    private static float screenRatio = -100.0f;
     protected Context mContext;
     private LoadService mLoadService;
 
-    private static float screenRatio = -100.0f;
+    // takagen99 : Check for Gesture or 3-Buttons NavBar
+    // 0 : 3-Button NavBar
+    // 1 : 2-Button NavBar (Android P)
+    // 2 : Gesture full screen
+    public static int isEdgeToEdgeEnabled(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("config_navBarInteractionMode", "integer", "android");
+        if (resourceId > 0) {
+            return resources.getInteger(resourceId);
+        }
+        return 0;
+    }
 
     // takagen99 : Fix for Locale change not persist on higher Android version
     @Override
@@ -104,19 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         super.onResume();
         hideSystemUI(true);
         changeWallpaper(false);
-    }
-
-    // takagen99 : Check for Gesture or 3-Buttons NavBar
-    // 0 : 3-Button NavBar
-    // 1 : 2-Button NavBar (Android P)
-    // 2 : Gesture full screen
-    public static int isEdgeToEdgeEnabled(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("config_navBarInteractionMode", "integer", "android");
-        if (resourceId > 0) {
-            return resources.getInteger(resourceId);
-        }
-        return 0;
     }
 
     public void hideSysBar() {
@@ -297,8 +297,6 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         int themeColor = a.getColor(R.styleable.themeColor_color_theme, 0);
         return themeColor;
     }
-
-    protected static BitmapDrawable globalWp = null;
 
     public void changeWallpaper(boolean force) {
         if (!force && globalWp != null) {

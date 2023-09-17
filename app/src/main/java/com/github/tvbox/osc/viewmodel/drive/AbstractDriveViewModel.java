@@ -15,6 +15,21 @@ public abstract class AbstractDriveViewModel extends ViewModel {
     protected DriveFolderFile currentDrive = null;
     protected DriveFolderFile currentDriveNote = null;
     protected int sortType = 0;
+    private final Comparator<DriveFolderFile> sortComparator = new Comparator<DriveFolderFile>() {
+        @Override
+        public int compare(DriveFolderFile o1, DriveFolderFile o2) {
+            switch (sortType) {
+                case 1:
+                    return Collator.getInstance(Locale.CHINESE).compare(o2.name.toUpperCase(Locale.CHINESE), o1.name.toUpperCase(Locale.CHINESE));
+                case 2:
+                    return Long.compare(o1.lastModifiedDate, o2.lastModifiedDate);
+                case 3:
+                    return Long.compare(o2.lastModifiedDate, o1.lastModifiedDate);
+                default:
+                    return Collator.getInstance(Locale.CHINESE).compare(o1.name.toUpperCase(Locale.CHINESE), o2.name.toUpperCase(Locale.CHINESE));
+            }
+        }
+    };
 
     public DriveFolderFile getCurrentDrive() {
         return currentDrive;
@@ -46,22 +61,6 @@ public abstract class AbstractDriveViewModel extends ViewModel {
         if (backItem != null)
             data.add(0, backItem);
     }
-
-    private final Comparator<DriveFolderFile> sortComparator = new Comparator<DriveFolderFile>() {
-        @Override
-        public int compare(DriveFolderFile o1, DriveFolderFile o2) {
-            switch (sortType) {
-                case 1:
-                    return Collator.getInstance(Locale.CHINESE).compare(o2.name.toUpperCase(Locale.CHINESE), o1.name.toUpperCase(Locale.CHINESE));
-                case 2:
-                    return Long.compare(o1.lastModifiedDate, o2.lastModifiedDate);
-                case 3:
-                    return Long.compare(o2.lastModifiedDate, o1.lastModifiedDate);
-                default:
-                    return Collator.getInstance(Locale.CHINESE).compare(o1.name.toUpperCase(Locale.CHINESE), o2.name.toUpperCase(Locale.CHINESE));
-            }
-        }
-    };
 
     public interface LoadDataCallback {
 

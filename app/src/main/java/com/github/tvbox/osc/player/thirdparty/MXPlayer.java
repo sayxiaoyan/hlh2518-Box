@@ -1,7 +1,6 @@
 package com.github.tvbox.osc.player.thirdparty;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -21,17 +20,6 @@ public class MXPlayer {
     private static final String PACKAGE_NAME_AD = "com.mxtech.videoplayer.ad";
     private static final String PLAYBACK_ACTIVITY_PRO = "com.mxtech.videoplayer.ActivityScreen";
     private static final String PLAYBACK_ACTIVITY_AD = "com.mxtech.videoplayer.ad.ActivityScreen";
-
-    private static class MXPackageInfo {
-        final String packageName;
-        final String activityName;
-
-        MXPackageInfo(String packageName, String activityName) {
-            this.packageName = packageName;
-            this.activityName = activityName;
-        }
-    }
-
     private static final MXPackageInfo[] PACKAGES = {
             new MXPackageInfo(PACKAGE_NAME_PRO, PLAYBACK_ACTIVITY_PRO),
             new MXPackageInfo(PACKAGE_NAME_AD, PLAYBACK_ACTIVITY_AD),
@@ -55,24 +43,6 @@ public class MXPlayer {
         return null;
     }
 
-    private static class Subtitle {
-        final Uri uri;
-        String name;
-        String filename;
-
-        Subtitle(Uri uri) {
-            if (uri.getScheme() == null)
-                throw new IllegalStateException("Scheme is missed for subtitle URI " + uri);
-
-            this.uri = uri;
-        }
-
-        Subtitle(String uriStr) {
-            this(Uri.parse(uriStr));
-        }
-    }
-
-
     public static boolean run(Activity activity, String url, String title, String subtitle, HashMap<String, String> headers) {
         MXPackageInfo packageInfo = getPackageInfo();
         if (packageInfo == null)
@@ -87,10 +57,10 @@ public class MXPlayer {
                 int idx = 0;
                 for (String hk : headers.keySet()) {
                     url += hk + "=" + URLEncoder.encode(headers.get(hk), "UTF-8");
-                    if (idx < headers.keySet().size() -1) {
+                    if (idx < headers.keySet().size() - 1) {
                         url += "&";
                     }
-                    idx ++;
+                    idx++;
                 }
             }
             intent.setData(Uri.parse(url));
@@ -107,6 +77,33 @@ public class MXPlayer {
         } catch (Exception ex) {
             Log.e(TAG, "Can't run MX Player(Pro)", ex);
             return false;
+        }
+    }
+
+    private static class MXPackageInfo {
+        final String packageName;
+        final String activityName;
+
+        MXPackageInfo(String packageName, String activityName) {
+            this.packageName = packageName;
+            this.activityName = activityName;
+        }
+    }
+
+    private static class Subtitle {
+        final Uri uri;
+        String name;
+        String filename;
+
+        Subtitle(Uri uri) {
+            if (uri.getScheme() == null)
+                throw new IllegalStateException("Scheme is missed for subtitle URI " + uri);
+
+            this.uri = uri;
+        }
+
+        Subtitle(String uriStr) {
+            this(Uri.parse(uriStr));
         }
     }
 }

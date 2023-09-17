@@ -9,9 +9,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
+
 import java.util.Random;
 
 public class AudioWaveView extends View {
+    /**
+     * 条间距
+     */
+    private final int space = 8;
     private Paint paint;
     private RectF rectF1;
     private RectF rectF2;
@@ -22,13 +27,17 @@ public class AudioWaveView extends View {
     private RectF rectF7;
     private int viewWidth;
     private int viewHeight;
-    /** 每个条的宽度 */
+    /**
+     * 每个条的宽度
+     */
     private int rectWidth;
-    /** 条数 */
+    /**
+     * 条数
+     */
     private int columnCount = 7;
-    /** 条间距 */
-    private final int space = 8;
-    /** 条随机高度 */
+    /**
+     * 条随机高度
+     */
     private int randomHeight;
     private Random random;
     private Handler handler = new Handler() {

@@ -114,23 +114,6 @@ public class SubtitleLoader {
         });
     }
 
-    public SubtitleLoadSuccessResult loadSubtitle(String path) {
-        if (TextUtils.isEmpty(path)) {
-            return null;
-        }
-        try {
-            if (path.startsWith("http://")
-                    || path.startsWith("https://")) {
-                return loadFromRemote(path);
-            } else {
-                return loadFromLocal(path);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private static SubtitleLoadSuccessResult loadFromRemote(final String remoteSubtitlePath)
             throws IOException, FatalParsingException, Exception {
         Log.d(TAG, "parseRemote: remoteSubtitlePath = " + remoteSubtitlePath);
@@ -162,7 +145,7 @@ public class SubtitleLoader {
                 filename = filenameInfo.replace("filename=", "");
                 filename = filename.replace("\"", "");
             } else if (filenameInfo.startsWith("filename*=")) {
-                filename = filenameInfo.substring(filenameInfo.lastIndexOf("''")+2);
+                filename = filenameInfo.substring(filenameInfo.lastIndexOf("''") + 2);
             }
             filename = filename.trim();
             filename = URLDecoder.decode(filename);
@@ -221,6 +204,23 @@ public class SubtitleLoader {
             return new FormatSTL().parseFile(fileName, newInputStream);
         }
         return new FormatSRT().parseFile(fileName, newInputStream);
+    }
+
+    public SubtitleLoadSuccessResult loadSubtitle(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+        try {
+            if (path.startsWith("http://")
+                    || path.startsWith("https://")) {
+                return loadFromRemote(path);
+            } else {
+                return loadFromLocal(path);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public interface Callback {

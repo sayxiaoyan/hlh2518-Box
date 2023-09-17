@@ -1,22 +1,25 @@
 package com.github.tvbox.osc.picasso;
 
 import android.text.TextUtils;
+
 import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.SSL.SSLSocketFactoryCompat;
 import com.github.tvbox.osc.util.UA;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Downloader;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class CustomImageDownloader implements Downloader {
-    private OkHttpClient client;
+   private OkHttpClient client;
+   //final OkHttpClient client;
 
     public CustomImageDownloader() {
         String pathName = FileUtils.getCachePath() + "/pic/";
@@ -30,6 +33,13 @@ public class CustomImageDownloader implements Downloader {
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .build();
     }
+
+
+   // public CustomImageDownloader(OkHttpClient client) {
+   //     this.client = client;
+   // }
+
+
 
     @Override
     public Response load(Request request) throws IOException {

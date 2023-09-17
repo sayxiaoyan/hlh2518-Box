@@ -1,12 +1,10 @@
 package com.github.tvbox.osc.player.thirdparty;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.github.tvbox.osc.base.App;
@@ -19,17 +17,6 @@ public class Kodi {
 
     private static final String PACKAGE_NAME = "org.xbmc.kodi";
     private static final String PLAYBACK_ACTIVITY = "org.xbmc.kodi.Splash";
-
-    private static class KodiPackageInfo {
-        final String packageName;
-        final String activityName;
-
-        KodiPackageInfo(String packageName, String activityName) {
-            this.packageName = packageName;
-            this.activityName = activityName;
-        }
-    }
-
     private static final KodiPackageInfo[] PACKAGES = {
             new KodiPackageInfo(PACKAGE_NAME, PLAYBACK_ACTIVITY),
     };
@@ -52,24 +39,6 @@ public class Kodi {
         return null;
     }
 
-    private static class Subtitle {
-        final Uri uri;
-        String name;
-        String filename;
-
-        Subtitle(Uri uri) {
-            if (uri.getScheme() == null)
-                throw new IllegalStateException("Scheme is missed for subtitle URI " + uri);
-
-            this.uri = uri;
-        }
-
-        Subtitle(String uriStr) {
-            this(Uri.parse(uriStr));
-        }
-    }
-
-
     public static boolean run(Activity activity, String url, String title, String subtitle, HashMap<String, String> headers) {
         KodiPackageInfo packageInfo = getPackageInfo();
         if (packageInfo == null)
@@ -84,10 +53,10 @@ public class Kodi {
                 int idx = 0;
                 for (String hk : headers.keySet()) {
                     url += hk + "=" + URLEncoder.encode(headers.get(hk), "UTF-8");
-                    if (idx < headers.keySet().size() -1) {
+                    if (idx < headers.keySet().size() - 1) {
                         url += "&";
                     }
-                    idx ++;
+                    idx++;
                 }
             }
             intent.setData(Uri.parse(url));
@@ -102,6 +71,33 @@ public class Kodi {
         } catch (Exception ex) {
             Log.e(TAG, "Can't run Kodi", ex);
             return false;
+        }
+    }
+
+    private static class KodiPackageInfo {
+        final String packageName;
+        final String activityName;
+
+        KodiPackageInfo(String packageName, String activityName) {
+            this.packageName = packageName;
+            this.activityName = activityName;
+        }
+    }
+
+    private static class Subtitle {
+        final Uri uri;
+        String name;
+        String filename;
+
+        Subtitle(Uri uri) {
+            if (uri.getScheme() == null)
+                throw new IllegalStateException("Scheme is missed for subtitle URI " + uri);
+
+            this.uri = uri;
+        }
+
+        Subtitle(String uriStr) {
+            this(Uri.parse(uriStr));
         }
     }
 }

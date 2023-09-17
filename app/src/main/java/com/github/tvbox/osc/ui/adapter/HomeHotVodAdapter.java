@@ -45,7 +45,7 @@ public class HomeHotVodAdapter extends BaseQuickAdapter<Movie.Video, BaseViewHol
         if (Hawk.get(HawkConfig.HOME_REC, 0) == 2) {
             tvYear.setVisibility(View.VISIBLE);
             SourceBean source = ApiConfig.get().getSource(item.sourceKey);
-            tvYear.setText(source!=null?source.getName():"");
+            tvYear.setText(source != null ? source.getName() : "");
         } else {
             tvYear.setVisibility(View.GONE);
         }

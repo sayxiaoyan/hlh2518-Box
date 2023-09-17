@@ -129,7 +129,7 @@ public class OkHttpUtil {
     public static void cancel(Object tag) {
         cancel(OkGoHelper.getDefaultClient(), tag);
     }
-    
+
     public static void cancelAll() {
         cancelAll(OkGoHelper.getDefaultClient());
     }

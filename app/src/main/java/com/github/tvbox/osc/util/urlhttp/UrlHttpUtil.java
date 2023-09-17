@@ -9,13 +9,12 @@ import java.util.Map;
  */
 
 public class UrlHttpUtil {
-    private static final String METHOD_GET = "GET";
-    private static final String METHOD_POST = "POST";
-
     public static final String FILE_TYPE_FILE = "file/*";
     public static final String FILE_TYPE_IMAGE = "image/*";
     public static final String FILE_TYPE_AUDIO = "audio/*";
     public static final String FILE_TYPE_VIDEO = "video/*";
+    private static final String METHOD_GET = "GET";
+    private static final String METHOD_POST = "POST";
 
     /**
      * get请求

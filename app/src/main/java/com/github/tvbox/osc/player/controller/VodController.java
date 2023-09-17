@@ -66,6 +66,98 @@ import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
 public class VodController extends BaseController {
+    // pause container
+    public static FrameLayout mProgressTop;
+    public SimpleSubtitleView mSubtitleView;
+    // top container
+    LinearLayout mTopHide;
+    LinearLayout mTopRoot;
+    TextView mPlayTitle;
+    TextView mPlayerResolution;
+    LinearLayout mSpeedHidell;
+    LinearLayout mSpeedll;
+    ImageView mPauseIcon;
+    LinearLayout mTapSeek;
+
+    // progress container
+    LinearLayout mProgressRoot;
+    ImageView mProgressIcon;
+    TextView mProgressText;
+    ProgressBar mDialogVideoProgressBar;
+    ProgressBar mDialogVideoPauseBar;
+
+    // center BACK button
+    LinearLayout mBack;
+
+    // bottom container
+    LinearLayout mBottomRoot;
+    private final Runnable mUpdateLayout = new Runnable() {
+        @Override
+        public void run() {
+            mBottomRoot.requestLayout();
+        }
+    };
+    TextView mTime;
+    // takagen99 : To get system time
+    private final Runnable mTimeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Date date = new Date();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            mTime.setText(timeFormat.format(date));
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+    TextView mTimeEnd;
+    TextView mCurrentTime;
+    SeekBar mSeekBar;
+    TextView mTotalTime;
+    boolean mIsDragging;
+    // 1. media control
+    LinearLayout mPreBtn;
+    LinearLayout mPauseBtn;
+    ImageView mPauseImg;
+    LinearLayout mNextBtn;
+    float mSpeed;
+    LinearLayout mPlayerRetry;
+    // Fast Forward Buttons
+    LinearLayout mFFwdBtn;
+    ImageView mFFwdImg;
+    TextView mFFwdTxt;
+    // Scale Buttons
+    LinearLayout mPlayerScaleBtn;
+    ImageView mPlayerScaleImg;
+    TextView mPlayerScaleTxt;
+    // Player Buttons
+    LinearLayout mPlayerBtn;
+    ImageView mPlayerImg;
+    TextView mPlayerTxt;
+    TextView mPlayerIJKBtn;
+    LinearLayout mSubtitleBtn;
+    LinearLayout mAudioTrackBtn;
+    TextView mPlayerTimeStartBtn;
+    TextView mPlayerTimeSkipBtn;
+    TextView mPlayerTimeStepBtn;
+    // parse container
+    LinearLayout mParseRoot;
+    TvRecyclerView mGridView;
+    private JSONObject mPlayerConfig = null;
+    private boolean mxPlayerExist = false;
+    private boolean reexPlayerExist = false;
+    private boolean KodiExist = false;
+    private VodControlListener listener;
+    private boolean skipEnd = true;
+    private boolean simSlideStart = false;
+    private int simSeekPosition = 0;
+    private long simSlideOffset = 0;
+    private int tapDirection;
+    // takagen99 : Check Pause
+    private boolean isPaused = false;
+    private boolean isKeyUp = false;
+    // takagen99 : Add long press to fast forward x3 speed
+    private boolean fromLongPress;
+    private float currentSpeed;
+
     public VodController(@NonNull @NotNull Context context) {
         super(context);
         mHandlerCallback = new HandlerCallback() {
@@ -224,90 +316,41 @@ public class VodController extends BaseController {
         };
     }
 
-    // top container
-    LinearLayout mTopHide;
-    LinearLayout mTopRoot;
-    TextView mPlayTitle;
-    TextView mPlayerResolution;
-    LinearLayout mSpeedHidell;
-    LinearLayout mSpeedll;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void circularReveal(View v, int direction) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int radius = Math.max(v.getWidth(), v.getHeight()) / 2;
+            int width = 0;
+            if (direction == 1) {
+                width = v.getWidth();
+            }
+            TransitionManager.beginDelayedTransition((ViewGroup) v);
+            Animator anim = ViewAnimationUtils.createCircularReveal(v, width, v.getHeight() / 2, 0, radius);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    v.setVisibility(VISIBLE);
+                }
 
-    // pause container
-    public static FrameLayout mProgressTop;
-    ImageView mPauseIcon;
-    LinearLayout mTapSeek;
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    v.setVisibility(INVISIBLE);
+                }
 
-    // progress container
-    LinearLayout mProgressRoot;
-    ImageView mProgressIcon;
-    TextView mProgressText;
-    ProgressBar mDialogVideoProgressBar;
-    ProgressBar mDialogVideoPauseBar;
+                @Override
+                public void onAnimationCancel(Animator animation) {
 
-    // center BACK button
-    LinearLayout mBack;
+                }
 
-    // bottom container
-    LinearLayout mBottomRoot;
-    TextView mTime;
-    TextView mTimeEnd;
-    TextView mCurrentTime;
-    SeekBar mSeekBar;
-    TextView mTotalTime;
-    boolean mIsDragging;
+                @Override
+                public void onAnimationRepeat(Animator animation) {
 
-    // 1. media control
-    LinearLayout mPreBtn;
-    LinearLayout mPauseBtn;
-    ImageView mPauseImg;
-    LinearLayout mNextBtn;
-    float mSpeed;
-    LinearLayout mPlayerRetry;
-
-    // Fast Forward Buttons
-    LinearLayout mFFwdBtn;
-    ImageView mFFwdImg;
-    TextView mFFwdTxt;
-
-    // Scale Buttons
-    LinearLayout mPlayerScaleBtn;
-    ImageView mPlayerScaleImg;
-    TextView mPlayerScaleTxt;
-
-    // Player Buttons
-    LinearLayout mPlayerBtn;
-    ImageView mPlayerImg;
-    TextView mPlayerTxt;
-    TextView mPlayerIJKBtn;
-    LinearLayout mSubtitleBtn;
-
-    public SimpleSubtitleView mSubtitleView;
-    LinearLayout mAudioTrackBtn;
-    TextView mPlayerTimeStartBtn;
-    TextView mPlayerTimeSkipBtn;
-    TextView mPlayerTimeStepBtn;
-
-    // parse container
-    LinearLayout mParseRoot;
-    TvRecyclerView mGridView;
-
-    // takagen99 : To get system time
-    private final Runnable mTimeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Date date = new Date();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-            mTime.setText(timeFormat.format(date));
-            mHandler.postDelayed(this, 1000);
+                }
+            });
+            anim.setDuration(600);
+            anim.start();
         }
-    };
-
-    private final Runnable mUpdateLayout = new Runnable() {
-        @Override
-        public void run() {
-            mBottomRoot.requestLayout();
-        }
-    };
+    }
 
     @Override
     protected void onDetachedFromWindow() {
@@ -862,12 +905,6 @@ public class VodController extends BaseController {
         mParseRoot.setVisibility(userJxList ? VISIBLE : GONE);
     }
 
-    private JSONObject mPlayerConfig = null;
-
-    private boolean mxPlayerExist = false;
-    private boolean reexPlayerExist = false;
-    private boolean KodiExist = false;
-
     public void setPlayerConfig(JSONObject playerCfg) {
         this.mPlayerConfig = playerCfg;
         updatePlayerCfgView();
@@ -912,36 +949,25 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessageDelayed(1004, 100);
     }
 
-    public interface VodControlListener {
-        void playNext(boolean rmProgress);
-
-        void playPre();
-
-        void prepared();
-
-        void changeParse(ParseBean pb);
-
-        void updatePlayerCfg();
-
-        void replay(boolean replay);
-
-        void errReplay();
-
-        void selectSubtitle();
-
-        void selectAudioTrack();
-
-        void openVideo();
-
-    }
-
     public void setListener(VodControlListener listener) {
         this.listener = listener;
     }
 
-    private VodControlListener listener;
-
-    private boolean skipEnd = true;
+    // takagen99: (Optional) Hide Bottom Control if trigger Brightness / Volume Slider
+//    @Override
+//    protected void slideToChangeBrightness(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeBrightness(deltaY);
+//    }
+//    @Override
+//    protected void slideToChangeVolume(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeVolume(deltaY);
+//    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -990,11 +1016,6 @@ public class VodController extends BaseController {
         }
     }
 
-    private boolean simSlideStart = false;
-    private int simSeekPosition = 0;
-    private long simSlideOffset = 0;
-    private int tapDirection;
-
     public void tvSlideStop() {
         if (!simSlideStart)
             return;
@@ -1041,23 +1062,12 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessage(1000);
         mHandler.removeMessages(1001);
         mHandler.sendEmptyMessageDelayed(1001, 1000);
-    }
-
-    // takagen99: (Optional) Hide Bottom Control if trigger Brightness / Volume Slider
-//    @Override
-//    protected void slideToChangeBrightness(float deltaY) {
-//        if (isBottomVisible()) {
-//            hideBottom();
-//        }
-//        super.slideToChangeBrightness(deltaY);
-//    }
-//    @Override
-//    protected void slideToChangeVolume(float deltaY) {
-//        if (isBottomVisible()) {
-//            hideBottom();
-//        }
-//        super.slideToChangeVolume(deltaY);
-//    }
+    }    Runnable mHideBottomRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideBottom();
+        }
+    };
 
     @Override
     protected void onPlayStateChanged(int playState) {
@@ -1104,13 +1114,6 @@ public class VodController extends BaseController {
         mHandler.post(mTimeRunnable);
         mHandler.postDelayed(mHideBottomRunnable, 8000);
     }
-
-    Runnable mHideBottomRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideBottom();
-        }
-    };
 
     public void hideBottom() {
         mHandler.removeMessages(1002);
@@ -1198,10 +1201,6 @@ public class VodController extends BaseController {
             e.printStackTrace();
         }
     }
-
-    // takagen99 : Check Pause
-    private boolean isPaused = false;
-    private boolean isKeyUp = false;
 
     @Override
     public boolean onKeyEvent(KeyEvent event) {
@@ -1306,10 +1305,6 @@ public class VodController extends BaseController {
         return true;
     }
 
-    // takagen99 : Add long press to fast forward x3 speed
-    private boolean fromLongPress;
-    private float currentSpeed;
-
     @Override
     public void onLongPress(MotionEvent e) {
         if (!isPaused) {
@@ -1381,42 +1376,6 @@ public class VodController extends BaseController {
         return true;
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void circularReveal(View v, int direction) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int radius = Math.max(v.getWidth(), v.getHeight()) / 2;
-            int width = 0;
-            if (direction == 1) {
-                width = v.getWidth();
-            }
-            TransitionManager.beginDelayedTransition((ViewGroup) v);
-            Animator anim = ViewAnimationUtils.createCircularReveal(v, width, v.getHeight() / 2, 0, radius);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    v.setVisibility(VISIBLE);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    v.setVisibility(INVISIBLE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-            anim.setDuration(600);
-            anim.start();
-        }
-    }
-
     @Override
     public boolean onBackPressed() {
         if (super.onBackPressed()) {
@@ -1432,4 +1391,29 @@ public class VodController extends BaseController {
         }
         return false;
     }
+
+    public interface VodControlListener {
+        void playNext(boolean rmProgress);
+
+        void playPre();
+
+        void prepared();
+
+        void changeParse(ParseBean pb);
+
+        void updatePlayerCfg();
+
+        void replay(boolean replay);
+
+        void errReplay();
+
+        void selectSubtitle();
+
+        void selectAudioTrack();
+
+        void openVideo();
+
+    }
+
+
 }

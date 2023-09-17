@@ -5,17 +5,12 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 /**
- *
  * @author acer
  * @date 2018/7/24
  */
 
 public class FixedSpeedScroller extends Scroller {
     private int mDuration = 0;
-
-    public void setmDuration(int mDuration) {
-        this.mDuration = mDuration;
-    }
 
     public FixedSpeedScroller(Context context) {
         super(context);
@@ -29,6 +24,9 @@ public class FixedSpeedScroller extends Scroller {
         super(context, interpolator, flywheel);
     }
 
+    public void setmDuration(int mDuration) {
+        this.mDuration = mDuration;
+    }
 
     @Override
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {

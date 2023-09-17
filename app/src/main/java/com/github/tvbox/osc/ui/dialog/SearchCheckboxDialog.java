@@ -25,13 +25,12 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
 
 public class SearchCheckboxDialog extends BaseDialog {
 
-    private TvRecyclerView mGridView;
-    private CheckboxSearchAdapter checkboxSearchAdapter;
     private final List<SourceBean> mSourceList;
+    public HashMap<String, String> mCheckSourcees;
     LinearLayout checkAll;
     LinearLayout clearAll;
-
-    public HashMap<String, String> mCheckSourcees;
+    private TvRecyclerView mGridView;
+    private CheckboxSearchAdapter checkboxSearchAdapter;
 
     public SearchCheckboxDialog(@NonNull @NotNull Context context, List<SourceBean> sourceList, HashMap<String, String> checkedSources) {
         super(context);

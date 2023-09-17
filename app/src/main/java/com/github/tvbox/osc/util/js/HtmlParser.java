@@ -36,12 +36,6 @@ public class HtmlParser {
         }
     }
 
-    public static class Painfo {
-        public String nparse_rule;
-        public int nparse_index;
-        public List<String> excludes;
-    }
-
     private static Painfo getParseInfo(String nparse) {
         /*
          根据传入的单规则获取 parse规则，索引位置,排除列表  -- 可以用于剔除元素,支持多个，按标签剔除，按id剔除等操作
@@ -265,5 +259,11 @@ public class HtmlParser {
             }
         }
         return ret;
+    }
+
+    public static class Painfo {
+        public String nparse_rule;
+        public int nparse_index;
+        public List<String> excludes;
     }
 }

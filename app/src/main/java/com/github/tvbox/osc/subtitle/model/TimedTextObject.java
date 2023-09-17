@@ -119,6 +119,7 @@ public class TimedTextObject {
 
     /**
      * Method to generate the .SCC file
+     *
      * @return
      */
     public String[] toSCC() {
@@ -127,6 +128,7 @@ public class TimedTextObject {
 
     /**
      * Method to generate the .XML file
+     *
      * @return
      */
     public String[] toTTML() {
@@ -142,7 +144,6 @@ public class TimedTextObject {
      * This method simply checks the style list and eliminate any style not referenced by any caption
      * This might come useful when default styles get created and cover too much.
      * It require a unique iteration through all captions.
-     *
      */
     public void cleanUnusedStyles() {
         //here all used styles will be stored

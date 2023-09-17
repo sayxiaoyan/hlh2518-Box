@@ -81,7 +81,13 @@ public class HomeActivity extends BaseActivity {
 
     // takagen99: Added to allow read string
     private static Resources res;
-
+    private final List<BaseLazyFragment> fragments = new ArrayList<>();
+    private final Handler mHandler = new Handler();
+    public View sortFocusView = null;
+    boolean useCacheConfig = false;
+    // takagen99 : Switch to show / hide source title
+    boolean HomeShow = Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false);
+    byte topHide = 0;
     private View currentView;
     private LinearLayout topLayout;
     private LinearLayout contentLayout;
@@ -92,37 +98,52 @@ public class HomeActivity extends BaseActivity {
     private ImageView tvDraw;
     private ImageView tvMenu;
     private TextView tvDate;
-    private TvRecyclerView mGridView;
-    private NoScrollViewPager mViewPager;
-    private SourceViewModel sourceViewModel;
-    private SortAdapter sortAdapter;
-    private HomePageAdapter pageAdapter;
-    private final List<BaseLazyFragment> fragments = new ArrayList<>();
-    private boolean isDownOrUp = false;
-    private boolean sortChange = false;
-    private int currentSelected = 0;
-    private int sortFocused = 0;
-    public View sortFocusView = null;
-    private final Handler mHandler = new Handler();
-    private long mExitTime = 0;
     private final Runnable mRunnable = new Runnable() {
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
         @Override
         public void run() {
             Date date = new Date();
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat timeFormat = new SimpleDateFormat(getString(R.string.hm_date1) + ", " + getString(R.string.hm_date2));
+            SimpleDateFormat timeFormat = new SimpleDateFormat(getString(R.string.hm_date1) + getString(R.string.hm_date2));
             tvDate.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
         }
     };
+    private TvRecyclerView mGridView;
+    private NoScrollViewPager mViewPager;
+    private SourceViewModel sourceViewModel;
+    private SortAdapter sortAdapter;
+    private HomePageAdapter pageAdapter;
+    private boolean isDownOrUp = false;
+    private boolean sortChange = false;
+    private int currentSelected = 0;
+    private int sortFocused = 0;
+    private final Runnable mDataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (sortChange) {
+                sortChange = false;
+                if (sortFocused != currentSelected) {
+                    currentSelected = sortFocused;
+                    mViewPager.setCurrentItem(sortFocused, false);
+                    changeTop(sortFocused != 0);
+                }
+            }
+        }
+    };
+    private long mExitTime = 0;
+    private boolean dataInitOk = false;
+    private boolean jarInitOk = false;
+
+    // takagen99: Added to allow read string
+    public static Resources getRes() {
+        return res;
+    }
 
     @Override
     protected int getLayoutResID() {
         return R.layout.activity_home;
     }
-
-    boolean useCacheConfig = false;
 
     @Override
     protected void init() {
@@ -140,11 +161,6 @@ public class HomeActivity extends BaseActivity {
             useCacheConfig = bundle.getBoolean("useCache", false);
         }
         initData();
-    }
-
-    // takagen99: Added to allow read string
-    public static Resources getRes() {
-        return res;
     }
 
     private void initView() {
@@ -334,20 +350,15 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    private boolean dataInitOk = false;
-    private boolean jarInitOk = false;
-
-    // takagen99 : Switch to show / hide source title
-    boolean HomeShow = Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false);
-
     // takagen99 : Check if network is available
     boolean isNetworkAvailable() {
         ConnectivityManager cm
                 = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+        @SuppressLint("MissingPermission") NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
+    @SuppressLint("MissingPermission")
     private void initData() {
 
         // takagen99 : Switch to show / hide source title
@@ -654,20 +665,6 @@ public class HomeActivity extends BaseActivity {
         imgView.setColorFilter(activated ? this.getThemeColor() : Color.WHITE);
     }
 
-    private final Runnable mDataRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (sortChange) {
-                sortChange = false;
-                if (sortFocused != currentSelected) {
-                    currentSelected = sortFocused;
-                    mViewPager.setCurrentItem(sortFocused, false);
-                    changeTop(sortFocused != 0);
-                }
-            }
-        }
-    };
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (topHide < 0)
@@ -686,8 +683,6 @@ public class HomeActivity extends BaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
-    byte topHide = 0;
 
     private void changeTop(boolean hide) {
         ViewObj viewObj = new ViewObj(topLayout, (ViewGroup.MarginLayoutParams) topLayout.getLayoutParams());

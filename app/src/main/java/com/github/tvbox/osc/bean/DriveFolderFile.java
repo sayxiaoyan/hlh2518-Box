@@ -21,11 +21,11 @@ public class DriveFolderFile {
     public int version = 0;
     public boolean isFile;
     public String fileType;
-    private StorageDrive driveData;
     public Long lastModifiedDate;
     public boolean isSelected;
     public boolean isDelMode;
     public String fileUrl;
+    private StorageDrive driveData;
     private String[] accessingPath = new String[0];
     private List<DriveFolderFile> children;
     private JsonObject config;
@@ -33,15 +33,15 @@ public class DriveFolderFile {
     public DriveFolderFile(StorageDrive driveData) {
         this.driveData = driveData;
         this.name = driveData.name;
-        if(driveData.configJson != null && driveData.configJson.length() > 0)
+        if (driveData.configJson != null && driveData.configJson.length() > 0)
             this.config = JsonParser.parseString(driveData.configJson).getAsJsonObject();
     }
 
     public DriveFolderFile(DriveFolderFile parent, String name, int version, boolean isFile, String fileType, Long lastModifiedDate) {
-        if(parent != null) {
+        if (parent != null) {
             LinkedList<String> path = new LinkedList<>();
             DriveFolderFile currentParent = parent;
-            while(currentParent != null) {
+            while (currentParent != null) {
                 path.add(0, currentParent.name);
                 currentParent = currentParent.parentFolder;
             }
@@ -51,7 +51,7 @@ public class DriveFolderFile {
         this.name = name;
         this.version = version;
         this.isFile = isFile;
-        if(fileType != null)
+        if (fileType != null)
             this.fileType = fileType.toUpperCase(Locale.ROOT);
         this.lastModifiedDate = lastModifiedDate;
     }
@@ -97,7 +97,7 @@ public class DriveFolderFile {
     }
 
     public String getFormattedLastModified() {
-        if(this.lastModifiedDate != null) {
+        if (this.lastModifiedDate != null) {
             Date date = new Date(this.lastModifiedDate);
             Format fmt = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
             return fmt.format(date);
@@ -119,7 +119,8 @@ public class DriveFolderFile {
                 byte[] data = (config.get("username").getAsString() + ":" + config.get("password").getAsString()).getBytes("UTF-8");
                 return Base64.encodeToString(data, Base64.NO_WRAP);
             }
-        }catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
         return null;
     }
 }

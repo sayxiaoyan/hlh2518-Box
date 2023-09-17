@@ -1,6 +1,7 @@
 package com.github.tvbox.osc.viewmodel;
 
 import android.text.TextUtils;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -32,6 +33,8 @@ import okhttp3.Response;
 public class SubtitleViewModel extends ViewModel {
 
     public MutableLiveData<SubtitleData> searchResult;
+    Pattern regexShooterFileOnclick = Pattern.compile("onthefly\\(\"(\\d+)\",\"(\\d+)\",\"([\\s\\S]*)\"\\)");
+    private int pagesTotal = -1;
 
     public SubtitleViewModel() {
         searchResult = new MutableLiveData<>();
@@ -61,8 +64,6 @@ public class SubtitleViewModel extends ViewModel {
             searchResult.postValue(null);
         }
     }
-
-    private int pagesTotal = -1;
 
     private void searchResultFromAssrt(String title, int page) {
         try {
@@ -122,8 +123,6 @@ public class SubtitleViewModel extends ViewModel {
             e.printStackTrace();
         }
     }
-
-    Pattern regexShooterFileOnclick = Pattern.compile("onthefly\\(\"(\\d+)\",\"(\\d+)\",\"([\\s\\S]*)\"\\)");
 
     private void getSearchResultSubtitleUrlsFromAssrt(Subtitle subtitle) {
         try {

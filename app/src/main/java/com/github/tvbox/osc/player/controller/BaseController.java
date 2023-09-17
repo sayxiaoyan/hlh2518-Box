@@ -29,6 +29,8 @@ import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
 public abstract class BaseController extends BaseVideoController implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnTouchListener {
+    protected Handler mHandler;
+    protected HandlerCallback mHandlerCallback;
     private GestureDetector mGestureDetector;
     private AudioManager mAudioManager;
     private boolean mIsGestureEnabled = true;
@@ -43,18 +45,30 @@ public abstract class BaseController extends BaseVideoController implements Gest
     private boolean mEnableInNormal;
     private boolean mCanSlide;
     private int mCurPlayState;
-
-    protected Handler mHandler;
-
-    protected HandlerCallback mHandlerCallback;
-
-    protected interface HandlerCallback {
-        void callback(Message msg);
-    }
-
     private boolean mIsDoubleTapTogglePlayEnabled = true;
-
-
+    private TextView mSlideInfo;
+    private ProgressBar mLoading;
+    private ProgressBar mLoadingHide;
+    private ViewGroup mPauseRoot;
+    private TextView mPauseTime;
+    private TextView mSpeedTextTop;
+    private TextView mSpeedTextHide;
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            String format = String.format("%.2f", (float) mControlWrapper.getTcpSpeed() / 1024.0 / 1024.0);
+            mSpeedTextTop.setText(format);
+            mSpeedTextHide.setText(format);
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+    private LinearLayout mSpeedTop;
+    private LinearLayout mDialogVolume;
+    private LinearLayout mDialogBrightness;
+    private ProgressBar mDialogVolumeProgressBar;
+    private ProgressBar mDialogBrightnessProgressBar;
+    private ProgressBar mDialogVideoProgressBar;
+    private ProgressBar mDialogVideoPauseBar;
     public BaseController(@NonNull Context context) {
         super(context);
         mHandler = new Handler(new Handler.Callback() {
@@ -98,40 +112,12 @@ public abstract class BaseController extends BaseVideoController implements Gest
         });
         mHandler.post(mRunnable);
     }
-
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
-
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-    private TextView mSlideInfo;
-    private ProgressBar mLoading;
-    private ProgressBar mLoadingHide;
-    private ViewGroup mPauseRoot;
-    private TextView mPauseTime;
-    private TextView mSpeedTextTop;
-    private TextView mSpeedTextHide;
-    private LinearLayout mSpeedTop;
-
-    private LinearLayout mDialogVolume;
-    private LinearLayout mDialogBrightness;
-    private ProgressBar mDialogVolumeProgressBar;
-    private ProgressBar mDialogBrightnessProgressBar;
-    private ProgressBar mDialogVideoProgressBar;
-    private ProgressBar mDialogVideoPauseBar;
-
-    private final Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            String format = String.format("%.2f", (float) mControlWrapper.getTcpSpeed() / 1024.0 / 1024.0);
-            mSpeedTextTop.setText(format);
-            mSpeedTextHide.setText(format);
-            mHandler.postDelayed(this, 1000);
-        }
-    };
 
     @Override
     protected void initView() {
@@ -494,7 +480,6 @@ public abstract class BaseController extends BaseVideoController implements Gest
         return false;
     }
 
-
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
@@ -502,5 +487,9 @@ public abstract class BaseController extends BaseVideoController implements Gest
 
     public boolean onKeyEvent(KeyEvent event) {
         return false;
+    }
+
+    protected interface HandlerCallback {
+        void callback(Message msg);
     }
 }

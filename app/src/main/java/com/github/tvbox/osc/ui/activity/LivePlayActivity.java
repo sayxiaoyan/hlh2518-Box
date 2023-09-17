@@ -90,12 +90,54 @@ import xyz.doikki.videoplayer.util.PlayerUtils;
  */
 public class LivePlayActivity extends BaseActivity {
 
+    private static final Hashtable hsEpg = new Hashtable();
+    public static int currentChannelGroupIndex = 0;
+    private static LiveChannelItem channel_Name = null;
+    private static String shiyi_time;//时移时间
+    private final List<LiveChannelGroup> liveChannelGroupList = new ArrayList<>();
+    private final List<LiveSettingGroup> liveSettingGroupList = new ArrayList<>();
+    private final LivePlayerManager livePlayerManager = new LivePlayerManager();
+    private final ArrayList<Integer> channelGroupPasswordConfirmed = new ArrayList<>();
+    private final Handler mHandler = new Handler();
+    // Misc Variables
+    public String epgStringAddress = "";
+    SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+    // Seek Bar
+    boolean mIsDragging;
+    LinearLayout llSeekBar;
+    TextView mCurrentTime;
+    SeekBar mSeekBar;
+    TextView mTotalTime;
+    boolean isVOD = false;
+    // center BACK button
+    LinearLayout mBack;
+    boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
     // Main View
     private VideoView mVideoView;
     private LiveController controller;
-
     // Left Channel View
     private LinearLayout tvLeftChannelListLayout;
+    private final Runnable mHideChannelListRun = new Runnable() {
+        @Override
+        public void run() {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvLeftChannelListLayout.getLayoutParams();
+            if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
+                tvLeftChannelListLayout.animate()
+                        .translationX(-tvLeftChannelListLayout.getWidth() / 2)
+                        .alpha(0.0f)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
+                                tvLeftChannelListLayout.clearAnimation();
+                            }
+                        });
+            }
+        }
+    };
     private TvRecyclerView mGroupGridView;
     private LinearLayout mDivLeft;
     private TvRecyclerView mChannelGridView;
@@ -106,27 +148,135 @@ public class LivePlayActivity extends BaseActivity {
     // Left Channel View - Variables
     private LiveChannelGroupAdapter liveChannelGroupAdapter;
     private LiveChannelItemAdapter liveChannelItemAdapter;
-    private final List<LiveChannelGroup> liveChannelGroupList = new ArrayList<>();
-    private final List<LiveSettingGroup> liveSettingGroupList = new ArrayList<>();
-    public static int currentChannelGroupIndex = 0;
     private int currentLiveChannelIndex = -1;
     private LiveChannelItem currentLiveChannelItem = null;
-
     // Right Channel View
     private LinearLayout tvRightSettingLayout;
+    private final Runnable mUpdateLayout = new Runnable() {
+        @Override
+        public void run() {
+            tvLeftChannelListLayout.requestLayout();
+            tvRightSettingLayout.requestLayout();
+        }
+    };
+    private final Runnable mFocusCurrentChannelAndShowChannelList = new Runnable() {
+        @Override
+        public void run() {
+            if (mGroupGridView.isScrolling() || mChannelGridView.isScrolling() || mGroupGridView.isComputingLayout() || mChannelGridView.isComputingLayout()) {
+                mHandler.postDelayed(this, 100);
+            } else {
+                liveChannelGroupAdapter.setSelectedGroupIndex(currentChannelGroupIndex);
+                liveChannelItemAdapter.setSelectedChannelIndex(currentLiveChannelIndex);
+                RecyclerView.ViewHolder holder = mChannelGridView.findViewHolderForAdapterPosition(currentLiveChannelIndex);
+                if (holder != null)
+                    holder.itemView.requestFocus();
+                tvLeftChannelListLayout.setVisibility(View.VISIBLE);
+                tvLeftChannelListLayout.setAlpha(0.0f);
+                tvLeftChannelListLayout.setTranslationX(-tvLeftChannelListLayout.getWidth() / 2);
+                tvLeftChannelListLayout.animate()
+                        .translationX(0)
+                        .alpha(1.0f)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(null);
+                mHandler.removeCallbacks(mHideChannelListRun);
+                mHandler.postDelayed(mHideChannelListRun, 6000);
+                mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
+            }
+        }
+    };
     private TvRecyclerView mSettingGroupView;
     private TvRecyclerView mSettingItemView;
     // Right Channel View - Variables
     private LiveSettingGroupAdapter liveSettingGroupAdapter;
+    private final Runnable mHideSettingLayoutRun = new Runnable() {
+        @Override
+        public void run() {
+            if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
+                tvRightSettingLayout.animate()
+                        .translationX(tvRightSettingLayout.getWidth() / 2)
+                        .alpha(0.0f)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tvRightSettingLayout.setVisibility(View.INVISIBLE);
+                                tvRightSettingLayout.clearAnimation();
+                                liveSettingGroupAdapter.setSelectedGroupIndex(-1);
+                            }
+                        });
+            }
+        }
+    };
+    private final Runnable mFocusAndShowSettingGroup = new Runnable() {
+        @Override
+        public void run() {
+            if (mSettingGroupView.isScrolling() || mSettingItemView.isScrolling() || mSettingGroupView.isComputingLayout() || mSettingItemView.isComputingLayout()) {
+                mHandler.postDelayed(this, 100);
+            } else {
+                RecyclerView.ViewHolder holder = mSettingGroupView.findViewHolderForAdapterPosition(0);
+                if (holder != null)
+                    holder.itemView.requestFocus();
+                tvRightSettingLayout.setVisibility(View.VISIBLE);
+                tvRightSettingLayout.setAlpha(0.0f);
+                tvRightSettingLayout.setTranslationX(tvRightSettingLayout.getWidth() / 2);
+                tvRightSettingLayout.animate()
+                        .translationX(0)
+                        .alpha(1.0f)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(null);
+                mHandler.removeCallbacks(mHideSettingLayoutRun);
+                mHandler.postDelayed(mHideSettingLayoutRun, 6000);
+                mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
+            }
+        }
+    };
     private LiveSettingItemAdapter liveSettingItemAdapter;
-    private final LivePlayerManager livePlayerManager = new LivePlayerManager();
-    private final ArrayList<Integer> channelGroupPasswordConfirmed = new ArrayList<>();
     private int currentLiveChangeSourceTimes = 0;
-
     // Bottom Channel View
     private LinearLayout tvBottomLayout;
+    private final Runnable mHideChannelInfoRun = new Runnable() {
+        @Override
+        public void run() {
+            mBack.setVisibility(View.INVISIBLE);
+            if (tvBottomLayout.getVisibility() == View.VISIBLE) {
+                tvBottomLayout.animate()
+                        .alpha(0.0f)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .translationY(tvBottomLayout.getHeight() / 2)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tvBottomLayout.setVisibility(View.INVISIBLE);
+                                tvBottomLayout.clearAnimation();
+                            }
+                        });
+            }
+        }
+    };
     private ImageView tv_logo;
     private TextView tv_sys_time;
+    private final Runnable tv_sys_timeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Date date = new Date();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            tv_sys_time.setText(timeFormat.format(date));
+            mHandler.postDelayed(this, 1000);
+
+            // takagen99 : Update SeekBar
+            if (mVideoView != null & !mIsDragging) {
+                int currentPosition = (int) mVideoView.getCurrentPosition();
+                mCurrentTime.setText(stringForTimeVod(currentPosition));
+                mSeekBar.setProgress(currentPosition);
+            }
+        }
+    };
     private TextView tv_size;
     private TextView tv_source;
     // Bottom Channel View - Line 1 / 2 / 3
@@ -139,29 +289,44 @@ public class LivePlayActivity extends BaseActivity {
     // Bottom Channel View - Variables
     private LiveEpgDateAdapter epgDateAdapter;
     private LiveEpgAdapter epgListAdapter;
-
-    // Misc Variables
-    public String epgStringAddress = "";
-    SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private final Handler mHandler = new Handler();
-    private static LiveChannelItem channel_Name = null;
-    private static final Hashtable hsEpg = new Hashtable();
     private TextView tvTime;
+    private final Runnable mUpdateTimeRun = new Runnable() {
+        @Override
+        public void run() {
+            Date day = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+            tvTime.setText(df.format(day));
+            mHandler.postDelayed(this, 1000);
+        }
+    };
     private TextView tvNetSpeed;
-
-    // Seek Bar
-    boolean mIsDragging;
-    LinearLayout llSeekBar;
-    TextView mCurrentTime;
-    SeekBar mSeekBar;
-    TextView mTotalTime;
-    boolean isVOD = false;
-
-    // center BACK button
-    LinearLayout mBack;
-
+    private final Runnable mUpdateNetSpeedRun = new Runnable() {
+        @Override
+        public void run() {
+            if (mVideoView == null) return;
+            tvNetSpeed.setText(String.format("%.2fMB/s", (float) mVideoView.getTcpSpeed() / 1024.0 / 1024.0));
+            mHandler.postDelayed(this, 1000);
+        }
+    };
     private boolean isSHIYI = false;
-    private static String shiyi_time;//时移时间
+    private long mExitTime = 0;
+    // takagen99 : Use onStopCalled to track close activity
+    private boolean onStopCalled;
+    // 获取EPG并存储 // 百川epg
+    private List<Epginfo> epgdata = new ArrayList<>();
+    private final Runnable mConnectTimeoutChangeSourceRun = new Runnable() {
+        @Override
+        public void run() {
+            currentLiveChangeSourceTimes++;
+            if (currentLiveChannelItem.getSourceNum() == currentLiveChangeSourceTimes) {
+                currentLiveChangeSourceTimes = 0;
+                Integer[] groupChannelIndex = getNextChannel(Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false) ? -1 : 1);
+                playChannel(groupChannelIndex[0], groupChannelIndex[1], false);
+            } else {
+                playNextSource();
+            }
+        }
+    };
 
     @Override
     protected int getLayoutResID() {
@@ -298,8 +463,6 @@ public class LivePlayActivity extends BaseActivity {
         });
     }
 
-    boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
-
     // takagen99 : Enter PIP if supported
     @Override
     public void onUserLeaveHint() {
@@ -331,8 +494,6 @@ public class LivePlayActivity extends BaseActivity {
             exit();
         }
     }
-
-    private long mExitTime = 0;
 
     private void exit() {
         if (System.currentTimeMillis() - mExitTime < 2000) {
@@ -390,9 +551,6 @@ public class LivePlayActivity extends BaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
-    // takagen99 : Use onStopCalled to track close activity
-    private boolean onStopCalled;
 
     @Override
     protected void onResume() {
@@ -496,63 +654,6 @@ public class LivePlayActivity extends BaseActivity {
         showChannelList();
     }
 
-    private final Runnable mFocusCurrentChannelAndShowChannelList = new Runnable() {
-        @Override
-        public void run() {
-            if (mGroupGridView.isScrolling() || mChannelGridView.isScrolling() || mGroupGridView.isComputingLayout() || mChannelGridView.isComputingLayout()) {
-                mHandler.postDelayed(this, 100);
-            } else {
-                liveChannelGroupAdapter.setSelectedGroupIndex(currentChannelGroupIndex);
-                liveChannelItemAdapter.setSelectedChannelIndex(currentLiveChannelIndex);
-                RecyclerView.ViewHolder holder = mChannelGridView.findViewHolderForAdapterPosition(currentLiveChannelIndex);
-                if (holder != null)
-                    holder.itemView.requestFocus();
-                tvLeftChannelListLayout.setVisibility(View.VISIBLE);
-                tvLeftChannelListLayout.setAlpha(0.0f);
-                tvLeftChannelListLayout.setTranslationX(-tvLeftChannelListLayout.getWidth() / 2);
-                tvLeftChannelListLayout.animate()
-                        .translationX(0)
-                        .alpha(1.0f)
-                        .setDuration(250)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .setListener(null);
-                mHandler.removeCallbacks(mHideChannelListRun);
-                mHandler.postDelayed(mHideChannelListRun, 6000);
-                mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
-            }
-        }
-    };
-
-    private final Runnable mUpdateLayout = new Runnable() {
-        @Override
-        public void run() {
-            tvLeftChannelListLayout.requestLayout();
-            tvRightSettingLayout.requestLayout();
-        }
-    };
-
-    private final Runnable mHideChannelListRun = new Runnable() {
-        @Override
-        public void run() {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvLeftChannelListLayout.getLayoutParams();
-            if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
-                tvLeftChannelListLayout.animate()
-                        .translationX(-tvLeftChannelListLayout.getWidth() / 2)
-                        .alpha(0.0f)
-                        .setDuration(250)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
-                                tvLeftChannelListLayout.clearAnimation();
-                            }
-                        });
-            }
-        }
-    };
-
     private void showChannelInfo() {
         // takagen99: Check if Touch Screen, show back button
         if (supportsTouch()) {
@@ -574,28 +675,6 @@ public class LivePlayActivity extends BaseActivity {
         mHandler.postDelayed(mHideChannelInfoRun, 6000);
         mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
     }
-
-    private final Runnable mHideChannelInfoRun = new Runnable() {
-        @Override
-        public void run() {
-            mBack.setVisibility(View.INVISIBLE);
-            if (tvBottomLayout.getVisibility() == View.VISIBLE) {
-                tvBottomLayout.animate()
-                        .alpha(0.0f)
-                        .setDuration(250)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .translationY(tvBottomLayout.getHeight() / 2)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                tvBottomLayout.setVisibility(View.INVISIBLE);
-                                tvBottomLayout.clearAnimation();
-                            }
-                        });
-            }
-        }
-    };
 
     private void toggleChannelInfo() {
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
@@ -653,23 +732,6 @@ public class LivePlayActivity extends BaseActivity {
         }
     }
 
-    private final Runnable tv_sys_timeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Date date = new Date();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-            tv_sys_time.setText(timeFormat.format(date));
-            mHandler.postDelayed(this, 1000);
-
-            // takagen99 : Update SeekBar
-            if (mVideoView != null & !mIsDragging) {
-                int currentPosition = (int) mVideoView.getCurrentPosition();
-                mCurrentTime.setText(stringForTimeVod(currentPosition));
-                mSeekBar.setProgress(currentPosition);
-            }
-        }
-    };
-
     //显示底部EPG
     private void showBottomEpg() {
         if (isSHIYI)
@@ -713,9 +775,6 @@ public class LivePlayActivity extends BaseActivity {
             }
         }
     }
-
-    // 获取EPG并存储 // 百川epg
-    private List<Epginfo> epgdata = new ArrayList<>();
 
     // Get Channel Logo
     private void getTvLogo(String channelName, String logoUrl) {
@@ -768,6 +827,7 @@ public class LivePlayActivity extends BaseActivity {
                     hsEpg.put(savedEpgKey, arrayList);
                 showBottomEpg();
             }
+
             public void onFailure(int i, String str) {
                 showEpg(date, new ArrayList());
                 showBottomEpg();
@@ -865,53 +925,6 @@ public class LivePlayActivity extends BaseActivity {
         }
     }
 
-    private final Runnable mFocusAndShowSettingGroup = new Runnable() {
-        @Override
-        public void run() {
-            if (mSettingGroupView.isScrolling() || mSettingItemView.isScrolling() || mSettingGroupView.isComputingLayout() || mSettingItemView.isComputingLayout()) {
-                mHandler.postDelayed(this, 100);
-            } else {
-                RecyclerView.ViewHolder holder = mSettingGroupView.findViewHolderForAdapterPosition(0);
-                if (holder != null)
-                    holder.itemView.requestFocus();
-                tvRightSettingLayout.setVisibility(View.VISIBLE);
-                tvRightSettingLayout.setAlpha(0.0f);
-                tvRightSettingLayout.setTranslationX(tvRightSettingLayout.getWidth() / 2);
-                tvRightSettingLayout.animate()
-                        .translationX(0)
-                        .alpha(1.0f)
-                        .setDuration(250)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .setListener(null);
-                mHandler.removeCallbacks(mHideSettingLayoutRun);
-                mHandler.postDelayed(mHideSettingLayoutRun, 6000);
-                mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
-            }
-        }
-    };
-
-    private final Runnable mHideSettingLayoutRun = new Runnable() {
-        @Override
-        public void run() {
-            if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
-                tvRightSettingLayout.animate()
-                        .translationX(tvRightSettingLayout.getWidth() / 2)
-                        .alpha(0.0f)
-                        .setDuration(250)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                tvRightSettingLayout.setVisibility(View.INVISIBLE);
-                                tvRightSettingLayout.clearAnimation();
-                                liveSettingGroupAdapter.setSelectedGroupIndex(-1);
-                            }
-                        });
-            }
-        }
-    };
-
     private void initVideoView() {
         controller = new LiveController(this);
         controller.setListener(new LiveController.LiveControlListener() {
@@ -931,6 +944,7 @@ public class LivePlayActivity extends BaseActivity {
                 }
                 return true;
             }
+
             @Override
             public void longPress() {
                 showSettingGroup();
@@ -994,20 +1008,6 @@ public class LivePlayActivity extends BaseActivity {
         mVideoView.setVideoController(controller);
         mVideoView.setProgressManager(null);
     }
-
-    private final Runnable mConnectTimeoutChangeSourceRun = new Runnable() {
-        @Override
-        public void run() {
-            currentLiveChangeSourceTimes++;
-            if (currentLiveChannelItem.getSourceNum() == currentLiveChangeSourceTimes) {
-                currentLiveChangeSourceTimes = 0;
-                Integer[] groupChannelIndex = getNextChannel(Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false) ? -1 : 1);
-                playChannel(groupChannelIndex[0], groupChannelIndex[1], false);
-            } else {
-                playNextSource();
-            }
-        }
-    };
 
     private void initEpgListView() {
         mEpgInfoGridView.setHasFixedSize(true);
@@ -1757,16 +1757,6 @@ public class LivePlayActivity extends BaseActivity {
         }
     }
 
-    private final Runnable mUpdateTimeRun = new Runnable() {
-        @Override
-        public void run() {
-            Date day = new Date();
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-            tvTime.setText(df.format(day));
-            mHandler.postDelayed(this, 1000);
-        }
-    };
-
     private void showNetSpeed() {
         if (Hawk.get(HawkConfig.LIVE_SHOW_NET_SPEED, false)) {
             mHandler.post(mUpdateNetSpeedRun);
@@ -1776,15 +1766,6 @@ public class LivePlayActivity extends BaseActivity {
             tvNetSpeed.setVisibility(View.GONE);
         }
     }
-
-    private final Runnable mUpdateNetSpeedRun = new Runnable() {
-        @Override
-        public void run() {
-            if (mVideoView == null) return;
-            tvNetSpeed.setText(String.format("%.2fMB/s", (float) mVideoView.getTcpSpeed() / 1024.0 / 1024.0));
-            mHandler.postDelayed(this, 1000);
-        }
-    };
 
     private void showPasswordDialog(int groupIndex, int liveChannelIndex) {
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE)

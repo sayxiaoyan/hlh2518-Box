@@ -6,14 +6,14 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "storageDrive")
 public class StorageDrive {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
     @ColumnInfo(name = "name")
     public String name;
     @ColumnInfo(name = "type")
     public int type;
     @ColumnInfo(name = "configJson")
     public String configJson;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     public int getId() {
         return id;

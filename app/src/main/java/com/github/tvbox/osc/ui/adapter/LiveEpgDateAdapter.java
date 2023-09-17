@@ -35,6 +35,10 @@ public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHo
         }
     }
 
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
     public void setSelectedIndex(int selectedIndex) {
         if (selectedIndex == this.selectedIndex) return;
         int preSelectedIndex = this.selectedIndex;
@@ -43,10 +47,6 @@ public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHo
             notifyItemChanged(preSelectedIndex);
         if (this.selectedIndex != -1)
             notifyItemChanged(this.selectedIndex);
-    }
-
-    public int getSelectedIndex() {
-        return selectedIndex;
     }
 
     public void setFocusedIndex(int focusedIndex) {

@@ -24,9 +24,9 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * @description:
  */
 public class ControlManager {
+    public static Context mContext;
     private static ControlManager instance;
     private RemoteServer mServer = null;
-    public static Context mContext;
 
     private ControlManager() {
 

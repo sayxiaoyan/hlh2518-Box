@@ -30,12 +30,12 @@ public class DriveAdapter extends BaseQuickAdapter<DriveFolderFile, BaseViewHold
     public void toggleDelMode(boolean isDelMode) {
         for (int pos = 0; pos < this.getItemCount(); pos++) {
             View delView = this.getViewByPosition(pos, R.id.delDrive);
-            if(delView != null) {
+            if (delView != null) {
                 delView.setVisibility(isDelMode ? View.VISIBLE : View.GONE);
             }
             DriveFolderFile item = this.getItem(pos);
             item.isDelMode = isDelMode;
-            if(item.getDriveType() == StorageDriveType.TYPE.WEBDAV
+            if (item.getDriveType() == StorageDriveType.TYPE.WEBDAV
                     || item.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
                 this.getViewByPosition(pos, R.id.imgConfig).setVisibility(isDelMode ? View.GONE : View.VISIBLE);
             }
@@ -45,7 +45,7 @@ public class DriveAdapter extends BaseQuickAdapter<DriveFolderFile, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, DriveFolderFile item) {
         TextView itemName = helper.getView(R.id.txtItemName);
-        if(item.name == null && item.parentFolder == item)
+        if (item.name == null && item.parentFolder == item)
             itemName.setText(" . . ");
         else
             itemName.setText(item.name);
@@ -62,20 +62,19 @@ public class DriveAdapter extends BaseQuickAdapter<DriveFolderFile, BaseViewHold
             @Override
             public void onFocusChange(View view, boolean b) {
                 txtMediaName.setSelected(b);
-                ((TvRecyclerView)helper.itemView.getParent()).onFocusChange(helper.itemView, b);
+                ((TvRecyclerView) helper.itemView.getParent()).onFocusChange(helper.itemView, b);
             }
         });
         mItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((TvRecyclerView)helper.itemView.getParent()).onClick(helper.itemView);
+                ((TvRecyclerView) helper.itemView.getParent()).onClick(helper.itemView);
             }
         });
-        if(item.isDrive())
-        {
-            if(item.getDriveType() == StorageDriveType.TYPE.LOCAL)
+        if (item.isDrive()) {
+            if (item.getDriveType() == StorageDriveType.TYPE.LOCAL)
                 imgItem.setImageResource(R.drawable.icon_sdcard);
-            else if(item.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
+            else if (item.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
                 imgItem.setImageResource(R.drawable.icon_circle_node);
                 imgConfig.setVisibility(item.isDelMode ? View.GONE : View.VISIBLE);
                 imgConfig.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +84,7 @@ public class DriveAdapter extends BaseQuickAdapter<DriveFolderFile, BaseViewHold
                         dialog.show();
                     }
                 });
-            } else if(item.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
+            } else if (item.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
                 imgItem.setImageResource(R.drawable.icon_alist);
                 imgConfig.setVisibility(item.isDelMode ? View.GONE : View.VISIBLE);
                 imgConfig.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +98,13 @@ public class DriveAdapter extends BaseQuickAdapter<DriveFolderFile, BaseViewHold
         } else {
             lastModified.setText(item.getFormattedLastModified());
             lastModified.setVisibility(View.VISIBLE);
-            if(item.isFile) {
-                if(item.fileType != null) {
+            if (item.isFile) {
+                if (item.fileType != null) {
 
                     txtMediaName.setText(item.fileType);
                     txtMediaName.setVisibility(View.VISIBLE);
                 }
-                if(StorageDriveType.isVideoType(item.fileType))
+                if (StorageDriveType.isVideoType(item.fileType))
                     imgItem.setImageResource(R.drawable.icon_film);
                 else
                     imgItem.setImageResource(R.drawable.icon_file);

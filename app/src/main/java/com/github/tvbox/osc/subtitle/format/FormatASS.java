@@ -338,7 +338,7 @@ public class FormatASS implements TimedTextFileFormat {
     /**
      * This methods transforms a format line from ASS according to a format definition into an Style object.
      *
-     * @param line the format line without its declaration
+     * @param line        the format line without its declaration
      * @param styleFormat the list of attributes in this format line
      * @return a new Style object.
      */
@@ -474,9 +474,9 @@ public class FormatASS implements TimedTextFileFormat {
     /**
      * This methods transforms a dialogue line from ASS according to a format definition into an Caption object.
      *
-     * @param line the dialogue line without its declaration
+     * @param line           the dialogue line without its declaration
      * @param dialogueFormat the list of attributes in this dialogue line
-     * @param timer % to speed or slow the clock, above 100% span of the subtitles is reduced.
+     * @param timer          % to speed or slow the clock, above 100% span of the subtitles is reduced.
      * @return a new Caption object
      */
     private Subtitle parseDialogueForASS(String[] line, String[] dialogueFormat, float timer, TimedTextObject tto) {
@@ -516,6 +516,7 @@ public class FormatASS implements TimedTextFileFormat {
 
     /**
      * returns a string with the correctly formated colors
+     *
      * @param useASSInsteadOfSSA true if formated for ASS
      * @return the colors in the decimal format
      */
@@ -535,6 +536,7 @@ public class FormatASS implements TimedTextFileFormat {
 
     /**
      * returns a string with the correctly formated options
+     *
      * @param useASSInsteadOfSSA
      * @return
      */
@@ -560,6 +562,7 @@ public class FormatASS implements TimedTextFileFormat {
 
     /**
      * converts the string explaining the alignment into the ASS equivalent integer offering bottom-center as default value
+     *
      * @param useASSInsteadOfSSA
      * @param align
      * @return

@@ -8,8 +8,8 @@ import android.widget.ListView;
 import com.github.tvbox.osc.ui.activity.LivePlayActivity;
 
 public class ChannelListView extends ListView {
-    DataChangedListener dataChangedListener;
     public int pos = LivePlayActivity.currentChannelGroupIndex;
+    DataChangedListener dataChangedListener;
     private int y;
 
     public ChannelListView(Context context) {

@@ -1,8 +1,8 @@
 package com.github.tvbox.osc.util;
 
 import android.content.Context;
-import android.widget.Toast;
 import android.os.Looper;
+import android.widget.Toast;
 
 public class ToastHelper {
 

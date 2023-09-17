@@ -3,8 +3,6 @@ package com.github.tvbox.osc.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.github.tvbox.osc.base.App;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,11 +53,13 @@ public class FixDexUtils {
             }
         }
     }
+
     /**
      * 加载 Dex 文件
+     *
      * @param context
      */
-    public static void loadDex(Context context){
+    public static void loadDex(Context context) {
         // 修复包可能有多个, 如先后进行了多次修复 , 存在多个修复包 Dex 文件
         // 这些 Dex 文件按照时间顺序进行放置
         // 之前已经将 SD 卡中的 /storage/emulated/0/update.dex 文件拷贝到了
@@ -80,9 +80,9 @@ public class FixDexUtils {
         // 过滤文件, 系统打包都是 classes.dex , classes1.dex , classes2.dex 等文件
         // 上传的更新包 update.dex 以 .dex 为结尾
         // 以上面两个条件作为过滤的依据
-        for (File file : listFiles){
+        for (File file : listFiles) {
             if (file.getAbsolutePath().startsWith("classes") ||
-                    file.getAbsolutePath().endsWith(".dex")){
+                    file.getAbsolutePath().endsWith(".dex")) {
 
                 // 将 dex 文件加载到内存中
                 // 该 DexClassLoader 是 BaseDexClassLoader 的子类
@@ -201,7 +201,7 @@ public class FixDexUtils {
                     // 修复包的 Dex 要放在最前面 , 这样才能起到修复作用
 
                     // 先放置修复包 Dex
-                    for(int i = 0; i < myDexCount; i ++){
+                    for (int i = 0; i < myDexCount; i++) {
                         // 获取 myDexElementsObject 数组中的第 i 个元素
                         // 放置到 elementArray 数组中的第 i 个元素位置
                         Array.set(elementArray, i,
@@ -209,7 +209,7 @@ public class FixDexUtils {
                     }
 
                     // 再放置系统 Dex
-                    for(int i = 0; i < systemDexCount; i ++){
+                    for (int i = 0; i < systemDexCount; i++) {
                         // 获取 systemDexElementsObject 数组中的第 i 个元素
                         // 放置到 elementArray 数组中的第 i + myDexCount 个元素位置
                         Array.set(elementArray,
@@ -221,7 +221,6 @@ public class FixDexUtils {
                     // 将合并后的 elementArray 数组放置到
                     // PathClassLoader 中的 Element[] dexElements 中
                     systemDexElementsField.set(systemPathListObject, elementArray);
-
 
 
                 } catch (ClassNotFoundException e) {

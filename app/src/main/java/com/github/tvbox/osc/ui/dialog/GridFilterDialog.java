@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class GridFilterDialog extends BaseDialog {
     private LinearLayout filterRoot;
+    private boolean selectChange = false;
 
     public GridFilterDialog(@NonNull @NotNull Context context) {
         super(context);
@@ -33,10 +34,6 @@ public class GridFilterDialog extends BaseDialog {
         setCancelable(true);
         setContentView(R.layout.dialog_grid_filter);
         filterRoot = findViewById(R.id.filterRoot);
-    }
-
-    public interface Callback {
-        void change();
     }
 
     public void setOnDismiss(Callback callback) {
@@ -99,8 +96,6 @@ public class GridFilterDialog extends BaseDialog {
         }
     }
 
-    private boolean selectChange = false;
-
     public void show() {
         selectChange = false;
         super.show();
@@ -111,5 +106,9 @@ public class GridFilterDialog extends BaseDialog {
         // layoutParams.dimAmount = 0f;
         getWindow().getDecorView().setPadding(0, 0, 0, 0);
         getWindow().setAttributes(layoutParams);
+    }
+
+    public interface Callback {
+        void change();
     }
 }

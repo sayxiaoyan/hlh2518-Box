@@ -33,6 +33,14 @@ import java.util.List;
  * @description:
  */
 public class SettingActivity extends BaseActivity {
+    public static DevModeCallback callback = null;
+    String devMode = "";
+    private final Runnable mDevModeRun = new Runnable() {
+        @Override
+        public void run() {
+            devMode = "";
+        }
+    };
     private TvRecyclerView mGridView;
     private ViewPager mViewPager;
     private SettingMenuAdapter sortAdapter;
@@ -41,6 +49,18 @@ public class SettingActivity extends BaseActivity {
     private boolean sortChange = false;
     private int defaultSelected = 0;
     private int sortFocused = 0;
+    private final Runnable mDataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (sortChange) {
+                sortChange = false;
+                if (sortFocused != defaultSelected) {
+                    defaultSelected = sortFocused;
+                    mViewPager.setCurrentItem(sortFocused, false);
+                }
+            }
+        }
+    };
     private Handler mHandler = new Handler();
     private String homeSourceKey;
     private String currentApi;
@@ -125,35 +145,6 @@ public class SettingActivity extends BaseActivity {
         mViewPager.setCurrentItem(0);
     }
 
-    private final Runnable mDataRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (sortChange) {
-                sortChange = false;
-                if (sortFocused != defaultSelected) {
-                    defaultSelected = sortFocused;
-                    mViewPager.setCurrentItem(sortFocused, false);
-                }
-            }
-        }
-    };
-
-    private final Runnable mDevModeRun = new Runnable() {
-        @Override
-        public void run() {
-            devMode = "";
-        }
-    };
-
-
-    public interface DevModeCallback {
-        void onChange();
-    }
-
-    public static DevModeCallback callback = null;
-
-    String devMode = "";
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -194,5 +185,9 @@ public class SettingActivity extends BaseActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public interface DevModeCallback {
+        void onChange();
     }
 }

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <device id="tv_4k" />
+      </config>
     </shared>
   </component>
   <component name="AutoImportSettings">
@@ -15,7 +17,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[q4fiaqdizta6eiea]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -65,7 +67,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "J:/heyin/Box-main/app/src/main/res",
+    "last_opened_file_path": "J:/heyin/Box-main/app/src/main/res/drawable",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   },
   "keyToStringList": {
@@ -76,11 +78,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\heyin\Box-main\app\src\main\res\drawable" />
+      <recent name="J:\heyin\Box-main\app\src\main\res\layout" />
       <recent name="J:\heyin\Box-main\app\src\main\res" />
       <recent name="J:\heyin\Box-main\app\src\main\java\com\github\tvbox\osc\server" />
       <recent name="J:\heyin\Box-main\app\libs" />
-      <recent name="J:\heyin\Box-main\app\src\main\java\com" />
-      <recent name="J:\heyin\Box-main\app\src\main\java\com\github" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.github.tvbox.osc.util.js" />

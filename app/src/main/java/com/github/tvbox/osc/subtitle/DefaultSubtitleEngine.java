@@ -3,9 +3,10 @@ package com.github.tvbox.osc.subtitle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.cache.CacheManager;
@@ -30,7 +31,7 @@ public class DefaultSubtitleEngine implements SubtitleEngine {
     private static final String TAG = DefaultSubtitleEngine.class.getSimpleName();
     private static final int MSG_REFRESH = 0x888;
     private static final int REFRESH_INTERVAL = 100;
-
+    private static String playSubtitleCacheKey;
     @Nullable
     private HandlerThread mHandlerThread;
     @Nullable
@@ -133,13 +134,12 @@ public class DefaultSubtitleEngine implements SubtitleEngine {
         mSubtitles = thisSubtitles;
     }
 
-    private static String playSubtitleCacheKey;
-    public void setPlaySubtitleCacheKey(String cacheKey) {
-        playSubtitleCacheKey = cacheKey;
-    }
-
     public String getPlaySubtitleCacheKey() {
         return playSubtitleCacheKey;
+    }
+
+    public void setPlaySubtitleCacheKey(String cacheKey) {
+        playSubtitleCacheKey = cacheKey;
     }
 
     @Override

@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class SubtitleDialog extends BaseDialog {
 
-    private TextView subtitleOption;
     public TextView selectInternal;
     public TextView selectLocal;
     public TextView selectRemote;
+    private TextView subtitleOption;
     private ImageView subtitleSizeMinus;
     private TextView subtitleSizeText;
     private ImageView subtitleSizePlus;
@@ -129,7 +129,7 @@ public class SubtitleDialog extends BaseDialog {
         int timeDelay = SubtitleHelper.getTimeDelay();
         String timeStr = "0";
         if (timeDelay != 0) {
-            double dbTimeDelay = timeDelay/1000;
+            double dbTimeDelay = timeDelay / 1000;
             timeStr = Double.toString(dbTimeDelay);
         }
         subtitleTimeText.setText(timeStr);
@@ -148,8 +148,8 @@ public class SubtitleDialog extends BaseDialog {
                     timeStr = Double.toString(time);
                 }
                 subtitleTimeText.setText(timeStr);
-                int mseconds = (int)(oneceDelay*1000);
-                SubtitleHelper.setTimeDelay((int)(time*1000));
+                int mseconds = (int) (oneceDelay * 1000);
+                SubtitleHelper.setTimeDelay((int) (time * 1000));
                 mSubtitleViewListener.setSubtitleDelay(mseconds);
             }
         });
@@ -167,8 +167,8 @@ public class SubtitleDialog extends BaseDialog {
                     timeStr = Double.toString(time);
                 }
                 subtitleTimeText.setText(timeStr);
-                int mseconds = (int)(oneceDelay*1000);
-                SubtitleHelper.setTimeDelay((int)(time*1000));
+                int mseconds = (int) (oneceDelay * 1000);
+                SubtitleHelper.setTimeDelay((int) (time * 1000));
                 mSubtitleViewListener.setSubtitleDelay(mseconds);
             }
         });
@@ -197,26 +197,29 @@ public class SubtitleDialog extends BaseDialog {
         mLocalFileChooserListener = localFileChooserListener;
     }
 
-    public interface LocalFileChooserListener {
-        void openLocalFileChooserDialog();
-    }
-
     public void setSearchSubtitleListener(SearchSubtitleListener searchSubtitleListener) {
         mSearchSubtitleListener = searchSubtitleListener;
-    }
-
-    public interface SearchSubtitleListener {
-        void openSearchSubtitleDialog();
     }
 
     public void setSubtitleViewListener(SubtitleViewListener subtitleViewListener) {
         mSubtitleViewListener = subtitleViewListener;
     }
 
+    public interface LocalFileChooserListener {
+        void openLocalFileChooserDialog();
+    }
+
+    public interface SearchSubtitleListener {
+        void openSearchSubtitleDialog();
+    }
+
     public interface SubtitleViewListener {
         void setTextSize(int size);
+
         void setSubtitleDelay(int milliseconds);
+
         void selectInternalSubtitle();
+
         void setTextStyle(int style);
     }
 

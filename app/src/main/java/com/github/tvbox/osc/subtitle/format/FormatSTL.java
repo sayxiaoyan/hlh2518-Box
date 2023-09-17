@@ -143,14 +143,14 @@ public class FormatSTL implements TimedTextFileFormat {
                     tto.warnings += "Unexpected subtitle number at TTI block " + i + ". Parsing proceeds...\n\n";
                 //EBN : Extension Block Number 3
                 int ebn = ttiBlock[3];
-				additionalText = ebn != -1;
+                additionalText = ebn != -1;
 
                 //CS : Cumulative Status 4
                 //TCI : Time Code In 5..8
                 String startTime = "" + ttiBlock[5] + ":" + ttiBlock[6] + ":" + ttiBlock[7] + ":" + ttiBlock[8];
                 //TCO : Time Code Out 9..12
                 String endTime = "" + ttiBlock[9] + ":" + ttiBlock[10] + ":" + ttiBlock[11] + ":" + ttiBlock[12];
-				//VP : Vertical Position 13
+                //VP : Vertical Position 13
                 //JC : Justification Code 14
                 int justification = ttiBlock[14];
                 //0:none, 1:left, 2:centered, 3:right
@@ -351,6 +351,7 @@ public class FormatSTL implements TimedTextFileFormat {
 
     /**
      * This method parses the text field taking into account STL control codes
+     *
      * @param currentCaption
      * @param textField
      * @param justification

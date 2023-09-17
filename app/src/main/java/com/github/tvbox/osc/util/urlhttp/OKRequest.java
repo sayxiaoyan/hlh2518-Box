@@ -15,12 +15,12 @@ import okhttp3.Response;
 
 class OKRequest {
     private final String mMethodType;
-    private String mUrl;
-    private Object mTag = null;
     private final Map<String, String> mParamsMap;
     private final String mJsonStr;
     private final Map<String, String> mHeaderMap;
     private final OKCallBack mCallBack;
+    private String mUrl;
+    private Object mTag = null;
     private okhttp3.Request mOkHttpRequest;
     private okhttp3.Request.Builder mRequestBuilder;
 

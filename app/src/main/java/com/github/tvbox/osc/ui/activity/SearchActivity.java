@@ -1,6 +1,5 @@
 package com.github.tvbox.osc.ui.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -69,10 +68,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @description:
  */
 public class SearchActivity extends BaseActivity {
+    private static HashMap<String, String> mCheckSources = null;
+    private final AtomicInteger allRunCount = new AtomicInteger(0);
+    SourceViewModel sourceViewModel;
     private LinearLayout llLayout;
     private TvRecyclerView mGridView;
     private TvRecyclerView mGridViewWord;
-    SourceViewModel sourceViewModel;
     private EditText etSearch;
     private TextView tvSearch;
     private TextView tvClear;
@@ -83,8 +84,13 @@ public class SearchActivity extends BaseActivity {
     private PinyinAdapter wordAdapter;
     private String searchTitle = "";
     private ImageView tvSearchCheckbox;
-    private static HashMap<String, String> mCheckSources = null;
     private SearchCheckboxDialog mSearchCheckboxDialog = null;
+    private List<Runnable> pauseRunnable = null;
+    private ExecutorService searchExecutorService = null;
+
+    public static void setCheckedSourcesForSearch(HashMap<String, String> checkedSources) {
+        mCheckSources = checkedSources;
+    }
 
     @Override
     protected int getLayoutResID() {
@@ -97,8 +103,6 @@ public class SearchActivity extends BaseActivity {
         initViewModel();
         initData();
     }
-
-    private List<Runnable> pauseRunnable = null;
 
     @Override
     protected void onResume() {
@@ -400,10 +404,6 @@ public class SearchActivity extends BaseActivity {
         mCheckSources = SearchHelper.getSourcesForSearch();
     }
 
-    public static void setCheckedSourcesForSearch(HashMap<String, String> checkedSources) {
-        mCheckSources = checkedSources;
-    }
-
     private void search(String title) {
         cancel();
         showLoading();
@@ -413,9 +413,6 @@ public class SearchActivity extends BaseActivity {
         searchAdapter.setNewData(new ArrayList<>());
         searchResult();
     }
-
-    private ExecutorService searchExecutorService = null;
-    private final AtomicInteger allRunCount = new AtomicInteger(0);
 
     private void searchResult() {
         try {

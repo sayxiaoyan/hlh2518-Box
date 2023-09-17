@@ -19,24 +19,8 @@ import java.util.List;
 
 public class ApiHistoryDialogAdapter extends ListAdapter<String, ApiHistoryDialogAdapter.SelectViewHolder> {
 
-    class SelectViewHolder extends RecyclerView.ViewHolder {
-
-        public SelectViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-        }
-    }
-
-    public interface SelectDialogInterface {
-        void click(String value);
-
-        void del(String value, ArrayList<String> data);
-    }
-
-
     private ArrayList<String> data = new ArrayList<>();
-
     private String select = "";
-
     private SelectDialogInterface dialogInterface = null;
 
     public ApiHistoryDialogAdapter(SelectDialogInterface dialogInterface) {
@@ -65,7 +49,6 @@ public class ApiHistoryDialogAdapter extends ListAdapter<String, ApiHistoryDialo
     public int getItemCount() {
         return data.size();
     }
-
 
     @Override
     public ApiHistoryDialogAdapter.SelectViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
@@ -100,5 +83,19 @@ public class ApiHistoryDialogAdapter extends ListAdapter<String, ApiHistoryDialo
                 dialogInterface.del(value, data);
             }
         });
+    }
+
+
+    public interface SelectDialogInterface {
+        void click(String value);
+
+        void del(String value, ArrayList<String> data);
+    }
+
+    class SelectViewHolder extends RecyclerView.ViewHolder {
+
+        public SelectViewHolder(@NonNull @NotNull View itemView) {
+            super(itemView);
+        }
     }
 }

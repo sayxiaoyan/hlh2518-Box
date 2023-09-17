@@ -35,11 +35,6 @@ public class AppsActivity extends BaseActivity {
     private ImageView tvDelete;
     private TvRecyclerView mGridViewApps;
     private AppsAdapter appsAdapter;
-    private boolean delMode = false;
-    private String packageName = "";
-    private boolean isUnInstallClicked;
-    private int appPosition;
-
     private final AsyncTask<Void, Void, AppInfo[]> mApplicationLoader = new AsyncTask<Void, Void, AppInfo[]>() {
         List<AppInfo> items = new ArrayList<>();
 
@@ -56,7 +51,10 @@ public class AppsActivity extends BaseActivity {
             appsAdapter.notifyDataSetChanged();
         }
     };
-
+    private boolean delMode = false;
+    private String packageName = "";
+    private boolean isUnInstallClicked;
+    private int appPosition;
 
     @Override
     protected int getLayoutResID() {

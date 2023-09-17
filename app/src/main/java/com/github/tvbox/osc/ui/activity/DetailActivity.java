@@ -1,5 +1,6 @@
 package com.github.tvbox.osc.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
@@ -92,11 +93,26 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * @description:
  */
 public class DetailActivity extends BaseActivity {
+    private static final int PIP_BOARDCAST_ACTION_PREV = 0;
+    private static final int PIP_BOARDCAST_ACTION_PLAYPAUSE = 1;
+    private static final int PIP_BOARDCAST_ACTION_NEXT = 2;
+    private static PlayFragment playFragment = null;
+    private final List<Movie.Video> quickSearchData = new ArrayList<>();
+    private final List<String> quickSearchWord = new ArrayList<>();
+    public String vodId;
+    public String sourceKey;
+    public boolean fullWindows = false;
+    boolean seriesSelect = false;
+    boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
+    // preview : true 开启 false 关闭
+    VodInfo previewVodInfo = null;
+    boolean showPreview = Hawk.get(HawkConfig.SHOW_PREVIEW, true);
+    ViewGroup.LayoutParams windowsPreview = null;
+    ViewGroup.LayoutParams windowsFull = null;
     private LinearLayout llLayout;
     private FragmentContainerView llPlayerFragmentContainer;
     private View llPlayerFragmentContainerBlock;
     private View llPlayerPlace;
-    private static PlayFragment playFragment = null;
     private ImageView ivThumb;
     private TextView tvName;
     private TextView tvYear;
@@ -120,19 +136,16 @@ public class DetailActivity extends BaseActivity {
     private VodInfo vodInfo;
     private SeriesFlagAdapter seriesFlagAdapter;
     private SeriesAdapter seriesAdapter;
-    public String vodId;
-    public String sourceKey;
-    boolean seriesSelect = false;
     private View seriesFlagFocus = null;
     private HashMap<String, String> mCheckSources = null;
     private V7GridLayoutManager mGridViewLayoutMgr = null;
-
     private BroadcastReceiver pipActionReceiver;
-    private static final int PIP_BOARDCAST_ACTION_PREV = 0;
-    private static final int PIP_BOARDCAST_ACTION_PLAYPAUSE = 1;
-    private static final int PIP_BOARDCAST_ACTION_NEXT = 2;
-
     private ImageView tvPlayUrl;
+    private List<Runnable> pauseRunnable = null;
+    private String preFlag = "";
+    private String searchTitle = "";
+    private boolean hadQuickStart = false;
+    private ExecutorService searchExecutorService = null;
 
     @Override
     protected int getLayoutResID() {
@@ -393,10 +406,6 @@ public class DetailActivity extends BaseActivity {
             }
         });
     }
-
-    private List<Runnable> pauseRunnable = null;
-
-    private String preFlag = "";
 
     private void jumpToPlay() {
         if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
@@ -689,7 +698,7 @@ public class DetailActivity extends BaseActivity {
                                     throw new IllegalStateException("网络请求错误");
                                 }
                             }
-		        
+
                             @Override
                             public void onSuccess(Response<String> response) {
                                 String r = response.body();
@@ -708,12 +717,6 @@ public class DetailActivity extends BaseActivity {
             }
         }
     }
-
-    private String searchTitle = "";
-    private boolean hadQuickStart = false;
-    private final List<Movie.Video> quickSearchData = new ArrayList<>();
-    private final List<String> quickSearchWord = new ArrayList<>();
-    private ExecutorService searchExecutorService = null;
 
     private void switchSearchWord(String word) {
         OkGo.getInstance().cancelTag("quick_search");
@@ -852,7 +855,18 @@ public class DetailActivity extends BaseActivity {
         if (!showPreview) Thunder.stop(true);
     }
 
-    boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
+    // takagen99 : Commented out to allow monitor Click Event
+    //@Override
+    //public boolean dispatchTouchEvent(MotionEvent ev) {
+    //    if (showPreview && !fullWindows) {
+    //        Rect editTextRect = new Rect();
+    //        llPlayerFragmentContainerBlock.getHitRect(editTextRect);
+    //        if (editTextRect.contains((int) ev.getX(), (int) ev.getY())) {
+    //            return true;
+    //        }
+    //    }
+    //    return super.dispatchTouchEvent(ev);
+    //}
 
     @Override
     public void onUserLeaveHint() {
@@ -888,7 +902,7 @@ public class DetailActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private RemoteAction generateRemoteAction(int iconResId, int actionCode, String title, String desc) {
-        final PendingIntent intent =
+        @SuppressLint("UnspecifiedImmutableFlag") final PendingIntent intent =
                 PendingIntent.getBroadcast(
                         DetailActivity.this,
                         actionCode,
@@ -958,26 +972,6 @@ public class DetailActivity extends BaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
-    // takagen99 : Commented out to allow monitor Click Event
-    //@Override
-    //public boolean dispatchTouchEvent(MotionEvent ev) {
-    //    if (showPreview && !fullWindows) {
-    //        Rect editTextRect = new Rect();
-    //        llPlayerFragmentContainerBlock.getHitRect(editTextRect);
-    //        if (editTextRect.contains((int) ev.getX(), (int) ev.getY())) {
-    //            return true;
-    //        }
-    //    }
-    //    return super.dispatchTouchEvent(ev);
-    //}
-
-    // preview : true 开启 false 关闭
-    VodInfo previewVodInfo = null;
-    boolean showPreview = Hawk.get(HawkConfig.SHOW_PREVIEW, true);
-    public boolean fullWindows = false;
-    ViewGroup.LayoutParams windowsPreview = null;
-    ViewGroup.LayoutParams windowsFull = null;
 
     public void toggleFullPreview() {
         if (windowsPreview == null) {

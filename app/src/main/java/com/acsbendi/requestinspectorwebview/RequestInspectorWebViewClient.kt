@@ -22,6 +22,7 @@ open class RequestInspectorWebViewClient @JvmOverloads constructor(
         webSettings.domStorageEnabled = true
     }
 
+    @SuppressLint("NewApi")
     final override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest

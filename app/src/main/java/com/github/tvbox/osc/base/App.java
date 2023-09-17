@@ -8,7 +8,6 @@ import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.data.AppDataManager;
@@ -33,6 +32,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Provider;
 import java.security.Security;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
@@ -43,10 +44,8 @@ import me.jessyan.autosize.unit.Subunits;
  * @description:
  */
 public class App extends MultiDexApplication {
-
-    public static Provider conscrypt = Conscrypt.newProvider();
-
     public static String burl;
+    public static Provider conscrypt = Conscrypt.newProvider();
     private static App instance;
     private static P2PClass p;
 
@@ -61,6 +60,11 @@ public class App extends MultiDexApplication {
             return null;
         }
     }
+
+    public static App getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -88,7 +92,6 @@ public class App extends MultiDexApplication {
         //pyramid-add-start
         PythonLoader.getInstance().setApplication(this);
         //pyramid-add-end
-
         // Delete Cache
         /*File dir = getCacheDir();
         FileUtils.recursiveDelete(dir);
@@ -109,6 +112,22 @@ public class App extends MultiDexApplication {
         // Hawk
         Hawk.init(this).build();
         Hawk.put(HawkConfig.DEBUG_OPEN, false);
+
+        String defaultApiName = "默认-自备份线路";
+        String defaultApi = "";
+
+        HashMap<String, String> defaultApiMap = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
+        defaultApiMap.put(defaultApiName, defaultApi);
+
+        ArrayList<String> defaultApiHistory = Hawk.get(HawkConfig.API_NAME_HISTORY, new ArrayList<>());
+        defaultApiHistory.add(defaultApiName);
+
+
+        putDefault(HawkConfig.API_URL, defaultApi);
+        putDefault(HawkConfig.API_NAME, defaultApiName);
+        putDefault(HawkConfig.API_NAME_HISTORY, defaultApiHistory);
+        putDefault(HawkConfig.API_MAP, defaultApiMap);
+
 
         // 首页选项
         putDefault(HawkConfig.HOME_SHOW_SOURCE, true);       //数据源显示: true=开启, false=关闭
@@ -139,10 +158,6 @@ public class App extends MultiDexApplication {
         }
     }
 
-    public static App getInstance() {
-        return instance;
-    }
-
     private void putDefault(String key, Object value) {
         if (!Hawk.contains(key)) {
             Hawk.put(key, value);
@@ -162,7 +177,7 @@ public class App extends MultiDexApplication {
         //okhttp的改动见OkHttpClientReplace.java的public OkHttpClientReplace build()
         //用于替换spider jar里的Builder.build()以让android 9及以下系统支持 tls 1.3
         try {
-            Uri uri = Uri.parse("android.resource://"+ BuildConfig.APPLICATION_ID+"/raw/okhttp_inject.dex");
+            Uri uri = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID + "/raw/okhttp_inject.dex");
             FixDexUtils.copy(base, new FileInputStream(uri.getPath()));
         } catch (IOException e) {
         }

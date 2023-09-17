@@ -47,8 +47,8 @@ public interface TimedTextFileFormat {
      *
      * @param tto the object to transform into a file
      * @return NULL if the given TimedTextObject has not been built first,
-     * 		or String[] where each String is at least a line, if size is 2, then the file has at least two lines.
-     * 		or byte[] in case the file is a binary (as is the case of STL format)
+     * or String[] where each String is at least a line, if size is 2, then the file has at least two lines.
+     * or byte[] in case the file is a binary (as is the case of STL format)
      */
     Object toFile(TimedTextObject tto);
 

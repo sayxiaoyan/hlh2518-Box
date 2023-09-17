@@ -1,15 +1,17 @@
 package com.github.tvbox.osc.util.SSL;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 public final class InternalSSLSocketFactory extends SSLSocketFactory {
     private final SSLSocketFactory mSSLSocketFactory;
 
-    public InternalSSLSocketFactory(SSLSocketFactory sslSocketFactory)  {
+    public InternalSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
         this.mSSLSocketFactory = sslSocketFactory;
     }
 
@@ -55,7 +57,8 @@ public final class InternalSSLSocketFactory extends SSLSocketFactory {
 
     private Socket enableTLSOnSocket(Socket socket) {
         //if(socket instanceof SSLSocket) ((SSLSocket) socket).setEnabledProtocols(new String[] {"TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3"});
-        if(socket instanceof SSLSocket) ((SSLSocket) socket).setEnabledProtocols(new String[] {"TLSv1.2", "TLSv1.3"});
+        if (socket instanceof SSLSocket)
+            ((SSLSocket) socket).setEnabledProtocols(new String[]{"TLSv1.2", "TLSv1.3"});
         return socket;
     }
 }

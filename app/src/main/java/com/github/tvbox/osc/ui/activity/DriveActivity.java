@@ -65,6 +65,7 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
 
 public class DriveActivity extends BaseActivity {
 
+    List<DriveFolderFile> searchResult = null;
     private TextView txtTitle;
     private TvRecyclerView mGridView;
     private ImageButton btnAddServer;
@@ -72,7 +73,6 @@ public class DriveActivity extends BaseActivity {
     private ImageButton btnSort;
     private DriveAdapter adapter = new DriveAdapter();
     private List<DriveFolderFile> drives = null;
-    List<DriveFolderFile> searchResult = null;
     private AbstractDriveViewModel viewModel = null;
     private AbstractDriveViewModel backupViewModel = null;
     private int sortType = 0;
@@ -82,6 +82,21 @@ public class DriveActivity extends BaseActivity {
     private boolean delMode = false;
 
     private Handler mHandler = new Handler();
+    private Comparator<DriveFolderFile> sortComparator = new Comparator<DriveFolderFile>() {
+        @Override
+        public int compare(DriveFolderFile o1, DriveFolderFile o2) {
+            switch (sortType) {
+                case 1:
+                    return Collator.getInstance(Locale.CHINESE).compare(o2.name.toUpperCase(Locale.CHINESE), o1.name.toUpperCase(Locale.CHINESE));
+                case 2:
+                    return Long.compare(o1.lastModifiedDate, o2.lastModifiedDate);
+                case 3:
+                    return Long.compare(o2.lastModifiedDate, o1.lastModifiedDate);
+                default:
+                    return Collator.getInstance(Locale.CHINESE).compare(o1.name.toUpperCase(Locale.CHINESE), o2.name.toUpperCase(Locale.CHINESE));
+            }
+        }
+    };
 
     @Override
     protected int getLayoutResID() {
@@ -320,22 +335,6 @@ public class DriveActivity extends BaseActivity {
         dialog.show();
     }
 
-    private Comparator<DriveFolderFile> sortComparator = new Comparator<DriveFolderFile>() {
-        @Override
-        public int compare(DriveFolderFile o1, DriveFolderFile o2) {
-            switch (sortType) {
-                case 1:
-                    return Collator.getInstance(Locale.CHINESE).compare(o2.name.toUpperCase(Locale.CHINESE), o1.name.toUpperCase(Locale.CHINESE));
-                case 2:
-                    return Long.compare(o1.lastModifiedDate, o2.lastModifiedDate);
-                case 3:
-                    return Long.compare(o2.lastModifiedDate, o1.lastModifiedDate);
-                default:
-                    return Collator.getInstance(Locale.CHINESE).compare(o1.name.toUpperCase(Locale.CHINESE), o2.name.toUpperCase(Locale.CHINESE));
-            }
-        }
-    };
-
     private void openFilePicker() {
         if (delMode)
             toggleDelMode();
@@ -474,7 +473,7 @@ public class DriveActivity extends BaseActivity {
                 });
             }
         });
-        if(JSUtils.isNotEmpty(path)) {
+        if (JSUtils.isNotEmpty(path)) {
             this.txtTitle.setText(path);
         }
     }

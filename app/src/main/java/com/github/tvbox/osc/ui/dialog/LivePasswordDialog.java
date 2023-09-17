@@ -2,9 +2,6 @@ package com.github.tvbox.osc.ui.dialog;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,7 +12,6 @@ import com.github.tvbox.osc.R;
 import org.jetbrains.annotations.NotNull;
 
 
-
 /**
  * 描述
  *
@@ -23,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2020/12/27
  */
 public class LivePasswordDialog extends BaseDialog {
+    OnListener listener = null;
     private EditText inputPassword;
 
     public LivePasswordDialog(@NonNull @NotNull Context context) {
@@ -53,10 +50,9 @@ public class LivePasswordDialog extends BaseDialog {
         this.listener = listener;
     }
 
-    OnListener listener = null;
-
     public interface OnListener {
         void onChange(String password);
+
         void onCancel();
     }
 }

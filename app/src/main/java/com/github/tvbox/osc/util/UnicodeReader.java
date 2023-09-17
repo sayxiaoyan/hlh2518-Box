@@ -10,9 +10,9 @@ import java.io.PushbackInputStream;
 import java.io.Reader;
 
 public class UnicodeReader extends Reader {
+    private static final int BOM_SIZE = 4;
     private InputStreamReader internalIn = null;
     private String encoding;
-    private static final int BOM_SIZE = 4;
 
     public UnicodeReader(String file)
             throws IOException, FileNotFoundException, SecurityException {

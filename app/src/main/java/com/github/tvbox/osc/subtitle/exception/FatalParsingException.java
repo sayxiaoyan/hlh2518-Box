@@ -30,7 +30,6 @@ package com.github.tvbox.osc.subtitle.exception;
  * This class represents problems that may arise during the parsing of a subttile file.
  *
  * @author J. David
- *
  */
 public class FatalParsingException extends Exception {
 

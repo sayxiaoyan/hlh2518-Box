@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectActivity extends BaseActivity {
+    public static CollectAdapter collectAdapter;
     private TextView tvDelTip;
     private ImageView tvDelete;
     private ImageView tvClear;
     private TvRecyclerView mGridView;
-    public static CollectAdapter collectAdapter;
     private boolean delMode = false;
 
     @Override

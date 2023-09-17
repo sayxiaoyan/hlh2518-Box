@@ -389,7 +389,7 @@ public class FormatTTML implements TimedTextFileFormat {
 
         } else if (color.startsWith("rgb")) {
             boolean alpha = color.startsWith("rgba");
-			try {
+            try {
                 values = color.split("\\(")[1].split(",");
 
                 int r, g, b, a = 255;

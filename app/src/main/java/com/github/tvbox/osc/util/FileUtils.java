@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.server.ControlManager;
 import com.github.tvbox.osc.util.urlhttp.OkHttpUtil;
+import com.github.tvbox.quickjs.JSUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.github.tvbox.quickjs.JSUtils;
 
 import org.json.JSONObject;
 
@@ -88,15 +88,15 @@ public class FileUtils {
 
     public static String loadModule(String name) {
         try {
-            if(name.contains("cheerio.min.js")){
+            if (name.contains("cheerio.min.js")) {
                 name = "cheerio.min.js";
-            } else if(name.contains("crypto-js.js")){
+            } else if (name.contains("crypto-js.js")) {
                 name = "crypto-js.js";
-            } else if(name.contains("dayjs.min.js")){
+            } else if (name.contains("dayjs.min.js")) {
                 name = "dayjs.min.js";
-            } else if(name.contains("uri.min.js")){
+            } else if (name.contains("uri.min.js")) {
                 name = "uri.min.js";
-            } else if(name.contains("underscore-esm-min.js")){
+            } else if (name.contains("underscore-esm-min.js")) {
                 name = "underscore-esm-min.js";
             }
             if (name.startsWith("http://") || name.startsWith("https://")) {
@@ -189,9 +189,11 @@ public class FileUtils {
     public static File getCacheDir() {
         return App.getInstance().getCacheDir();
     }
+
     public static File getExternalCacheDir() {
         return App.getInstance().getExternalCacheDir();
     }
+
     public static String getExternalCachePath() {
         return getExternalCacheDir().getAbsolutePath();
     }
@@ -199,7 +201,7 @@ public class FileUtils {
     public static String getCachePath() {
         return getCacheDir().getAbsolutePath();
     }
-    
+
     public static void cleanPlayerCache() {
         String thunderCachePath = getCachePath() + "/thunder/";
         File thunderCacheDir = new File(thunderCachePath);
@@ -218,15 +220,15 @@ public class FileUtils {
         }
     }
 
-    public static String getFileNameWithoutExt(String filePath){
-        if(TextUtils.isEmpty(filePath)) return "";
+    public static String getFileNameWithoutExt(String filePath) {
+        if (TextUtils.isEmpty(filePath)) return "";
         String fileName = filePath;
         int p = fileName.lastIndexOf(File.separatorChar);
-        if(p != -1){
+        if (p != -1) {
             fileName = fileName.substring(p + 1);
         }
         p = fileName.indexOf('.');
-        if(p != -1){
+        if (p != -1) {
             fileName = fileName.substring(0, p);
         }
         return fileName;

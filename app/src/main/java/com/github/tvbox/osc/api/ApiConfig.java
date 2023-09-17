@@ -58,23 +58,19 @@ import java.util.regex.Pattern;
 public class ApiConfig {
     private static ApiConfig instance;
     private final LinkedHashMap<String, SourceBean> sourceBeanList;
-    private SourceBean mHomeSource;
-    private ParseBean mDefaultParse;
     private final List<LiveChannelGroup> liveChannelGroupList;
     private final List<ParseBean> parseBeanList;
+    private final SourceBean emptyHome = new SourceBean();
+    private final JarLoader jarLoader = new JarLoader();
+    private final JsLoader jsLoader = new JsLoader();
+    private final String userAgent = "okhttp/3.15";
+    private final String requestAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+    public String wallpaper = "";
+    private SourceBean mHomeSource;
+    private ParseBean mDefaultParse;
     private List<String> vipParseFlags;
     private List<IJKCode> ijkCodes;
     private String spider = null;
-    public String wallpaper = "";
-
-    private final SourceBean emptyHome = new SourceBean();
-
-    private final JarLoader jarLoader = new JarLoader();
-    private final JsLoader jsLoader = new JsLoader();
-
-    private final String userAgent = "okhttp/3.15";
-
-    private final String requestAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
     private ApiConfig() {
         sourceBeanList = new LinkedHashMap<>();
@@ -130,11 +126,22 @@ public class ApiConfig {
         return "".getBytes();
     }
 
+    public static void putEPGHistory(String url) {
+        if (!url.isEmpty()) {
+            ArrayList<String> epgHistory = Hawk.get(HawkConfig.EPG_HISTORY, new ArrayList<String>());
+            if (!epgHistory.contains(url))
+                epgHistory.add(0, url);
+            if (epgHistory.size() > 20)
+                epgHistory.remove(20);
+            Hawk.put(HawkConfig.EPG_HISTORY, epgHistory);
+        }
+    }
+
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required
         String apiUrl = Hawk.get(HawkConfig.API_URL, HomeActivity.getRes().getString(R.string.app_source));
         if (apiUrl.isEmpty()) {
-            callback.error("源地址为空");
+            callback.error("首次使用源地址为空：");
             return;
         }
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
@@ -382,7 +389,7 @@ public class ApiConfig {
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
         String liveURL = Hawk.get(HawkConfig.LIVE_URL, "");
-        String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
+        String epgURL = Hawk.get(HawkConfig.EPG_URL, "");
 
         String liveURL_final = null;
         try {
@@ -606,17 +613,6 @@ public class ApiConfig {
         }
     }
 
-    public static void putEPGHistory(String url) {
-        if (!url.isEmpty()) {
-            ArrayList<String> epgHistory = Hawk.get(HawkConfig.EPG_HISTORY, new ArrayList<String>());
-            if (!epgHistory.contains(url))
-                epgHistory.add(0, url);
-            if (epgHistory.size() > 20)
-                epgHistory.remove(20);
-            Hawk.put(HawkConfig.EPG_HISTORY, epgHistory);
-        }
-    }
-
     public void loadLives(JsonArray livesArray) {
         liveChannelGroupList.clear();
         int groupIndex = 0;
@@ -666,6 +662,11 @@ public class ApiConfig {
     }
 
     public Spider getCSP(SourceBean sourceBean) {
+
+        // Getting js api
+        if (sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?")) {
+            return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
+        }
         //pyramid-add-start
         if (sourceBean.getApi().startsWith("py_")) {
             try {
@@ -676,27 +677,22 @@ public class ApiConfig {
             }
         }
         //pyramid-add-end
-
-        // Getting js api
-        if (sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?")) {
-            return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
-        }
-
         return jarLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
     }
 
     public Object[] proxyLocal(Map param) {
         //pyramid-add-start
         try {
-            if(param.containsKey("api")){
+            if (param.containsKey("api")) {
                 String doStr = param.get("do").toString();
-                if(doStr.equals("ck"))
-                    return PythonLoader.getInstance().proxyLocal("","",param);
+                if (doStr.equals("ck"))
+                    return PythonLoader.getInstance().proxyLocal("", "", param);
                 SourceBean sourceBean = ApiConfig.get().getSource(doStr);
-                return PythonLoader.getInstance().proxyLocal(sourceBean.getKey(),sourceBean.getExt(),param);
-            }else{
+                return PythonLoader.getInstance().proxyLocal(sourceBean.getKey(), sourceBean.getExt(), param);
+            } else {
                 String doStr = param.get("do").toString();
-                if(doStr.equals("live")) return PythonLoader.getInstance().proxyLocal("","",param);
+                if (doStr.equals("live"))
+                    return PythonLoader.getInstance().proxyLocal("", "", param);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -714,20 +710,6 @@ public class ApiConfig {
         return jarLoader.jsonExtMix(flag, key, name, jxs, url);
     }
 
-    public interface LoadConfigCallback {
-        void success();
-
-        void retry();
-
-        void error(String msg);
-    }
-
-    public interface FastParseCallback {
-        void success(boolean parse, String url, Map<String, String> header);
-
-        void fail(int code, String msg);
-    }
-
     public SourceBean getSource(String key) {
         if (!sourceBeanList.containsKey(key))
             return null;
@@ -739,16 +721,16 @@ public class ApiConfig {
         Hawk.put(HawkConfig.HOME_API, sourceBean.getKey());
     }
 
+    public ParseBean getDefaultParse() {
+        return mDefaultParse;
+    }
+
     public void setDefaultParse(ParseBean parseBean) {
         if (this.mDefaultParse != null)
             this.mDefaultParse.setDefault(false);
         this.mDefaultParse = parseBean;
         Hawk.put(HawkConfig.DEFAULT_PARSE, parseBean.getName());
         parseBean.setDefault(true);
-    }
-
-    public ParseBean getDefaultParse() {
-        return mDefaultParse;
     }
 
     public List<SourceBean> getSourceBeanList() {
@@ -819,6 +801,20 @@ public class ApiConfig {
 
         }
         return url;
+    }
+
+    public interface LoadConfigCallback {
+        void success();
+
+        void retry();
+
+        void error(String msg);
+    }
+
+    public interface FastParseCallback {
+        void success(boolean parse, String url, Map<String, String> header);
+
+        void fail(int code, String msg);
     }
 
 }

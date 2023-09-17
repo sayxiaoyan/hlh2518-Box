@@ -27,6 +27,24 @@ import java.util.regex.Pattern;
  */
 public class DefaultConfig {
 
+    // takagen99 : 增加对flv|avi|mkv|rm|wmv|mpg等几种视频格式的支持
+    private static final Pattern snifferMatch = Pattern.compile(
+            "http((?!http).){20,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg)\\?.*|" +
+                    "http((?!http).){20,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg)|" +
+                    "http((?!http).)*?video/tos*|" +
+                    "http((?!http).){20,}?/m3u8\\?pt=m3u8.*|" +
+                    "http((?!http).)*?default\\.ixigua\\.com/.*|" +
+                    "http((?!http).)*?dycdn-tos\\.pstatp[^\\?]*|" +
+                    "http.*?/player/m3u8play\\.php\\?url=.*|" +
+                    "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
+                    "http.*?/playlist/m3u8/\\?vid=.*|" +
+                    "http.*?\\.php\\?type=m3u8&.*|" +
+                    "http.*?/download.aspx\\?.*|" +
+                    "http.*?/api/up_api.php\\?.*|" +
+                    "https.*?\\.66yk\\.cn.*|" +
+                    "http((?!http).)*?netease\\.com/file/.*"
+    );
+
     public static List<MovieSort.SortData> adjustSort(String sourceKey, List<MovieSort.SortData> list, boolean withMy) {
         List<MovieSort.SortData> data = new ArrayList<>();
         if (sourceKey != null) {
@@ -108,23 +126,6 @@ public class DefaultConfig {
         return start > -1 ? fileName.substring(0, start) : fileName;
     }
 
-    // takagen99 : 增加对flv|avi|mkv|rm|wmv|mpg等几种视频格式的支持
-    private static final Pattern snifferMatch = Pattern.compile(
-            "http((?!http).){20,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg)\\?.*|" +
-                    "http((?!http).){20,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg)|" +
-                    "http((?!http).)*?video/tos*|" +
-                    "http((?!http).){20,}?/m3u8\\?pt=m3u8.*|" +
-                    "http((?!http).)*?default\\.ixigua\\.com/.*|" +
-                    "http((?!http).)*?dycdn-tos\\.pstatp[^\\?]*|" +
-                    "http.*?/player/m3u8play\\.php\\?url=.*|" +
-                    "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
-                    "http.*?/playlist/m3u8/\\?vid=.*|" +
-                    "http.*?\\.php\\?type=m3u8&.*|" +
-                    "http.*?/download.aspx\\?.*|" +
-                    "http.*?/api/up_api.php\\?.*|" +
-                    "https.*?\\.66yk\\.cn.*|" +
-                    "http((?!http).)*?netease\\.com/file/.*"
-    );
     public static boolean isVideoFormat(String url) {
         if (url.contains("=http")) {
             return false;
@@ -182,7 +183,7 @@ public class DefaultConfig {
     }
 
     public static String[] StoragePermissionGroup() {
-        return new String[] {
+        return new String[]{
                 Permission.MANAGE_EXTERNAL_STORAGE
         };
     }
