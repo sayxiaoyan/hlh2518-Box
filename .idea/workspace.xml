@@ -65,7 +65,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "J:/heyin/Box-main",
+    "last_opened_file_path": "J:/heyin/Box-main/app",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   },
   "keyToStringList": {
@@ -76,6 +76,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\heyin\Box-main\app" />
       <recent name="J:\heyin\Box-main" />
     </key>
   </component>
