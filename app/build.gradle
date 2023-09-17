@@ -163,11 +163,11 @@ dependencies {
     implementation 'com.orhanobut:hawk:2.0.1'
 
     implementation 'androidx.annotation:annotation:1.6.0'
-    implementation "com.google.android.exoplayer:exoplayer-core:exoVersion"
-    implementation "com.google.android.exoplayer:exoplayer-dash:$exoVersion"
-    implementation "com.google.android.exoplayer:exoplayer-hls:$exoVersion"
-    implementation "com.google.android.exoplayer:exoplayer-rtsp:$exoVersion"
-    implementation "com.google.android.exoplayer:extension-rtmp:$exoVersion"
+    implementation "com.google.android.exoplayer:exoplayer-core:" + rootProject.ext.exoVersion
+    implementation "com.google.android.exoplayer:exoplayer-dash:" + rootProject.ext.exoVersion
+    implementation "com.google.android.exoplayer:exoplayer-hls:" + rootProject.ext.exoVersion
+    implementation "com.google.android.exoplayer:exoplayer-rtsp:" + rootProject.ext.exoVersion
+    implementation "com.google.android.exoplayer:extension-rtmp:" + rootProject.ext.exoVersion
     //implementation 'com.google.android.exoplayer:extension-okhttp:' + rootProject.ext.exoVersion
 
     implementation "com.aliyun.sdk.android:AliyunPlayer:5.5.1.0-full"
