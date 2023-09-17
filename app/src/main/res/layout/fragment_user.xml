@@ -305,7 +305,7 @@
     <com.owen.tvrecyclerview.widget.TvRecyclerView
         android:id="@+id/tvHotListForLine"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/vs_0"
+        android:layout_height="@dimen/vs_440"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
