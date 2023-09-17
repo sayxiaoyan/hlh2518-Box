@@ -127,6 +127,7 @@ public final class MyTsExtractor implements Extractor {
     private TsPayloadReader id3Reader;
     private int bytesSinceLastSync;
     private int pcrPid;
+
     public MyTsExtractor() {
         this(/* defaultTsPayloadReaderFlags= */ 0);
     }

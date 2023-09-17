@@ -2,15 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@drawable/shape_user_focus"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="horizontal">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/vs_50"
-        >
+        android:layout_height="@dimen/vs_50">
 
         <ImageView
             android:id="@+id/ivThumb"
@@ -21,9 +20,9 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
@@ -34,9 +33,9 @@
 
         <TextView
             android:id="@+id/tvNote"
-            android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="4"
             android:ellipsize="marquee"
             android:gravity="end"
             android:marqueeRepeatLimit="marquee_forever"

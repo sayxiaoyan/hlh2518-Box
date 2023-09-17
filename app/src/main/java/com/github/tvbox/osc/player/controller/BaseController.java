@@ -69,6 +69,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
     private ProgressBar mDialogBrightnessProgressBar;
     private ProgressBar mDialogVideoProgressBar;
     private ProgressBar mDialogVideoPauseBar;
+
     public BaseController(@NonNull Context context) {
         super(context);
         mHandler = new Handler(new Handler.Callback() {
@@ -112,9 +113,11 @@ public abstract class BaseController extends BaseVideoController implements Gest
         });
         mHandler.post(mRunnable);
     }
+
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
+
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }

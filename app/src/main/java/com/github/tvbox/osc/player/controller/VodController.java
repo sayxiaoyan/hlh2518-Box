@@ -1062,12 +1062,7 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessage(1000);
         mHandler.removeMessages(1001);
         mHandler.sendEmptyMessageDelayed(1001, 1000);
-    }    Runnable mHideBottomRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideBottom();
-        }
-    };
+    }
 
     @Override
     protected void onPlayStateChanged(int playState) {
@@ -1102,7 +1097,12 @@ public class VodController extends BaseController {
                 listener.playNext(true);
                 break;
         }
-    }
+    }    Runnable mHideBottomRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideBottom();
+        }
+    };
 
     boolean isBottomVisible() {
         return mBottomRoot.getVisibility() == VISIBLE;
@@ -1414,6 +1414,8 @@ public class VodController extends BaseController {
         void openVideo();
 
     }
+
+
 
 
 }

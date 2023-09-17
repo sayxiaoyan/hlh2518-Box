@@ -37,7 +37,6 @@
                 tools:text="Subtitle Options" />
 
             <LinearLayout
-                android:id="@+id/ll_subtitle_mode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -101,7 +100,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_subtitle_size"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/vs_55"
                 android:layout_gravity="center"
@@ -226,7 +224,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_subtitle_delay"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/vs_55"
                 android:layout_gravity="center"

@@ -26,28 +26,29 @@ import javax.net.ssl.X509TrustManager;
 public class SSLSocketFactoryCompat extends SSLSocketFactory {
     // 自定义一个信任所有证书的TrustManager，添加SSLSocketFactory的时候要用到
     public static final X509TrustManager trustAllCert = new X509TrustManager() {
-       // @Override
-      //  public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-      //  }
-       @Override
-       public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-       }
-      //  @Override
-       // public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-       // }
-      @Override
-      public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-      }
+        // @Override
+        //  public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+        //  }
+        @Override
+        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+        }
 
-       // @Override
-       // public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-       //     return new java.security.cert.X509Certificate[]{};
-       // }
-   // };
-       @Override
-       public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-           return new java.security.cert.X509Certificate[]{};
-       }
+        //  @Override
+        // public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+        // }
+        @Override
+        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+        }
+
+        // @Override
+        // public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        //     return new java.security.cert.X509Certificate[]{};
+        // }
+        // };
+        @Override
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return new java.security.cert.X509Certificate[]{};
+        }
     };
     // Android 5.0+ (API level21) provides reasonable default settings
     // but it still allows SSLv3

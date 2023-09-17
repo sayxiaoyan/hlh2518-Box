@@ -42,6 +42,7 @@ public class Style {
     public boolean italic;
     public boolean bold;
     public boolean underline;
+
     /**
      * Constructor that receives a String to use a its identifier
      *
@@ -50,6 +51,7 @@ public class Style {
     public Style(String styleName) {
         this.iD = styleName;
     }
+
     /**
      * Constructor that receives a String with the new styleName and a style to
      * copy

@@ -11,12 +11,12 @@
         android:layout_marginBottom="@dimen/vs_10"
         android:background="@drawable/shape_setting_sort_focus"
         android:focusable="true"
-        android:singleLine="true"
-        android:maxLines="1"
         android:gravity="center_vertical"
+        android:maxLines="1"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/vs_20"
         android:paddingRight="@dimen/vs_20"
+        android:singleLine="true"
         android:visibility="visible">
 
         <TextView
@@ -24,17 +24,18 @@
             android:layout_width="@dimen/vs_960"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:singleLine="true"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="字幕搜索结果"
             android:textColor="@android:color/white"
             android:textSize="@dimen/ts_22" />
+
         <TextView
             android:id="@+id/subtitleNameInfo"
             android:layout_width="@dimen/vs_80"
             android:layout_height="wrap_content"
-            android:singleLine="true"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="压缩包"
             android:textColor="@android:color/white"
             android:textSize="@dimen/ts_22" />

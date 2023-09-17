@@ -1173,7 +1173,7 @@ public class PlayActivity extends BaseActivity {
         stopLoadWebView(true);
         stopParse();
         Thunder.stop(false); // 停止磁力下载
-       // Jianpian.finish();//停止p2p下载
+        // Jianpian.finish();//停止p2p下载
     }
 
     private void playNext(boolean inProgress) {

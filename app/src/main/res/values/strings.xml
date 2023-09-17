@@ -47,8 +47,6 @@
     <string name="det_des"></string>
 
     // Settings Menu Page //
-    <string name="mn_config">Configuration Address</string>
-    <string name="mn_home">Source</string>
     <string name="mn_home_show">Show Source</string>
     <string name="mn_home_type">Type</string>
     <string name="mn_icon">Button</string>
@@ -107,24 +105,17 @@
     // Activity Page //
     <string name="act_app">Applications</string>
     <string name="act_app_sel">Select to Uninstall</string>
-    <string name="act_app_rm">Uninstall</string>
     <string name="act_fav">Favorite</string>
     <string name="act_fav_sel">Select to Remove</string>
-    <string name="act_fav_rm">Remove</string>
     <string name="act_drive">Drives</string>
     <string name="act_hist">History</string>
     <string name="act_hist_sel">Select to Remove</string>
-    <string name="act_hist_rm">Remove</string>
     <string name="act_search">Search</string>
     <string name="act_search_clr">Clear</string>
     <string name="act_search_del">Backspace</string>
     <string name="act_search_rem">Remote</string>
     <string name="act_search_trend">Trending</string>
     <string name="act_search_txt">Enter Search Title</string>
-    <string name="act_settings">Settings</string>
-    <string name="act_home">Home</string>
-    <string name="act_player">Player</string>
-    <string name="act_system">System</string>
 
     // Search Page //
     <string name="search_input">Input cannot be blank</string>
@@ -153,11 +144,6 @@
     <string name="vod_ends_at">Ends at</string>
 
     // EXO Player
-    <string name="exo_track_selection_title_video">Video</string>
-    <string name="exo_track_selection_title_audio">Audio</string>
-    <string name="exo_track_selection_title_text">Text</string>
-    <string name="exo_track_selection_none">None</string>
-    <string name="exo_track_selection_auto">Auto</string>
     <string name="exo_track_unknown">Unknown</string>
     <string name="exo_track_resolution">%1$d × %2$d</string>
     <string name="exo_track_mono">Mono</string>

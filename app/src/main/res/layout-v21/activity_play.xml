@@ -16,9 +16,9 @@
         android:layout_height="@dimen/vs_50"
         android:layout_gravity="center"
         android:indeterminateBehavior="repeat"
-        android:indeterminateTintMode="src_atop"
+        android:indeterminateOnly="true"
         android:indeterminateTint="?attr/color_theme_70"
-        android:indeterminateOnly="true" />
+        android:indeterminateTintMode="src_atop" />
 
     <ImageView
         android:id="@+id/play_load_error"

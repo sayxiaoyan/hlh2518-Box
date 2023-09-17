@@ -267,6 +267,14 @@ public abstract class BaseVideoController extends FrameLayout
         //重新开始计时
         stopFadeOut();
         postDelayed(mFadeOut, mDefaultTimeout);
+    }
+
+    /**
+     * 取消计时
+     */
+    @Override
+    public void stopFadeOut() {
+        removeCallbacks(mFadeOut);
     }    /**
      * 隐藏播放视图Runnable
      */
@@ -276,14 +284,6 @@ public abstract class BaseVideoController extends FrameLayout
             hide();
         }
     };
-
-    /**
-     * 取消计时
-     */
-    @Override
-    public void stopFadeOut() {
-        removeCallbacks(mFadeOut);
-    }
 
     @Override
     public boolean isLocked() {
@@ -539,8 +539,6 @@ public abstract class BaseVideoController extends FrameLayout
         onVisibilityChanged(isVisible, anim);
     }
 
-    //------------------------ start handle event change ------------------------//
-
     /**
      * 子类重写此方法监听控制的显示和隐藏
      *
@@ -550,6 +548,8 @@ public abstract class BaseVideoController extends FrameLayout
     protected void onVisibilityChanged(boolean isVisible, Animation anim) {
 
     }
+
+    //------------------------ start handle event change ------------------------//
 
     private void handlePlayStateChanged(int playState) {
         for (Map.Entry<IControlComponent, Boolean> next
@@ -657,6 +657,7 @@ public abstract class BaseVideoController extends FrameLayout
     protected void onLockStateChanged(boolean isLocked) {
 
     }
+
 
 
 

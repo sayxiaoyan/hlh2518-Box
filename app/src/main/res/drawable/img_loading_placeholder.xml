@@ -8,6 +8,6 @@
     </item>
     <item
         android:antialias="true"
-        android:gravity="center"
-        android:drawable="@drawable/icon_img_placeholder" />
+        android:drawable="@drawable/icon_img_placeholder"
+        android:gravity="center" />
 </layer-list>

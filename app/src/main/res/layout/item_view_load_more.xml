@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_40"
     android:visibility="invisible">
@@ -14,11 +13,11 @@
 
         <ProgressBar
             android:id="@+id/loading_progress"
+            style="?android:attr/progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@android:color/white"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_marginRight="@dimen/dp_4"/>
+            android:layout_marginRight="@dimen/dp_4"
+            android:indeterminateTint="@android:color/white" />
 
         <TextView
             android:id="@+id/loading_text"
@@ -27,7 +26,7 @@
             android:layout_marginLeft="@dimen/dp_4"
             android:text="@string/brvah_loading"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_14"/>
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <FrameLayout
@@ -38,11 +37,10 @@
 
 
         <TextView
-            android:id="@+id/tv_prommm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/brvah_load_failed"/>
+            android:text="@string/brvah_load_failed" />
 
     </FrameLayout>
 
@@ -57,6 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/brvah_load_end"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
     </FrameLayout>
 </FrameLayout>

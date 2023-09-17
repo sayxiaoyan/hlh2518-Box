@@ -93,6 +93,7 @@ public class RemoteServer extends NanoHTTPD {
      * 不支持跨域请求(CORS)
      */
     private boolean noCORS = false;
+
     public RemoteServer(int port, Context context) {
         super(port);
         mContext = context;

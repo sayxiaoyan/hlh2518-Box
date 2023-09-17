@@ -50,7 +50,6 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_arrow0"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -66,7 +65,6 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_arrow2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
@@ -75,7 +73,6 @@
                 android:src="@drawable/scrollviewleft" />
 
             <TextView
-                android:id="@+id/tv_arrow3"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -130,7 +127,6 @@
             android:paddingBottom="@dimen/vs_15">
 
             <TextView
-                android:id="@+id/tv_arrow"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -146,7 +142,6 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
@@ -155,7 +150,6 @@
                 android:src="@drawable/scrollviewright" />
 
             <TextView
-                android:id="@+id/tv_arrow2"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -211,7 +205,6 @@
                 android:scrollbars="none" />
 
             <TextView
-                android:id="@+id/txtNoEpg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -297,7 +290,6 @@
             android:paddingBottom="@dimen/vs_30">
 
             <LinearLayout
-                android:id="@+id/ll_line1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -305,7 +297,6 @@
                 android:paddingBottom="@dimen/vs_10">
 
                 <View
-                    android:id="@+id/redLine"
                     android:layout_width="@dimen/vs_6"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -359,7 +350,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_line2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -479,7 +469,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_line3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

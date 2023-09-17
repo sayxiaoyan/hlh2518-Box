@@ -54,7 +54,6 @@
                     android:padding="@dimen/vs_5">
 
                     <LinearLayout
-                        android:id="@+id/ll_apiHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/vs_5"
@@ -104,7 +103,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_liveHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/vs_5"
@@ -154,7 +152,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_EPGHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/vs_5"
@@ -211,8 +208,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/vs_10"
-                android:padding="@dimen/vs_5"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/vs_5">
 
                 <TextView
                     android:id="@+id/storagePermission"

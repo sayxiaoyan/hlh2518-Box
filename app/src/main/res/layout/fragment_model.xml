@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -1247,7 +1246,6 @@
                             android:textColor="@color/color_CBF46A"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
-
 
 
                 </LinearLayout>

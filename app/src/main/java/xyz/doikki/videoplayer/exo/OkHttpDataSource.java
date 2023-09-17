@@ -92,6 +92,7 @@ public class OkHttpDataSource extends BaseDataSource implements HttpDataSource {
     private boolean opened;
     private long bytesToRead;
     private long bytesRead;
+
     /**
      * @deprecated Use {@link OkHttpDataSource.Factory} instead.
      */

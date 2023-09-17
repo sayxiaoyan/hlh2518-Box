@@ -18,8 +18,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CustomImageDownloader implements Downloader {
-   private OkHttpClient client;
-   //final OkHttpClient client;
+    private OkHttpClient client;
+    //final OkHttpClient client;
 
     public CustomImageDownloader() {
         String pathName = FileUtils.getCachePath() + "/pic/";
@@ -35,10 +35,9 @@ public class CustomImageDownloader implements Downloader {
     }
 
 
-   // public CustomImageDownloader(OkHttpClient client) {
-   //     this.client = client;
-   // }
-
+    // public CustomImageDownloader(OkHttpClient client) {
+    //     this.client = client;
+    // }
 
 
     @Override

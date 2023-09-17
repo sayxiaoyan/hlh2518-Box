@@ -61,10 +61,10 @@
             android:layout_height="@dimen/vs_50"
             android:layout_marginStart="@dimen/vs_10"
             android:layout_marginEnd="@dimen/vs_10"
-            android:gravity="center"
             android:background="@drawable/button_dialog_vod"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:gravity="center"
             android:padding="@dimen/vs_5"
             android:src="@drawable/icon_delete" />
 
@@ -74,10 +74,10 @@
             android:layout_height="@dimen/vs_50"
             android:layout_marginStart="@dimen/vs_10"
             android:layout_marginEnd="@dimen/vs_10"
-            android:gravity="center"
             android:background="@drawable/button_dialog_vod"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:gravity="center"
             android:padding="@dimen/vs_5"
             android:src="@drawable/icon_clear" />
     </LinearLayout>
