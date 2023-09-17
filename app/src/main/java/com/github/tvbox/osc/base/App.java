@@ -17,14 +17,12 @@ import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.FixDexUtils;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.LocaleHelper;
-import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.js.JSEngine;
 import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
 
-import com.p2p.P2PClass;
 import org.conscrypt.Conscrypt;
 
 import java.io.FileInputStream;
@@ -42,8 +40,6 @@ import me.jessyan.autosize.unit.Subunits;
  */
 public class App extends MultiDexApplication {
     private static App instance;
-    private static P2PClass p;
-    public static String burl;
     public static Provider conscrypt = Conscrypt.newProvider();
     @Override
     public void onCreate() {
@@ -85,19 +81,6 @@ public class App extends MultiDexApplication {
         }
 
     }
-
-    public static P2PClass getp2p() {
-        try {
-            if (p == null) {
-                p = new P2PClass(instance.getExternalCacheDir().getAbsolutePath());
-            }
-            return p;
-        } catch (Exception e) {
-            LOG.e(e.toString());
-            return null;
-        }
-    }
-
 
     private void initParams() {
         // Hawk

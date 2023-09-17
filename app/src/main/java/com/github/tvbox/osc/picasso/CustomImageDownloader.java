@@ -1,6 +1,8 @@
 package com.github.tvbox.osc.picasso;
 
 import android.text.TextUtils;
+import com.github.tvbox.osc.util.FileUtils;
+import com.github.tvbox.osc.util.SSL.SSLSocketFactoryCompat;
 import com.github.tvbox.osc.util.UA;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -9,13 +11,24 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class CustomImageDownloader implements Downloader {
-    final OkHttpClient client;
+    private OkHttpClient client;
 
-    public CustomImageDownloader(OkHttpClient client) {
-        this.client = client;
+    public CustomImageDownloader() {
+        String pathName = FileUtils.getCachePath() + "/pic/";
+        File file = new File(pathName);
+        client = new OkHttpClient.Builder()
+                .cache(new okhttp3.Cache(file, 100 * 1024 * 1024)) // 设置缓存大小为 100 MB
+                .sslSocketFactory(new SSLSocketFactoryCompat(SSLSocketFactoryCompat.trustAllCert), SSLSocketFactoryCompat.trustAllCert)
+                .hostnameVerifier((hostname, session) -> true)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .build();
     }
 
     @Override
