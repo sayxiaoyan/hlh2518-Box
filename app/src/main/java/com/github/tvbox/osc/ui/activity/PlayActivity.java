@@ -82,6 +82,7 @@ import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.VideoParseRuler;
 import com.github.tvbox.osc.util.XWalkUtils;
+import com.github.tvbox.osc.util.js.jianpian;
 import com.github.tvbox.osc.util.thunder.Thunder;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.google.android.exoplayer2.Player;
@@ -1275,6 +1276,16 @@ public class PlayActivity extends BaseActivity {
             playUrl(vs.url.replace("tvbox-drive://", ""), headers);
             return;
         }
+        if (vs.url.startsWith("tvbox-xg:")) {
+            if (vs.url.startsWith("tvbox-xg://")) {
+                vs.url = vs.url.replace("tvbox-xg://", "tvbox-xg:");
+            }
+            if (!TextUtils.isEmpty(vs.url.substring(9))) {
+                mController.showParse(false);
+                playUrl(jianpian.JPUrlDec(vs.url.substring(9)), null);
+                return;
+            }
+        }
         if (Thunder.play(vs.url, new Thunder.ThunderCallback() {
             @Override
             public void status(int code, String info) {
@@ -1980,9 +1991,13 @@ public class PlayActivity extends BaseActivity {
                             if (csArray.length >= 2)
                                 charset = csArray[1];
                         }
-                        return new WebResourceResponse(contentType, charset, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            return new WebResourceResponse(contentType, charset, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                        }
                     } else {
-                        return new WebResourceResponse(contentTypeValue, null, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            return new WebResourceResponse(contentTypeValue, null, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                        }
                     }
                 } else {
                     String guessMimeType = "application/octet-stream";
@@ -1997,7 +2012,9 @@ public class PlayActivity extends BaseActivity {
                     } else if (url.endsWith(".jpg") || url.endsWith(".jpeg")) {
                         guessMimeType = "image/jpeg";
                     }
-                    return new WebResourceResponse(guessMimeType, null, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        return new WebResourceResponse(guessMimeType, null, response.code(), responsePhase, request.getHeaders(), response.body().byteStream());
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

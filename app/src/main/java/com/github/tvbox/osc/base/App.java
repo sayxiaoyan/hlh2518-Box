@@ -17,12 +17,14 @@ import com.github.tvbox.osc.util.EpgUtil;
 import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.FixDexUtils;
 import com.github.tvbox.osc.util.HawkConfig;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.LocaleHelper;
 import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.js.JSEngine;
 import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
+import com.p2p.P2PClass;
 import com.undcover.freedom.pyramid.PythonLoader;
 
 import org.conscrypt.Conscrypt;
@@ -41,8 +43,24 @@ import me.jessyan.autosize.unit.Subunits;
  * @description:
  */
 public class App extends MultiDexApplication {
-    private static App instance;
+
     public static Provider conscrypt = Conscrypt.newProvider();
+
+    public static String burl;
+    private static App instance;
+    private static P2PClass p;
+
+    public static P2PClass getp2p() {
+        try {
+            if (p == null) {
+                p = new P2PClass(instance.getExternalCacheDir().getAbsolutePath());
+            }
+            return p;
+        } catch (Exception e) {
+            LOG.e(e);
+            return null;
+        }
+    }
     @Override
     public void onCreate() {
         super.onCreate();
