@@ -120,11 +120,11 @@ dependencies {
     implementation 'com.orhanobut:hawk:2.0.1'
 
     implementation 'androidx.annotation:annotation:1.6.0'
-    implementation "com.google.android.exoplayer:exoplayer-core:2.19.0"
-    implementation "com.google.android.exoplayer:exoplayer-dash:2.19.0"
-    implementation "com.google.android.exoplayer:exoplayer-hls:2.19.0"
-    implementation "com.google.android.exoplayer:exoplayer-rtsp:2.19.0"
-    implementation "com.google.android.exoplayer:extension-rtmp:2.19.0"
+    implementation "com.google.android.exoplayer:exoplayer-core:exoVersion"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoVersion"
+    implementation "com.google.android.exoplayer:exoplayer-hls:$exoVersion"
+    implementation "com.google.android.exoplayer:exoplayer-rtsp:$exoVersion"
+    implementation "com.google.android.exoplayer:extension-rtmp:$exoVersion"
     //implementation 'com.google.android.exoplayer:extension-okhttp:' + rootProject.ext.exoVersion
 
     implementation "com.aliyun.sdk.android:AliyunPlayer:5.5.1.0-full"
@@ -133,6 +133,7 @@ dependencies {
     implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
 
     implementation project(":quickjs")
+    implementation project(":pyramid")
 
     implementation('org.xwalk:xwalk_shared_library:23.53.589.4') {
         exclude group: 'com.android.support'

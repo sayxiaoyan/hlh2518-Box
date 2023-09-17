@@ -4,10 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.github.tvbox.osc.BuildConfig;
+
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.data.AppDataManager;
@@ -22,6 +23,7 @@ import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.js.JSEngine;
 import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
+import com.undcover.freedom.pyramid.PythonLoader;
 
 import org.conscrypt.Conscrypt;
 
@@ -65,6 +67,9 @@ public class App extends MultiDexApplication {
                 .setSupportSP(false)
                 .setSupportSubunits(Subunits.MM);
         PlayerHelper.init();
+        //pyramid-add-start
+        PythonLoader.getInstance().setApplication(this);
+        //pyramid-add-end
 
         // Delete Cache
         /*File dir = getCacheDir();

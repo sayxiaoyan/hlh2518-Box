@@ -14,9 +14,6 @@
         putDefault(HawkConfig.SEARCH_VIEW, 2);    // Text or Picture
 
     }
-
-
-
 	
 	github命令行上传本地代码
 使用Personal access token
