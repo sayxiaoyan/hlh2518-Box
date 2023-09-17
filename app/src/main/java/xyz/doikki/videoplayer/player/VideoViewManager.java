@@ -14,27 +14,32 @@ import xyz.doikki.videoplayer.util.L;
 public class VideoViewManager {
 
     /**
+     * VideoViewManager实例
+     */
+    private static VideoViewManager sInstance;
+    /**
+     * VideoViewConfig实例
+     */
+    private static VideoViewConfig sConfig;
+    /**
      * 保存VideoView的容器
      */
     private final LinkedHashMap<String, VideoView> mVideoViews = new LinkedHashMap<>();
-
     /**
      * 是否在移动网络下直接播放视频
      */
     private boolean mPlayOnMobileNetwork;
 
-    /**
-     * VideoViewManager实例
-     */
-    private static VideoViewManager sInstance;
-
-    /**
-     * VideoViewConfig实例
-     */
-    private static VideoViewConfig sConfig;
-
     private VideoViewManager() {
         mPlayOnMobileNetwork = getConfig().mPlayOnMobileNetwork;
+    }
+
+    /**
+     * 获取VideoViewConfig
+     */
+    public static VideoViewConfig getConfig() {
+        setConfig(null);
+        return sConfig;
     }
 
     /**
@@ -50,12 +55,15 @@ public class VideoViewManager {
         }
     }
 
-    /**
-     * 获取VideoViewConfig
-     */
-    public static VideoViewConfig getConfig() {
-        setConfig(null);
-        return sConfig;
+    public static VideoViewManager instance() {
+        if (sInstance == null) {
+            synchronized (VideoViewManager.class) {
+                if (sInstance == null) {
+                    sInstance = new VideoViewManager();
+                }
+            }
+        }
+        return sInstance;
     }
 
     /**
@@ -72,19 +80,9 @@ public class VideoViewManager {
         mPlayOnMobileNetwork = playOnMobileNetwork;
     }
 
-    public static VideoViewManager instance() {
-        if (sInstance == null) {
-            synchronized (VideoViewManager.class) {
-                if (sInstance == null) {
-                    sInstance = new VideoViewManager();
-                }
-            }
-        }
-        return sInstance;
-    }
-
     /**
      * 添加VideoView
+     *
      * @param tag 相同tag的VideoView只会保存一个，如果tag相同则会release并移除前一个
      */
     public void add(VideoView videoView, String tag) {

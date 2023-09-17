@@ -41,15 +41,13 @@ import tv.danmaku.ijk.media.player.misc.ITrackInfo;
 import tv.danmaku.ijk.media.player.pragma.DebugLog;
 
 public class AndroidMediaPlayer extends AbstractMediaPlayer {
+    private static MediaInfo sMediaInfo;
     private final MediaPlayer mInternalMediaPlayer;
     private final AndroidMediaPlayerListenerHolder mInternalListenerAdapter;
+    private final Object mInitLock = new Object();
     private String mDataSource;
     private MediaDataSource mMediaDataSource;
-
-    private final Object mInitLock = new Object();
     private boolean mIsReleased;
-
-    private static MediaInfo sMediaInfo;
 
     public AndroidMediaPlayer() {
         synchronized (mInitLock) {
@@ -93,6 +91,11 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
     }
 
     @Override
+    public String getDataSource() {
+        return mDataSource;
+    }
+
+    @Override
     public void setDataSource(FileDescriptor fd)
             throws IOException, IllegalArgumentException, IllegalStateException {
         mInternalMediaPlayer.setDataSource(fd);
@@ -119,35 +122,6 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
 
         mMediaDataSource = new MediaDataSourceProxy(mediaDataSource);
         mInternalMediaPlayer.setDataSource(mMediaDataSource);
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private static class MediaDataSourceProxy extends MediaDataSource {
-        private final IMediaDataSource mMediaDataSource;
-
-        public MediaDataSourceProxy(IMediaDataSource mediaDataSource) {
-            mMediaDataSource = mediaDataSource;
-        }
-
-        @Override
-        public int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
-            return mMediaDataSource.readAt(position, buffer, offset, size);
-        }
-
-        @Override
-        public long getSize() throws IOException {
-            return mMediaDataSource.getSize();
-        }
-
-        @Override
-        public void close() throws IOException {
-            mMediaDataSource.close();
-        }
-    }
-
-    @Override
-    public String getDataSource() {
-        return mDataSource;
     }
 
     private void releaseMediaDataSource() {
@@ -268,13 +242,13 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
     }
 
     @Override
-    public void setLooping(boolean looping) {
-        mInternalMediaPlayer.setLooping(looping);
+    public boolean isLooping() {
+        return mInternalMediaPlayer.isLooping();
     }
 
     @Override
-    public boolean isLooping() {
-        return mInternalMediaPlayer.isLooping();
+    public void setLooping(boolean looping) {
+        mInternalMediaPlayer.setLooping(looping);
     }
 
     @Override
@@ -345,6 +319,30 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
         mInternalMediaPlayer.setOnErrorListener(mInternalListenerAdapter);
         mInternalMediaPlayer.setOnInfoListener(mInternalListenerAdapter);
         mInternalMediaPlayer.setOnTimedTextListener(mInternalListenerAdapter);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private static class MediaDataSourceProxy extends MediaDataSource {
+        private final IMediaDataSource mMediaDataSource;
+
+        public MediaDataSourceProxy(IMediaDataSource mediaDataSource) {
+            mMediaDataSource = mediaDataSource;
+        }
+
+        @Override
+        public int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+            return mMediaDataSource.readAt(position, buffer, offset, size);
+        }
+
+        @Override
+        public long getSize() throws IOException {
+            return mMediaDataSource.getSize();
+        }
+
+        @Override
+        public void close() throws IOException {
+            mMediaDataSource.close();
+        }
     }
 
     private class AndroidMediaPlayerListenerHolder implements

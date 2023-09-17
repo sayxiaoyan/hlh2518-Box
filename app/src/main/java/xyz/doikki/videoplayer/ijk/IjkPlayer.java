@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import java.io.IOException;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -23,9 +22,9 @@ public class IjkPlayer extends AbstractPlayer implements IMediaPlayer.OnErrorLis
         IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnPreparedListener,
         IMediaPlayer.OnVideoSizeChangedListener, IjkMediaPlayer.OnNativeInvokeListener {
 
+    protected final Context mAppContext;
     protected IjkMediaPlayer mMediaPlayer;
     private int mBufferedPercent;
-    protected final Context mAppContext;
 
     public IjkPlayer(Context context) {
         mAppContext = context;
@@ -187,13 +186,13 @@ public class IjkPlayer extends AbstractPlayer implements IMediaPlayer.OnErrorLis
     }
 
     @Override
-    public void setSpeed(float speed) {
-        mMediaPlayer.setSpeed(speed);
+    public float getSpeed() {
+        return mMediaPlayer.getSpeed();
     }
 
     @Override
-    public float getSpeed() {
-        return mMediaPlayer.getSpeed();
+    public void setSpeed(float speed) {
+        mMediaPlayer.setSpeed(speed);
     }
 
     @Override

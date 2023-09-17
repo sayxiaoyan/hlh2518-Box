@@ -67,6 +67,11 @@ public class MediaPlayerProxy implements IMediaPlayer {
     }
 
     @Override
+    public String getDataSource() {
+        return mBackEndMediaPlayer.getDataSource();
+    }
+
+    @Override
     public void setDataSource(FileDescriptor fd)
             throws IOException, IllegalArgumentException, IllegalStateException {
         mBackEndMediaPlayer.setDataSource(fd);
@@ -78,13 +83,8 @@ public class MediaPlayerProxy implements IMediaPlayer {
     }
 
     @Override
-    public void setDataSource(IMediaDataSource mediaDataSource)  {
+    public void setDataSource(IMediaDataSource mediaDataSource) {
         mBackEndMediaPlayer.setDataSource(mediaDataSource);
-    }
-
-    @Override
-    public String getDataSource() {
-        return mBackEndMediaPlayer.getDataSource();
     }
 
     @Override
@@ -328,12 +328,12 @@ public class MediaPlayerProxy implements IMediaPlayer {
     }
 
     @Override
-    public void setLooping(boolean looping) {
-        mBackEndMediaPlayer.setLooping(looping);
+    public boolean isLooping() {
+        return mBackEndMediaPlayer.isLooping();
     }
 
     @Override
-    public boolean isLooping() {
-        return mBackEndMediaPlayer.isLooping();
+    public void setLooping(boolean looping) {
+        mBackEndMediaPlayer.setLooping(looping);
     }
 }

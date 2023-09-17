@@ -20,9 +20,9 @@ package tv.danmaku.ijk.media.player;
 import android.graphics.SurfaceTexture;
 
 public interface ISurfaceTextureHolder {
-    void setSurfaceTexture(SurfaceTexture surfaceTexture);
-
     SurfaceTexture getSurfaceTexture();
+
+    void setSurfaceTexture(SurfaceTexture surfaceTexture);
 
     void setSurfaceTextureHost(ISurfaceTextureHost surfaceTextureHost);
 }

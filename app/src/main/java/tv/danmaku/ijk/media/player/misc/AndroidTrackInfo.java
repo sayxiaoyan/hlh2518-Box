@@ -25,6 +25,10 @@ import android.os.Build;
 public class AndroidTrackInfo implements ITrackInfo {
     private final MediaPlayer.TrackInfo mTrackInfo;
 
+    private AndroidTrackInfo(MediaPlayer.TrackInfo trackInfo) {
+        mTrackInfo = trackInfo;
+    }
+
     public static AndroidTrackInfo[] fromMediaPlayer(MediaPlayer mp) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             return fromTrackInfo(mp.getTrackInfo());
@@ -42,10 +46,6 @@ public class AndroidTrackInfo implements ITrackInfo {
         }
 
         return androidTrackInfo;
-    }
-
-    private AndroidTrackInfo(MediaPlayer.TrackInfo trackInfo) {
-        mTrackInfo = trackInfo;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

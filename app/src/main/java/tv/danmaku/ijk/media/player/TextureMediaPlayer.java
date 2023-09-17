@@ -75,6 +75,11 @@ public class TextureMediaPlayer extends MediaPlayerProxy implements IMediaPlayer
     //--------------------
 
     @Override
+    public SurfaceTexture getSurfaceTexture() {
+        return mSurfaceTexture;
+    }
+
+    @Override
     public void setSurfaceTexture(SurfaceTexture surfaceTexture) {
         if (mSurfaceTexture == surfaceTexture)
             return;
@@ -86,11 +91,6 @@ public class TextureMediaPlayer extends MediaPlayerProxy implements IMediaPlayer
         } else {
             super.setSurface(new Surface(surfaceTexture));
         }
-    }
-
-    @Override
-    public SurfaceTexture getSurfaceTexture() {
-        return mSurfaceTexture;
     }
 
     @Override

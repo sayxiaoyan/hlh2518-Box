@@ -11,26 +11,14 @@ import xyz.doikki.videoplayer.render.TextureRenderViewFactory;
  */
 public class VideoViewConfig {
 
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public final boolean mPlayOnMobileNetwork;
-
     public final boolean mEnableOrientation;
-
     public final boolean mEnableAudioFocus;
-
     public final boolean mIsEnableLog;
-
     public final ProgressManager mProgressManager;
-
     public final PlayerFactory mPlayerFactory;
-
     public final int mScreenScaleType;
-
     public final RenderViewFactory mRenderViewFactory;
-
     public final boolean mAdaptCutout;
 
     private VideoViewConfig(Builder builder) {
@@ -55,6 +43,9 @@ public class VideoViewConfig {
         mAdaptCutout = builder.mAdaptCutout;
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     public final static class Builder {
 

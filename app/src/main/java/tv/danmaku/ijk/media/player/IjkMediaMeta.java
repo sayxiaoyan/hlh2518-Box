@@ -81,114 +81,61 @@ public class IjkMediaMeta {
     public static final long AV_CH_LAYOUT_3POINT1 = (AV_CH_LAYOUT_SURROUND | AV_CH_LOW_FREQUENCY);
     public static final long AV_CH_LAYOUT_4POINT0 = (AV_CH_LAYOUT_SURROUND | AV_CH_BACK_CENTER);
     public static final long AV_CH_LAYOUT_4POINT1 = (AV_CH_LAYOUT_4POINT0 | AV_CH_LOW_FREQUENCY);
-    public static final long AV_CH_LAYOUT_2_2 = (AV_CH_LAYOUT_STEREO
-            | AV_CH_SIDE_LEFT | AV_CH_SIDE_RIGHT);
-    public static final long AV_CH_LAYOUT_QUAD = (AV_CH_LAYOUT_STEREO
-            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
     public static final long AV_CH_LAYOUT_5POINT0 = (AV_CH_LAYOUT_SURROUND
             | AV_CH_SIDE_LEFT | AV_CH_SIDE_RIGHT);
     public static final long AV_CH_LAYOUT_5POINT1 = (AV_CH_LAYOUT_5POINT0 | AV_CH_LOW_FREQUENCY);
-    public static final long AV_CH_LAYOUT_5POINT0_BACK = (AV_CH_LAYOUT_SURROUND
-            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
-    public static final long AV_CH_LAYOUT_5POINT1_BACK = (AV_CH_LAYOUT_5POINT0_BACK | AV_CH_LOW_FREQUENCY);
-    public static final long AV_CH_LAYOUT_6POINT0 = (AV_CH_LAYOUT_5POINT0 | AV_CH_BACK_CENTER);
-    public static final long AV_CH_LAYOUT_6POINT0_FRONT = (AV_CH_LAYOUT_2_2
-            | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
-    public static final long AV_CH_LAYOUT_HEXAGONAL = (AV_CH_LAYOUT_5POINT0_BACK | AV_CH_BACK_CENTER);
     public static final long AV_CH_LAYOUT_6POINT1 = (AV_CH_LAYOUT_5POINT1 | AV_CH_BACK_CENTER);
-    public static final long AV_CH_LAYOUT_6POINT1_BACK = (AV_CH_LAYOUT_5POINT1_BACK | AV_CH_BACK_CENTER);
-    public static final long AV_CH_LAYOUT_6POINT1_FRONT = (AV_CH_LAYOUT_6POINT0_FRONT | AV_CH_LOW_FREQUENCY);
-    public static final long AV_CH_LAYOUT_7POINT0 = (AV_CH_LAYOUT_5POINT0
-            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
-    public static final long AV_CH_LAYOUT_7POINT0_FRONT = (AV_CH_LAYOUT_5POINT0
-            | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
     public static final long AV_CH_LAYOUT_7POINT1 = (AV_CH_LAYOUT_5POINT1
             | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
     public static final long AV_CH_LAYOUT_7POINT1_WIDE = (AV_CH_LAYOUT_5POINT1
             | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
-    public static final long AV_CH_LAYOUT_7POINT1_WIDE_BACK = (AV_CH_LAYOUT_5POINT1_BACK
+    public static final long AV_CH_LAYOUT_6POINT0 = (AV_CH_LAYOUT_5POINT0 | AV_CH_BACK_CENTER);
+    public static final long AV_CH_LAYOUT_7POINT0 = (AV_CH_LAYOUT_5POINT0
+            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
+    public static final long AV_CH_LAYOUT_7POINT0_FRONT = (AV_CH_LAYOUT_5POINT0
             | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
     public static final long AV_CH_LAYOUT_OCTAGONAL = (AV_CH_LAYOUT_5POINT0
             | AV_CH_BACK_LEFT | AV_CH_BACK_CENTER | AV_CH_BACK_RIGHT);
+    public static final long AV_CH_LAYOUT_5POINT0_BACK = (AV_CH_LAYOUT_SURROUND
+            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
+    public static final long AV_CH_LAYOUT_5POINT1_BACK = (AV_CH_LAYOUT_5POINT0_BACK | AV_CH_LOW_FREQUENCY);
+    public static final long AV_CH_LAYOUT_6POINT1_BACK = (AV_CH_LAYOUT_5POINT1_BACK | AV_CH_BACK_CENTER);
+    public static final long AV_CH_LAYOUT_7POINT1_WIDE_BACK = (AV_CH_LAYOUT_5POINT1_BACK
+            | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
+    public static final long AV_CH_LAYOUT_HEXAGONAL = (AV_CH_LAYOUT_5POINT0_BACK | AV_CH_BACK_CENTER);
+    public static final long AV_CH_LAYOUT_2_2 = (AV_CH_LAYOUT_STEREO
+            | AV_CH_SIDE_LEFT | AV_CH_SIDE_RIGHT);
+    public static final long AV_CH_LAYOUT_6POINT0_FRONT = (AV_CH_LAYOUT_2_2
+            | AV_CH_FRONT_LEFT_OF_CENTER | AV_CH_FRONT_RIGHT_OF_CENTER);
+    public static final long AV_CH_LAYOUT_6POINT1_FRONT = (AV_CH_LAYOUT_6POINT0_FRONT | AV_CH_LOW_FREQUENCY);
+    public static final long AV_CH_LAYOUT_QUAD = (AV_CH_LAYOUT_STEREO
+            | AV_CH_BACK_LEFT | AV_CH_BACK_RIGHT);
     public static final long AV_CH_LAYOUT_STEREO_DOWNMIX = (AV_CH_STEREO_LEFT | AV_CH_STEREO_RIGHT);
 
-    public static final int FF_PROFILE_H264_CONSTRAINED = (1<<9);  // 8+1; constraint_set1_flag
-    public static final int FF_PROFILE_H264_INTRA = (1<<11);       // 8+3; constraint_set3_flag
+    public static final int FF_PROFILE_H264_CONSTRAINED = (1 << 9);  // 8+1; constraint_set1_flag
+    public static final int FF_PROFILE_H264_INTRA = (1 << 11);       // 8+3; constraint_set3_flag
 
     public static final int FF_PROFILE_H264_BASELINE = 66;
-    public static final int FF_PROFILE_H264_CONSTRAINED_BASELINE = (66|FF_PROFILE_H264_CONSTRAINED);
+    public static final int FF_PROFILE_H264_CONSTRAINED_BASELINE = (66 | FF_PROFILE_H264_CONSTRAINED);
     public static final int FF_PROFILE_H264_MAIN = 77;
     public static final int FF_PROFILE_H264_EXTENDED = 88;
     public static final int FF_PROFILE_H264_HIGH = 100;
     public static final int FF_PROFILE_H264_HIGH_10 = 110;
-    public static final int FF_PROFILE_H264_HIGH_10_INTRA = (110|FF_PROFILE_H264_INTRA);
+    public static final int FF_PROFILE_H264_HIGH_10_INTRA = (110 | FF_PROFILE_H264_INTRA);
     public static final int FF_PROFILE_H264_HIGH_422 = 122;
-    public static final int FF_PROFILE_H264_HIGH_422_INTRA = (122|FF_PROFILE_H264_INTRA);
+    public static final int FF_PROFILE_H264_HIGH_422_INTRA = (122 | FF_PROFILE_H264_INTRA);
     public static final int FF_PROFILE_H264_HIGH_444 = 144;
     public static final int FF_PROFILE_H264_HIGH_444_PREDICTIVE = 244;
-    public static final int FF_PROFILE_H264_HIGH_444_INTRA = (244|FF_PROFILE_H264_INTRA);
+    public static final int FF_PROFILE_H264_HIGH_444_INTRA = (244 | FF_PROFILE_H264_INTRA);
     public static final int FF_PROFILE_H264_CAVLC_444 = 44;
-
+    public final ArrayList<IjkStreamMeta> mStreams = new ArrayList<IjkStreamMeta>();
     public Bundle mMediaMeta;
-
     public String mFormat;
     public long mDurationUS;
     public long mStartUS;
     public long mBitrate;
-
-    public final ArrayList<IjkStreamMeta> mStreams = new ArrayList<IjkStreamMeta>();
     public IjkStreamMeta mVideoStream;
     public IjkStreamMeta mAudioStream;
-
-    public String getString(String key) {
-        return mMediaMeta.getString(key);
-    }
-
-    public int getInt(String key) {
-        return getInt(key, 0);
-    }
-
-    public int getInt(String key, int defaultValue) {
-        String value = getString(key);
-        if (TextUtils.isEmpty(value))
-            return defaultValue;
-
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
-    }
-
-    public long getLong(String key) {
-        return getLong(key, 0);
-    }
-
-    public long getLong(String key, long defaultValue) {
-        String value = getString(key);
-        if (TextUtils.isEmpty(value))
-            return defaultValue;
-
-        try {
-            return Long.parseLong(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
-    }
-
-    public ArrayList<Bundle> getParcelableArrayList(String key) {
-        return mMediaMeta.getParcelableArrayList(key);
-    }
-
-    public String getDurationInline() {
-        long duration = mDurationUS + 5000;
-        long secs = duration / 1000000;
-        long mins = secs / 60;
-        secs %= 60;
-        long hours = mins / 60;
-        mins %= 60;
-        return String.format(Locale.US, "%02d:%02d:%02d", hours, mins, secs);
-    }
 
     public static IjkMediaMeta parse(Bundle mediaMeta) {
         if (mediaMeta == null)
@@ -262,10 +209,59 @@ public class IjkMediaMeta {
         return meta;
     }
 
-    public static class IjkStreamMeta {
-        public Bundle mMeta;
+    public String getString(String key) {
+        return mMediaMeta.getString(key);
+    }
 
+    public int getInt(String key) {
+        return getInt(key, 0);
+    }
+
+    public int getInt(String key, int defaultValue) {
+        String value = getString(key);
+        if (TextUtils.isEmpty(value))
+            return defaultValue;
+
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    public long getLong(String key) {
+        return getLong(key, 0);
+    }
+
+    public long getLong(String key, long defaultValue) {
+        String value = getString(key);
+        if (TextUtils.isEmpty(value))
+            return defaultValue;
+
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    public ArrayList<Bundle> getParcelableArrayList(String key) {
+        return mMediaMeta.getParcelableArrayList(key);
+    }
+
+    public String getDurationInline() {
+        long duration = mDurationUS + 5000;
+        long secs = duration / 1000000;
+        long mins = secs / 60;
+        secs %= 60;
+        long hours = mins / 60;
+        mins %= 60;
+        return String.format(Locale.US, "%02d:%02d:%02d", hours, mins, secs);
+    }
+
+    public static class IjkStreamMeta {
         public final int mIndex;
+        public Bundle mMeta;
         public String mType;
         public String mLanguage;
 

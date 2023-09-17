@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
  * 并对部分api做了封装，方便使用
  */
 public class ControlWrapper implements MediaPlayerControl, IVideoController {
-    
+
     private final MediaPlayerControl mPlayerControl;
     private final IVideoController mController;
-    
+
     public ControlWrapper(@NonNull MediaPlayerControl playerControl, @NonNull IVideoController controller) {
         mPlayerControl = playerControl;
         mController = controller;
     }
-    
+
     @Override
     public void start() {
         mPlayerControl.start();
@@ -71,13 +71,13 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     }
 
     @Override
-    public void setMute(boolean isMute) {
-        mPlayerControl.setMute(isMute);
+    public boolean isMute() {
+        return mPlayerControl.isMute();
     }
 
     @Override
-    public boolean isMute() {
-        return mPlayerControl.isMute();
+    public void setMute(boolean isMute) {
+        mPlayerControl.setMute(isMute);
     }
 
     @Override
@@ -86,13 +86,13 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     }
 
     @Override
-    public void setSpeed(float speed) {
-        mPlayerControl.setSpeed(speed);
+    public float getSpeed() {
+        return mPlayerControl.getSpeed();
     }
 
     @Override
-    public float getSpeed() {
-        return mPlayerControl.getSpeed();
+    public void setSpeed(float speed) {
+        mPlayerControl.setSpeed(speed);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
         if (isFullScreen()) {
             stopFullScreen();
             if (width > height) {
-               activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         } else {
             startFullScreen();
@@ -215,13 +215,13 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     }
 
     @Override
-    public void setLocked(boolean locked) {
-        mController.setLocked(locked);
+    public boolean isLocked() {
+        return mController.isLocked();
     }
 
     @Override
-    public boolean isLocked() {
-        return mController.isLocked();
+    public void setLocked(boolean locked) {
+        mController.setLocked(locked);
     }
 
     @Override

@@ -45,56 +45,8 @@ public class IjkMediaFormat implements IMediaFormat {
 
     // Codec
     public static final String CODEC_NAME_H264 = "h264";
-
-    public final IjkMediaMeta.IjkStreamMeta mMediaFormat;
-
-    public IjkMediaFormat(IjkMediaMeta.IjkStreamMeta streamMeta) {
-        mMediaFormat = streamMeta;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    public int getInteger(String name) {
-        if (mMediaFormat == null)
-            return 0;
-
-        return mMediaFormat.getInt(name);
-    }
-
-    @Override
-    public String getString(String name) {
-        if (mMediaFormat == null)
-            return null;
-
-        if (sFormatterMap.containsKey(name)) {
-            Formatter formatter = sFormatterMap.get(name);
-            return formatter.format(this);
-        }
-
-        return mMediaFormat.getString(name);
-    }
-
-    //-------------------------
-    // Formatter
-    //-------------------------
-
-    private static abstract class Formatter {
-        public String format(IjkMediaFormat mediaFormat) {
-            String value = doFormat(mediaFormat);
-            if (TextUtils.isEmpty(value))
-                return getDefaultString();
-            return value;
-        }
-
-        protected abstract String doFormat(IjkMediaFormat mediaFormat);
-
-        @SuppressWarnings("SameReturnValue")
-        protected String getDefaultString() {
-            return "N/A";
-        }
-    }
-
     private static final Map<String, Formatter> sFormatterMap = new HashMap<String, Formatter>();
+    public final IjkMediaMeta.IjkStreamMeta mMediaFormat;
 
     {
         sFormatterMap.put(KEY_IJK_CODEC_LONG_NAME_UI, new Formatter() {
@@ -255,5 +207,51 @@ public class IjkMediaFormat implements IMediaFormat {
                 }
             }
         });
+    }
+
+    public IjkMediaFormat(IjkMediaMeta.IjkStreamMeta streamMeta) {
+        mMediaFormat = streamMeta;
+    }
+
+    //-------------------------
+    // Formatter
+    //-------------------------
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public int getInteger(String name) {
+        if (mMediaFormat == null)
+            return 0;
+
+        return mMediaFormat.getInt(name);
+    }
+
+    @Override
+    public String getString(String name) {
+        if (mMediaFormat == null)
+            return null;
+
+        if (sFormatterMap.containsKey(name)) {
+            Formatter formatter = sFormatterMap.get(name);
+            return formatter.format(this);
+        }
+
+        return mMediaFormat.getString(name);
+    }
+
+    private static abstract class Formatter {
+        public String format(IjkMediaFormat mediaFormat) {
+            String value = doFormat(mediaFormat);
+            if (TextUtils.isEmpty(value))
+                return getDefaultString();
+            return value;
+        }
+
+        protected abstract String doFormat(IjkMediaFormat mediaFormat);
+
+        @SuppressWarnings("SameReturnValue")
+        protected String getDefaultString() {
+            return "N/A";
+        }
     }
 }

@@ -50,12 +50,12 @@ public interface IMediaPlayer {
     int MEDIA_INFO_SUBTITLE_TIMED_OUT = 902;
 
     int MEDIA_INFO_VIDEO_ROTATION_CHANGED = 10001;
-    int MEDIA_INFO_AUDIO_RENDERING_START  = 10002;
-    int MEDIA_INFO_AUDIO_DECODED_START    = 10003;
-    int MEDIA_INFO_VIDEO_DECODED_START    = 10004;
-    int MEDIA_INFO_OPEN_INPUT             = 10005;
-    int MEDIA_INFO_FIND_STREAM_INFO       = 10006;
-    int MEDIA_INFO_COMPONENT_OPEN         = 10007;
+    int MEDIA_INFO_AUDIO_RENDERING_START = 10002;
+    int MEDIA_INFO_AUDIO_DECODED_START = 10003;
+    int MEDIA_INFO_VIDEO_DECODED_START = 10004;
+    int MEDIA_INFO_OPEN_INPUT = 10005;
+    int MEDIA_INFO_FIND_STREAM_INFO = 10006;
+    int MEDIA_INFO_COMPONENT_OPEN = 10007;
     int MEDIA_INFO_VIDEO_SEEK_RENDERING_START = 10008;
     int MEDIA_INFO_AUDIO_SEEK_RENDERING_START = 10009;
     int MEDIA_INFO_MEDIA_ACCURATE_SEEK_COMPLETE = 10100;
@@ -77,13 +77,18 @@ public interface IMediaPlayer {
     void setDataSource(Context context, Uri uri, Map<String, String> headers)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
 
+    String getDataSource();
+
     void setDataSource(FileDescriptor fd)
             throws IOException, IllegalArgumentException, IllegalStateException;
 
     void setDataSource(String path)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
 
-    String getDataSource();
+    /*--------------------
+     * AndroidMediaPlayer: M:
+     */
+    void setDataSource(IMediaDataSource mediaDataSource);
 
     void prepareAsync() throws IllegalStateException;
 
@@ -144,6 +149,35 @@ public interface IMediaPlayer {
     void setOnTimedTextListener(OnTimedTextListener listener);
 
     /*--------------------
+     * Optional
+     */
+    void setAudioStreamType(int streamtype);
+
+    @Deprecated
+    void setKeepInBackground(boolean keepInBackground);
+
+    int getVideoSarNum();
+
+    int getVideoSarDen();
+
+    @Deprecated
+    void setWakeMode(Context context, int mode);
+
+    boolean isLooping();
+
+    void setLooping(boolean looping);
+
+    /*--------------------
+     * AndroidMediaPlayer: JELLY_BEAN
+     */
+    ITrackInfo[] getTrackInfo();
+
+    /*--------------------
+     * AndroidMediaPlayer: ICE_CREAM_SANDWICH:
+     */
+    void setSurface(Surface surface);
+
+    /*--------------------
      * Listeners
      */
     interface OnPreparedListener {
@@ -178,38 +212,4 @@ public interface IMediaPlayer {
     interface OnTimedTextListener {
         void onTimedText(IMediaPlayer mp, IjkTimedText text);
     }
-
-    /*--------------------
-     * Optional
-     */
-    void setAudioStreamType(int streamtype);
-
-    @Deprecated
-    void setKeepInBackground(boolean keepInBackground);
-
-    int getVideoSarNum();
-
-    int getVideoSarDen();
-
-    @Deprecated
-    void setWakeMode(Context context, int mode);
-
-    void setLooping(boolean looping);
-
-    boolean isLooping();
-
-    /*--------------------
-     * AndroidMediaPlayer: JELLY_BEAN
-     */
-    ITrackInfo[] getTrackInfo();
-
-    /*--------------------
-     * AndroidMediaPlayer: ICE_CREAM_SANDWICH:
-     */
-    void setSurface(Surface surface);
-
-    /*--------------------
-     * AndroidMediaPlayer: M:
-     */
-    void setDataSource(IMediaDataSource mediaDataSource);
 }

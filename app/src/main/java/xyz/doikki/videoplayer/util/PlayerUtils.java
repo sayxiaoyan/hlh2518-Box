@@ -35,6 +35,13 @@ import java.util.Locale;
 
 public final class PlayerUtils {
 
+    public static final int NO_NETWORK = 0;
+    public static final int NETWORK_CLOSED = 1;
+    public static final int NETWORK_ETHERNET = 2;
+    public static final int NETWORK_WIFI = 3;
+    public static final int NETWORK_MOBILE = 4;
+    public static final int NETWORK_UNKNOWN = -1;
+
     private PlayerUtils() {
     }
 
@@ -165,14 +172,6 @@ public final class PlayerUtils {
                 || e.getRawY() > getScreenHeight(context, true) - edgeSize;
     }
 
-
-    public static final int NO_NETWORK = 0;
-    public static final int NETWORK_CLOSED = 1;
-    public static final int NETWORK_ETHERNET = 2;
-    public static final int NETWORK_WIFI = 3;
-    public static final int NETWORK_MOBILE = 4;
-    public static final int NETWORK_UNKNOWN = -1;
-
     /**
      * 判断当前网络类型
      */
@@ -185,7 +184,7 @@ public final class PlayerUtils {
             return NO_NETWORK;
         }
 
-        NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
         if (networkInfo == null) {
             // 没有任何网络
             return NO_NETWORK;

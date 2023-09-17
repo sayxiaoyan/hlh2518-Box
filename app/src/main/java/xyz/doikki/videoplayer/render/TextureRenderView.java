@@ -22,13 +22,13 @@ public class TextureRenderView extends TextureView implements IRenderView, Textu
     private AbstractPlayer mMediaPlayer;
     private Surface mSurface;
 
-    public TextureRenderView(Context context) {
-        super(context);
-    }
-
     {
         mMeasureHelper = new MeasureHelper();
         setSurfaceTextureListener(this);
+    }
+
+    public TextureRenderView(Context context) {
+        super(context);
     }
 
     @Override

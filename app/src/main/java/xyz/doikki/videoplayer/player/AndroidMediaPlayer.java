@@ -20,8 +20,8 @@ public class AndroidMediaPlayer extends AbstractPlayer implements MediaPlayer.On
         MediaPlayer.OnVideoSizeChangedListener {
 
     protected MediaPlayer mMediaPlayer;
-    private int mBufferedPercent;
     protected Context mAppContext;
+    private int mBufferedPercent;
     private boolean mIsPreparing;
 
     public AndroidMediaPlayer(Context context) {
@@ -195,18 +195,6 @@ public class AndroidMediaPlayer extends AbstractPlayer implements MediaPlayer.On
     }
 
     @Override
-    public void setSpeed(float speed) {
-        // only support above Android M
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
-            } catch (Exception e) {
-                mPlayerEventListener.onError();
-            }
-        }
-    }
-
-    @Override
     public float getSpeed() {
         // only support above Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -219,6 +207,18 @@ public class AndroidMediaPlayer extends AbstractPlayer implements MediaPlayer.On
             }
         }
         return 1f;
+    }
+
+    @Override
+    public void setSpeed(float speed) {
+        // only support above Android M
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
+            } catch (Exception e) {
+                mPlayerEventListener.onError();
+            }
+        }
     }
 
     @Override

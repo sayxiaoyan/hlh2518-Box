@@ -55,27 +55,37 @@ public abstract class BaseVideoController extends FrameLayout
 
     //播放视图隐藏超时
     protected int mDefaultTimeout = 4000;
-
-    //是否开启根据屏幕方向进入/退出全屏
-    private boolean mEnableOrientation;
     //屏幕方向监听辅助类
     protected OrientationHelper mOrientationHelper;
-
+    //保存了所有的控制组件
+    protected LinkedHashMap<IControlComponent, Boolean> mControlComponents = new LinkedHashMap<>();
+    //是否开启根据屏幕方向进入/退出全屏
+    private boolean mEnableOrientation;
     //用户设置是否适配刘海屏
     private boolean mAdaptCutout;
     //是否有刘海
     private Boolean mHasCutout;
     //刘海的高度
     private int mCutoutHeight;
-
     //是否开始刷新进度
     private boolean mIsStartProgress;
-
-    //保存了所有的控制组件
-    protected LinkedHashMap<IControlComponent, Boolean> mControlComponents = new LinkedHashMap<>();
-
+    /**
+     * 刷新进度Runnable
+     */
+    protected Runnable mShowProgress = new Runnable() {
+        @Override
+        public void run() {
+            int pos = setProgress();
+            if (mControlWrapper.isPlaying()) {
+                postDelayed(this, (long) ((1000 - pos % 1000) / mControlWrapper.getSpeed()));
+            } else {
+                mIsStartProgress = false;
+            }
+        }
+    };
     private Animation mShowAnim;
     private Animation mHideAnim;
+    private int mOrientation = 0;
 
     public BaseVideoController(@NonNull Context context) {
         this(context, null);
@@ -257,17 +267,7 @@ public abstract class BaseVideoController extends FrameLayout
         //重新开始计时
         stopFadeOut();
         postDelayed(mFadeOut, mDefaultTimeout);
-    }
-
-    /**
-     * 取消计时
-     */
-    @Override
-    public void stopFadeOut() {
-        removeCallbacks(mFadeOut);
-    }
-
-    /**
+    }    /**
      * 隐藏播放视图Runnable
      */
     protected final Runnable mFadeOut = new Runnable() {
@@ -277,15 +277,23 @@ public abstract class BaseVideoController extends FrameLayout
         }
     };
 
+    /**
+     * 取消计时
+     */
     @Override
-    public void setLocked(boolean locked) {
-        mIsLocked = locked;
-        handleLockStateChanged(locked);
+    public void stopFadeOut() {
+        removeCallbacks(mFadeOut);
     }
 
     @Override
     public boolean isLocked() {
         return mIsLocked;
+    }
+
+    @Override
+    public void setLocked(boolean locked) {
+        mIsLocked = locked;
+        handleLockStateChanged(locked);
     }
 
     /**
@@ -307,21 +315,6 @@ public abstract class BaseVideoController extends FrameLayout
         removeCallbacks(mShowProgress);
         mIsStartProgress = false;
     }
-
-    /**
-     * 刷新进度Runnable
-     */
-    protected Runnable mShowProgress = new Runnable() {
-        @Override
-        public void run() {
-            int pos = setProgress();
-            if (mControlWrapper.isPlaying()) {
-                postDelayed(this, (long) ((1000 - pos % 1000) / mControlWrapper.getSpeed()));
-            } else {
-                mIsStartProgress = false;
-            }
-        }
-    };
 
     private int setProgress() {
         int position = (int) mControlWrapper.getCurrentPosition();
@@ -455,8 +448,6 @@ public abstract class BaseVideoController extends FrameLayout
         mEnableOrientation = enableOrientation;
     }
 
-    private int mOrientation = 0;
-
     @CallSuper
     @Override
     public void onOrientationChanged(int orientation) {
@@ -537,8 +528,6 @@ public abstract class BaseVideoController extends FrameLayout
         }
     }
 
-    //------------------------ start handle event change ------------------------//
-
     private void handleVisibilityChanged(boolean isVisible, Animation anim) {
         if (!mIsLocked) { //没锁住时才向ControlComponent下发此事件
             for (Map.Entry<IControlComponent, Boolean> next
@@ -549,6 +538,8 @@ public abstract class BaseVideoController extends FrameLayout
         }
         onVisibilityChanged(isVisible, anim);
     }
+
+    //------------------------ start handle event change ------------------------//
 
     /**
      * 子类重写此方法监听控制的显示和隐藏
@@ -666,6 +657,8 @@ public abstract class BaseVideoController extends FrameLayout
     protected void onLockStateChanged(boolean isLocked) {
 
     }
+
+
 
     //------------------------ end handle event change ------------------------//
 }
