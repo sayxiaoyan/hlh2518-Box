@@ -17,7 +17,9 @@ function epg() {
 function push() {
     doAction('push', { url: $('#push_url').val() });
 }
-
+function store() {
+    doAction('store', { url: $('#diy_store_url').val() });
+}
 function doAction(action, kv) {
     kv['do'] = action;
     // alert(JSON.stringify(kv));
