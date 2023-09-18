@@ -29,7 +29,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="3"
-        android:text="更新日志\n1、居于居于https://github.com/takagen99/Box8月28日版本创建\n2、支持py源代码3、升级 exoplayer from 2.19.1 to media3 1.1.1\n4、支持websocket实时动态日志调试\n5、支持多仓，支持自动循环播放（最后一集跳到第一集）"
+        android:text="更新日志\n1、居于居于https://github.com/takagen99/Box8月28日版本创建\n2、支持py源代码3、升级 exoplayer from 2.19.1 to media3 1.1.1\n4、支持websocket实时动态日志调试\n5、支持多仓，支持自动循环播放（最后一集跳到第一集）\n6、websocket动态实时日志使用说明：IP:PORT/log"
         android:textColor="@color/color_CBF46A"
         android:textSize="@dimen/ts_24" />
 

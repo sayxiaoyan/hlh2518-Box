@@ -16,6 +16,8 @@
     }
 
 更新日志：
+23、
+update about_dialog add websocket动态实时日志使用说明
 22、
 websocket动态实时日志使用说明：IP:PORT/log
 21、
