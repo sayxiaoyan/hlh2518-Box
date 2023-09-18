@@ -16,6 +16,8 @@
     }
 
 更新日志：
+22、
+websocket动态实时日志使用说明：IP:PORT/log
 21、
 增加websocket动态实时日志调试成功截图
 20、
