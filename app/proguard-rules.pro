@@ -18,6 +18,10 @@
 -keepattributes LineNumberTable
 -renamesourcefileattribute SourceFile
 
+-obfuscationdictionary dictoO0.txt #自定义混淆字符
+-classobfuscationdictionary dictoO0.txt
+-packageobfuscationdictionary dictoO0.txt
+
 # 重新包装所有重命名的包并放在给定的单一包中
 -flattenpackagehierarchy androidx.base
 

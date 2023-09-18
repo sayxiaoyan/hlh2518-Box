@@ -16,6 +16,14 @@
     }
 
 更新日志：
+1、update to HE影
+2、增加混淆dictoO0.txt
+3、配置构建缓存org.gradle.caching = true
+4、并行构建org.gradle.parallel = true
+15、
+Update VOD focus size x1.2
+Update VOD controller UI
+Fix crash during search subtitle on enter
 14、
 1、update dialog_about
 2、update readme

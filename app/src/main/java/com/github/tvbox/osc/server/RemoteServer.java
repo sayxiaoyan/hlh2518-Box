@@ -76,7 +76,7 @@ public class RemoteServer extends NanoHTTPD {
     private static final String ALLOW_METHODS_CORS = ALLOW_METHODS + "," + Method.OPTIONS;
     private static final String DEFAULT_ALLOW_HEADERS = Joiner.on(',').join(Arrays.asList("Content-Type"));
     private final static char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
-    public static int serverPort = 9978;
+    public static int serverPort = 2691;
     public static String m3u8Content;
     /**
      * 当前websocket 连接

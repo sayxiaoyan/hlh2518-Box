@@ -18,15 +18,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="@dimen/vs_5"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/vs_8"
-            android:layout_marginEnd="@dimen/vs_12"
-            android:layout_marginRight="@dimen/vs_12"
-            android:layout_marginBottom="@dimen/vs_8"
-            android:background="?attr/color_theme" />
 
         <TextView
             android:id="@+id/tvName"
@@ -43,9 +34,25 @@
             android:singleLine="true"
             android:text="@string/app_name"
             android:textAlignment="gravity"
-            android:textColor="@color/font_home_selector"
+            android:textColor="@color/color_FF90CA09"
             android:textSize="@dimen/ts_30"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/vs_15"
+            android:layout_marginLeft="@dimen/vs_15"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="right|center_vertical"
+            android:textAlignment="gravity"
+            android:textColor="@color/color_FF90CA09"
+            android:textSize="@dimen/ts_22"
+            android:textStyle="bold"
+            tools:text="DateTime" />
 
         <ImageView
             android:id="@+id/tvWifi"
@@ -60,7 +67,8 @@
             android:focusable="true"
             android:nextFocusLeft="@id/tvName"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_wifi_no" />
+            android:src="@drawable/hm_wifi_no"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/tvFind"
@@ -74,7 +82,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_search" />
+            android:src="@drawable/hm_search"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/tvStyle"
@@ -88,7 +97,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_10"
-            android:src="@drawable/hm_left_right" />
+            android:src="@drawable/hm_left_right"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/tvDrawer"
@@ -102,7 +112,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_drawer" />
+            android:src="@drawable/hm_drawer"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/tvMenu"
@@ -117,22 +128,9 @@
             android:focusable="true"
             android:nextFocusDown="@id/tvDrive"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_settings" />
+            android:src="@drawable/hm_settings"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/vs_15"
-            android:layout_marginLeft="@dimen/vs_15"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:gravity="right|center_vertical"
-            android:textAlignment="gravity"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/ts_22"
-            android:textStyle="bold"
-            tools:text="DateTime" />
 
     </LinearLayout>
 
@@ -161,6 +159,7 @@
         <com.github.tvbox.osc.ui.tv.widget.NoScrollViewPager
             android:id="@+id/mViewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

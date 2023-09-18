@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 static def getVersionName() {
-    def name = "2023.9.17"
+    def name = "2023.9.18"
     return name
 }
 
@@ -27,14 +27,14 @@ def getVersionCode() {// 获取版本号
 //    }
 }
 
-def appName = "tvbox"
+def appName = "HE影"
 def versionCodeNew = getVersionCode()
 def versionNameNew = getVersionName()
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId 'com.github.tvbox.osc.taka'
+        applicationId 'com.hlhwan.heyin.drpy2'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode versionCodeNew

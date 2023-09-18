@@ -4,16 +4,16 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.github.tvbox.osc.taka",
+  "applicationId": "com.hlhwan.heyin.drpy2",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 2023091775,
-      "versionName": "2023.9.17",
-      "outputFile": "tvbox_V2023.9.17_C2023091775_release.apk"
+      "versionCode": 2023091881,
+      "versionName": "2023.9.18",
+      "outputFile": "HE影_V2023.9.18_C2023091881_release.apk"
     }
   ],
   "elementType": "File"

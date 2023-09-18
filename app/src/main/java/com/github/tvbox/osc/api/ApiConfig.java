@@ -500,7 +500,7 @@ public class ApiConfig {
                     liveURL_final = liveURL;
                 }
                 liveURL_final = Base64.encodeToString(liveURL_final.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-                liveURL_final = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL_final;
+                liveURL_final = "http://127.0.0.1:2691/proxy?do=live&type=txt&ext=" + liveURL_final;
                 LiveChannelGroup liveChannelGroup = new LiveChannelGroup();
                 liveChannelGroup.setGroupName(liveURL_final);
                 liveChannelGroupList.add(liveChannelGroup);

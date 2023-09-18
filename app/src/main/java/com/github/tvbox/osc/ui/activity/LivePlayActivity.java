@@ -1502,7 +1502,7 @@ public class LivePlayActivity extends BaseActivity {
 //                                liveChannelGroupList.clear();
 //                                try {
 //                                    liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-//                                    liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
+//                                    liveURL = "http://127.0.0.1:2691/proxy?do=live&type=txt&ext=" + liveURL;
 //                                    loadProxyLives(liveURL);
 //                                } catch (Throwable th) {
 //                                    th.printStackTrace();
@@ -1540,7 +1540,7 @@ public class LivePlayActivity extends BaseActivity {
                                 liveChannelGroupList.clear();
                                 try {
                                     liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-                                    liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
+                                    liveURL = "http://127.0.0.1:2691/proxy?do=live&type=txt&ext=" + liveURL;
                                     loadProxyLives(liveURL);
                                 } catch (Throwable th) {
                                     th.printStackTrace();
