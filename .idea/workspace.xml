@@ -12,35 +12,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf75d9e0-7211-4967-8db1-8455e1be07ff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_delete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_empty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_error.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_filter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_img_placeholder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/scrollviewleft.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/button_detail_collect.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/button_home_select.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_push.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/play_play.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/set_hm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/set_play.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/set_setting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/shape_thumb_lang.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/vod_ffwd.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/vod_play.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/output-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/RemoteServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/RemoteServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/LivePlayActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/LivePlayActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/app_banner.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/app_banner.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/app_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/app_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/app_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/app_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_loading.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_loading.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/logtail.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/logtail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_fav.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_fav.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_folder.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_folder.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_live.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_live.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_wifi.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_wifi.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/hm_wifi_no.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hm_wifi_no.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_img_placeholder.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/version.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +81,9 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2VVVC0BwLRgI6xz03fr1viXC0LQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -101,7 +98,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "J:/heyin/Box-main/app",
+    "last_opened_file_path": "J:/heyin/Box-main/app/src/main/res/drawable",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   },
@@ -113,8 +110,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="J:\heyin\Box-main\app" />
       <recent name="J:\heyin\Box-main\app\src\main\res\drawable" />
+      <recent name="J:\heyin\Box-main\app" />
       <recent name="J:\heyin\Box-main\app\src\main\res\layout" />
       <recent name="J:\heyin\Box-main\app\src\main\res" />
       <recent name="J:\heyin\Box-main\app\src\main\java\com\github\tvbox\osc\server" />

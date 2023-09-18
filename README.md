@@ -16,6 +16,10 @@
     }
 
 更新日志：
+17、
+1、美化图标
+2、禁止首页显示推荐
+16、
 1、update to HE影
 2、增加混淆dictoO0.txt
 3、配置构建缓存org.gradle.caching = true
