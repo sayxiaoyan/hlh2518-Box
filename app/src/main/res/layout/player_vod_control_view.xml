@@ -58,7 +58,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_26"
                 android:textStyle="bold"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <LinearLayout
                 android:id="@+id/tv_speed_top"
@@ -100,7 +101,8 @@
                     android:text="Mbps"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_16"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +244,8 @@
                     android:text="Mbps"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_16"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -355,7 +358,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck">
 
         <ImageView
             android:layout_width="@dimen/vs_40"
@@ -627,7 +631,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/vs_20"
                 android:textStyle="normal"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="TextSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -651,7 +656,8 @@
                 android:shadowRadius="3"
                 android:text="00:00:00"
                 android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_20" />
+                android:textSize="@dimen/ts_20"
+                tools:ignore="TextSizeCheck" />
 
             <TextView
                 android:layout_width="10dp"
@@ -694,7 +700,8 @@
                 android:shadowRadius="3"
                 android:text="00:00:00"
                 android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_20" />
+                android:textSize="@dimen/ts_20"
+                tools:ignore="TextSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -811,7 +818,8 @@
                 android:text="x0.25"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_12"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
 
             <LinearLayout
                 android:id="@+id/play_retry"
@@ -836,7 +844,7 @@
 
             <LinearLayout
                 android:id="@+id/play_scale"
-                android:layout_width="@dimen/vs_110"
+                android:layout_width="@dimen/vs_60"
                 android:layout_height="@dimen/vs_60"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_6"
@@ -855,22 +863,26 @@
                     android:layout_gravity="center"
                     android:src="@drawable/v_aspect" />
 
-                <TextView
-                    android:id="@+id/play_scale_txt"
-                    android:layout_width="@dimen/vs_45"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="-10mm"
-                    android:layout_marginLeft="@dimen/vs_4_"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center"
-                    android:text="16:9"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/ts_14"
-                    android:visibility="visible" />
+
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/play_scale_txt"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_20"
+                android:layout_gravity="center"
+                android:layout_marginStart="-20mm"
+                android:layout_marginLeft="-15mm"
+                android:layout_marginTop="8mm"
+                android:background="@drawable/shape_speed_hint"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:text="16:9"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_12"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
             <LinearLayout
                 android:id="@+id/play_player"
                 android:layout_width="@dimen/vs_60"
@@ -922,7 +934,8 @@
                 android:padding="@dimen/vs_8"
                 android:text="硬解码"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_14" />
+                android:textSize="@dimen/ts_14"
+                tools:ignore="TextSizeCheck" />
 
             <LinearLayout
                 android:id="@+id/play_subtitle"
@@ -997,7 +1010,8 @@
                 android:padding="@dimen/vs_8"
                 android:text="01:00"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16" />
+                android:textSize="@dimen/ts_16"
+                tools:ignore="TextSizeCheck" />
 
             <TextView
                 android:id="@+id/play_time_end"
@@ -1015,7 +1029,8 @@
                 android:padding="@dimen/vs_8"
                 android:text="01:00"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16" />
+                android:textSize="@dimen/ts_16"
+                tools:ignore="TextSizeCheck" />
 
             <TextView
                 android:id="@+id/play_time_step"
@@ -1061,7 +1076,8 @@
                 android:text="解析"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_20"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
 
             <com.owen.tvrecyclerview.widget.TvRecyclerView
                 android:id="@+id/mGridView"

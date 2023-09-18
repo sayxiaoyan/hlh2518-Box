@@ -28,7 +28,8 @@
                 android:layout_height="@dimen/vs_300"
                 android:clickable="true"
                 android:focusable="false"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <View
                 android:id="@+id/previewPlayerPlace"
@@ -151,7 +152,7 @@
                     android:lineSpacingMultiplier="1.2"
                     android:maxLines="4"
                     android:textColor="@color/color_FFFFFF_80"
-                    android:textSize="@dimen/ts_18" />
+                    android:textSize="@dimen/ts_16" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -174,7 +175,8 @@
                         android:gravity="center"
                         android:text="@string/det_play"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20" />
+                        android:textSize="@dimen/vs_20"
+                        tools:ignore="TextSizeCheck" />
 
                     <TextView
                         android:id="@+id/tvQuickSearch"
@@ -187,7 +189,8 @@
                         android:gravity="center"
                         android:text="@string/det_search"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20" />
+                        android:textSize="@dimen/vs_20"
+                        tools:ignore="TextSizeCheck" />
 
                     <TextView
                         android:id="@+id/tvSort"
@@ -200,7 +203,8 @@
                         android:gravity="center"
                         android:text="@string/det_sort"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20" />
+                        android:textSize="@dimen/vs_20"
+                        tools:ignore="TextSizeCheck" />
 
                     <TextView
                         android:id="@+id/tvPush"
@@ -213,7 +217,8 @@
                         android:gravity="center"
                         android:text="@string/det_push"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20" />
+                        android:textSize="@dimen/vs_20"
+                        tools:ignore="TextSizeCheck" />
 
                     <TextView
                         android:id="@+id/tvCollect"
@@ -224,7 +229,8 @@
                         android:gravity="center"
                         android:text="@string/det_fav"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20" />
+                        android:textSize="@dimen/vs_20"
+                        tools:ignore="TextSizeCheck" />
 
                     <ImageView
                         android:id="@+id/tvPlayUrl"
