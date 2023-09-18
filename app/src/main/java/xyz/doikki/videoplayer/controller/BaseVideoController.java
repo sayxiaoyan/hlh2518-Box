@@ -275,6 +275,11 @@ public abstract class BaseVideoController extends FrameLayout
     @Override
     public void stopFadeOut() {
         removeCallbacks(mFadeOut);
+    }
+
+    @Override
+    public boolean isLocked() {
+        return mIsLocked;
     }    /**
      * 隐藏播放视图Runnable
      */
@@ -284,11 +289,6 @@ public abstract class BaseVideoController extends FrameLayout
             hide();
         }
     };
-
-    @Override
-    public boolean isLocked() {
-        return mIsLocked;
-    }
 
     @Override
     public void setLocked(boolean locked) {
@@ -549,8 +549,6 @@ public abstract class BaseVideoController extends FrameLayout
 
     }
 
-    //------------------------ start handle event change ------------------------//
-
     private void handlePlayStateChanged(int playState) {
         for (Map.Entry<IControlComponent, Boolean> next
                 : mControlComponents.entrySet()) {
@@ -559,6 +557,8 @@ public abstract class BaseVideoController extends FrameLayout
         }
         onPlayStateChanged(playState);
     }
+
+    //------------------------ start handle event change ------------------------//
 
     /**
      * 子类重写此方法并在其中更新控制器在不同播放状态下的ui

@@ -36,22 +36,30 @@ public class SearchSubtitleDialog extends BaseDialog {
 
     //private Context mContext;
     private final Context mContext;
+    //private int maxPage = 5;
+    private final int maxPage = 5;
     private TvRecyclerView mGridView;
     private SearchSubtitleAdapter searchAdapter;
-
     private TextView subtitleSearchBtn;
     private EditText subtitleSearchEt;
+    // takagen99 : Fix on Key Enter
+    private final View.OnKeyListener onSoftKeyPress = new View.OnKeyListener() {
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                // hide soft keyboard, set focus on next button
+                subtitleSearchEt.clearFocus();
+                subtitleSearchBtn.requestFocus();
+            }
+            return false;
+        }
+    };
     private SubtitleLoader mSubtitleLoader;
     private ProgressBar loadingBar;
     private SubtitleViewModel subtitleViewModel;
     private int page = 1;
-    //private int maxPage = 5;
-    private final int maxPage = 5;
     private String searchWord = "";
-
     private List<Subtitle> zipSubtitles = new ArrayList<>();
     private boolean isSearchPag = true;
-
 
     public SearchSubtitleDialog(@NonNull @NotNull Context context) {
         super(context);
@@ -117,17 +125,7 @@ public class SearchSubtitleDialog extends BaseDialog {
         });
         searchAdapter.setNewData(new ArrayList<>());
     }
-    // takagen99 : Fix on Key Enter
-    private final View.OnKeyListener onSoftKeyPress = new View.OnKeyListener() {
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                // hide soft keyboard, set focus on next button
-                subtitleSearchEt.clearFocus();
-                subtitleSearchBtn.requestFocus();
-            }
-            return false;
-        }
-    };
+
     public void setSearchWord(String wd) {
         wd = wd.replaceAll("(?:（|\\(|\\[|【|\\.mp4|\\.mkv|\\.avi|\\.MP4|\\.MKV|\\.AVI)", "");
         wd = wd.replaceAll("(?:：|\\:|）|\\)|\\]|】|\\.)", " ");

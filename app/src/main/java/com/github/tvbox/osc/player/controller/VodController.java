@@ -1097,16 +1097,16 @@ public class VodController extends BaseController {
                 listener.playNext(true);
                 break;
         }
+    }
+
+    boolean isBottomVisible() {
+        return mBottomRoot.getVisibility() == VISIBLE;
     }    Runnable mHideBottomRunnable = new Runnable() {
         @Override
         public void run() {
             hideBottom();
         }
     };
-
-    boolean isBottomVisible() {
-        return mBottomRoot.getVisibility() == VISIBLE;
-    }
 
     void showBottom() {
         mHandler.removeMessages(1003);
