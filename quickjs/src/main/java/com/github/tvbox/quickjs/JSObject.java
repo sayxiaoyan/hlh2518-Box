@@ -1,5 +1,8 @@
 package com.github.tvbox.quickjs;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -254,4 +257,38 @@ public class JSObject {
         return pointer == jsObject.pointer && isReleased == jsObject.isReleased && context == jsObject.context;
     }
 
+    public JSONObject toJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+        String[] keys = getKeys();
+        for (String key : keys) {
+            Object obj = this.getProperty(key);
+            if (obj == null || obj instanceof JSFunction) {
+                continue;
+            }
+            if (obj instanceof Number || obj instanceof String || obj instanceof Boolean) {
+                try {
+                    jsonObject.put(key, obj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (obj instanceof JSArray) {
+                try {
+                    jsonObject.put(key, ((JSArray) obj).toJSONArray());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (obj instanceof JSObject) {
+                try {
+                    jsonObject.put(key, ((JSObject) obj).toJSONObject());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return jsonObject;
+    }
+
+    public String[] getKeys() {
+        return context.getKeys(this);
+    }
 }

@@ -94,6 +94,7 @@ public class RemoteServer extends NanoHTTPD {
      */
     private boolean noCORS = false;
 
+
     public RemoteServer(int port, Context context) {
         super(port);
         mContext = context;

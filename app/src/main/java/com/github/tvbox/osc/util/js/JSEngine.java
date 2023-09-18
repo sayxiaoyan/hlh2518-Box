@@ -8,12 +8,17 @@ import android.os.HandlerThread;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.annotation.Keep;
+
 import com.github.tvbox.osc.base.App;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.quickjs.JSArray;
 import com.github.tvbox.quickjs.JSCallFunction;
+import com.github.tvbox.quickjs.JSMethod;
 import com.github.tvbox.quickjs.JSModule;
 import com.github.tvbox.quickjs.JSObject;
+import com.github.tvbox.quickjs.JSUtils;
 import com.github.tvbox.quickjs.QuickJSContext;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -21,6 +26,7 @@ import com.lzy.okgo.OkGo;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
@@ -211,10 +217,11 @@ public class JSEngine {
                         result.wait();
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOG.e(e);
                 }
             }
             if (errors[0] != null) {
+                LOG.e(errors[0]);
                 throw errors[0];
             }
             return (T) result[0];
@@ -259,22 +266,179 @@ public class JSEngine {
                             result.wait();
                         }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOG.e(e);
                     }
                 }
                 if (errors[0] != null) {
+                    LOG.e(errors[0]);
                     throw errors[0];
                 }
             }
         }
+        private void initProperty() {
+            Method[] methods = this.getClass().getMethods();
+            for (Method method : methods) {
+                JSMethod an = method.getAnnotation(JSMethod.class);
+                if (an == null) continue;
+                String functionName = method.getName();
 
+                getGlobalObj().setProperty(functionName, args -> {
+                    try {
+                        return method.invoke(this, args);
+                    } catch (Exception e) {
+                        LOG.e(e);
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                if (JSUtils.isNotEmpty(an.alias())) {
+                    getJsContext().evaluate("var " + an.alias() + " = " + functionName + ";\n");
+                }
+            }
+        }
         public void init() {
             initConsole();
             initOkHttp();
             initLocalStorage();
         }
+        public String joinUrl(String parent, String child) {
+            return HtmlParser.joinUrl(parent, child);
+        }
+        @Keep
+        @JSMethod(alias = "pdfh")
+        public String parseDomForHtml(String html, String rule) {
+            try {
+                return HtmlParser.parseDomForUrl(html, rule, "");
+            } catch (Exception th) {
+                LOG.e(th);
+                return "";
+            }
+        }
 
-        void initConsole() {
+        @Keep
+        @JSMethod(alias = "pdfa")
+        public Object parseDomForArray(String html, String rule) {
+            try {
+                return getJsContext().parse(new Gson().toJson(HtmlParser.parseDomForArray(html, rule)));
+            } catch (Exception th) {
+                LOG.e(th);
+                return getJsContext().createNewJSArray();
+            }
+        }
+
+        @Keep
+        @JSMethod(alias = "pdfl")
+        public Object parseDomForList(String html, String p1, String list_text, String list_url, String urlKey) {
+            try {
+                return getJsContext().parse(new Gson().toJson(HtmlParser.parseDomForList(html, p1, list_text, list_url, urlKey)));
+            } catch (Exception th) {
+                LOG.e(th);
+                return getJsContext().createNewJSArray();
+            }
+        }
+
+        @Keep
+        @JSMethod(alias = "pd")
+        public String parseDom(String html, String rule, String urlKey) {
+            try {
+                return HtmlParser.parseDomForUrl(html, rule, urlKey);
+            } catch (Exception th) {
+                LOG.e(th);
+                return "";
+            }
+        }
+        private OkHttpClient okHttpClient;
+        @Keep
+        @JSMethod(alias = "req")
+        public Object ajax(String url, Object o2) {
+            try {
+                JSONObject opt = ((JSObject) o2).toJSONObject();
+                Headers.Builder headerBuilder = new Headers.Builder();
+                JSONObject optHeader = opt.optJSONObject("headers");
+                if (optHeader != null) {
+                    Iterator<String> hdKeys = optHeader.keys();
+                    while (hdKeys.hasNext()) {
+                        String k = hdKeys.next();
+                        String v = optHeader.optString(k);
+                        headerBuilder.add(k, v);
+                    }
+                }
+                Headers headers = headerBuilder.build();
+                Request.Builder requestBuilder = new Request.Builder().url(url).headers(headers);
+                requestBuilder.tag("js_okhttp_tag");
+                Request request;
+                String contentType = null;
+                if (!JSUtils.isEmpty(headers.get("content-type"))) {
+                    contentType = headers.get("Content-Type");
+                }
+                String method = opt.optString("method").toLowerCase();
+                String charset = "utf-8";
+                if (contentType != null && contentType.split("charset=").length > 1) {
+                    charset = contentType.split("charset=")[1];
+                }
+
+                if (method.equals("post")) {
+                    RequestBody body = null;
+                    String data = opt.optString("data", "").trim();
+                    if (!data.isEmpty()) {
+                        body = RequestBody.create(MediaType.parse("application/json"), data);
+                    }
+                    if (body == null) {
+                        String dataBody = opt.optString("body", "").trim();
+                        if (!dataBody.isEmpty() && contentType != null) {
+                            body = RequestBody.create(MediaType.parse(contentType), opt.optString("body", ""));
+                        }
+                    }
+                    if (body == null) {
+                        body = RequestBody.create(null, "");
+                    }
+                    request = requestBuilder.post(body).build();
+                } else if (method.equals("header")) {
+                    request = requestBuilder.head().build();
+                } else {
+                    request = requestBuilder.get().build();
+                }
+                okHttpClient = opt.optInt("redirect", 1) == 1 ? OkGoHelper.getDefaultClient() : OkGoHelper.getNoRedirectClient();
+                OkHttpClient.Builder builder = okHttpClient.newBuilder();
+                if (opt.has("timeout")) {
+                    long timeout = opt.optInt("timeout");
+                    builder.readTimeout(timeout, TimeUnit.MILLISECONDS);
+                    builder.writeTimeout(timeout, TimeUnit.MILLISECONDS);
+                    builder.connectTimeout(timeout, TimeUnit.MILLISECONDS);
+                }
+                Response response = builder.build().newCall(request).execute();
+                JSObject jsObject = jsContext.createNewJSObject();
+                Set<String> resHeaders = response.headers().names();
+                JSObject resHeader = jsContext.createNewJSObject();
+                for (String header : resHeaders) {
+                    resHeader.setProperty(header, response.header(header));
+                }
+                jsObject.setProperty("headers", resHeader);
+                jsObject.setProperty("code", response.code());
+
+                int returnBuffer = opt.optInt("buffer", 0);
+                if (returnBuffer == 1) {
+                    JSArray array = jsContext.createNewJSArray();
+                    byte[] bytes = response.body().bytes();
+                    for (int i = 0; i < bytes.length; i++) {
+                        array.set(bytes[i], i);
+                    }
+                    jsObject.setProperty("content", array);
+                } else if (returnBuffer == 2) {
+                    jsObject.setProperty("content", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
+                } else {
+                    String res;
+                    byte[] responseBytes = UTF8BOMFighter.removeUTF8BOM(response.body().bytes());
+                    res = new String(responseBytes, charset);
+                    jsObject.setProperty("content", res);
+                }
+                return jsObject;
+            } catch (Throwable throwable) {
+                LOG.e(throwable);
+                return "";
+            }
+        }
+        /*void initConsole() {
             jsContext.evaluate("var console = {};");
             JSObject console = (JSObject) jsContext.getGlobalObject().getProperty("console");
             console.setProperty("log", new JSCallFunction() {
@@ -290,6 +454,23 @@ public class JSEngine {
             });
         }
 
+         */
+        void initConsole() {
+            getGlobalObj().setProperty("local", local.class);
+            jsContext.evaluate("var console = {};");
+            JSObject console = (JSObject) jsContext.getGlobalObject().getProperty("console");
+            console.setProperty("log", new JSCallFunction() {
+                @Override
+                public Object call(Object... args) {
+                    StringBuilder b = new StringBuilder();
+                    for (Object o : args) {
+                        b.append(o == null ? "null" : o.toString());
+                    }
+                    LOG.i("QuickJS", b.toString());
+                    return null;
+                }
+            });
+        }
         void initLocalStorage() {
             jsContext.evaluate("var local = {};");
             JSObject console = (JSObject) jsContext.getGlobalObject().getProperty("local");

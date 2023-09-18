@@ -261,6 +261,53 @@ public class HtmlParser {
         return ret;
     }
 
+    public static List<String> parseDomForArray(String html, String rule) {
+        if (!pdfa_html.equals(html)) {
+            pdfa_html = html;
+            pdfa_doc = Jsoup.parse(html);
+        }
+        Document doc = pdfa_doc;
+        rule = parseHikerToJq(rule, false);
+        String[] parses = rule.split(" ");
+        Elements ret = new Elements();
+        for (String pars : parses) {
+            ret = parseOneRule(doc, pars, ret);
+            if (ret.isEmpty()) {
+                return new ArrayList<>();
+            }
+        }
+
+        List<String> eleHtml = new ArrayList<>();
+        for (int i = 0; i < ret.size(); i++) {
+            Element element1 = ret.get(i);
+            eleHtml.add(element1.outerHtml());
+        }
+        return eleHtml;
+    }
+
+    public static List<String> parseDomForList(String html, String p1, String list_text, String list_url, String add_url) {
+        if (!pdfa_html.equals(html)) {
+            pdfa_html = html;
+            pdfa_doc = Jsoup.parse(html);
+        }
+        Document doc = pdfa_doc;
+        p1 = parseHikerToJq(p1, false);
+        String[] parses = p1.split(" ");
+        Elements ret = new Elements();
+        for (String pars : parses) {
+            ret = parseOneRule(doc, pars, ret);
+            if (ret.isEmpty()) {
+                return new ArrayList<>();
+            }
+        }
+        List<String> new_vod_list = new ArrayList<>();
+        for(int i = 0; i < ret.size(); i++){
+            String it = ret.get(i).outerHtml();
+            new_vod_list.add(parseDomForUrl(it, list_text, "").trim() + '$' + parseDomForUrl(it, list_url, add_url));
+        }
+        return new_vod_list;
+    }
+
     public static class Painfo {
         public String nparse_rule;
         public int nparse_index;

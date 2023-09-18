@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.EventBus;
  * @description:
  */
 public class LOG {
-    private static String TAG = "TVBox";
+    private static String TAG = "HE影";
 
     public static void e(Throwable t) {
         Log.e(TAG, t.getMessage(), t);

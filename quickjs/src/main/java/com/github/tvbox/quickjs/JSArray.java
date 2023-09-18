@@ -1,5 +1,7 @@
 package com.github.tvbox.quickjs;
 
+import org.json.JSONArray;
+
 public class JSArray extends JSObject {
 
     public JSArray(QuickJSContext context, long pointer) {
@@ -21,4 +23,21 @@ public class JSArray extends JSObject {
         getContext().set(this, value, index);
     }
 
+    public JSONArray toJSONArray() {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < this.length(); i++) {
+            Object obj = this.get(i);
+            if (obj == null || obj instanceof JSFunction) {
+                continue;
+            }
+            if (obj instanceof Number || obj instanceof String || obj instanceof Boolean) {
+                jsonArray.put(obj);
+            } else if (obj instanceof JSArray) {
+                jsonArray.put(((JSArray) obj).toJSONArray());
+            } else if (obj instanceof JSObject) {
+                jsonArray.put(((JSObject) obj).toJSONObject());
+            }
+        }
+        return jsonArray;
+    }
 }

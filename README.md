@@ -16,6 +16,10 @@
     }
 
 更新日志：
+20、
+fix websocket动态实时日志
+19、
+remove unused resources
 18、
 fix render problem bug
 17、

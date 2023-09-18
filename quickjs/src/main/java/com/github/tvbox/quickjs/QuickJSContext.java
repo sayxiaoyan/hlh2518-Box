@@ -222,4 +222,17 @@ public class QuickJSContext {
     private native boolean isLiveObject(long context, long objValue);
 
     private native void runGC(long context);
+
+    public Object parse(String json) {
+        return parseJSON(context, json);
+    }
+
+    public String[] getKeys(JSObject jsObj) {
+        checkSameThread();
+        return getKeys(context, jsObj.getPointer());
+    }
+
+    private String[] getKeys(long context, long pointer) {
+        return new String[0];
+    }
 }
