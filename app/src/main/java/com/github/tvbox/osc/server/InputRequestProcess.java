@@ -68,6 +68,12 @@ public class InputRequestProcess implements RequestProcess {
                             mDataReceiver.onMirrorReceived(params.get("id").trim(), params.get("sourceKey").trim());
                             return RemoteServer.createPlainTextResponse(Status.OK, "mirrored");
                         }
+                        case "store": {
+                            //String name = params.get("store_api_name");
+                            //String url = params.get("store_api");
+                            mDataReceiver.onStoreReceived(params.get("url").trim());
+                            break;
+                        }
                     }
                 }
                 return RemoteServer.createPlainTextResponse(Status.OK, "ok");

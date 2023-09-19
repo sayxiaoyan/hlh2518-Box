@@ -16,6 +16,10 @@
     }
 
 更新日志：
+26、
+fix 多仓不能remote push api_url已成功
+25、
+1、App启动时清理荐片下载缓存2、fix 多仓不能remote push api_url(未成功）
 24、
 App启动时清理荐片下载缓存
 23、

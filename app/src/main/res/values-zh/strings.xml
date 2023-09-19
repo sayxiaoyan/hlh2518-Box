@@ -158,4 +158,5 @@
     <string name="exo_track_bitrate">%1$.2f Mbps</string>
     <string name="exo_item_list">%1$s，%2$s</string>
 
+    <string-array name="doh_url" />
 </resources>

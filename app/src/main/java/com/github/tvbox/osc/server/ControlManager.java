@@ -88,6 +88,12 @@ public class ControlManager {
                         mContext.sendBroadcast(intent);
                     }
                 }
+
+                @Override
+                public void onStoreReceived(String url) {
+                    EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_STORE_CONFIG_CHANGE, url));
+                }
+
                 @Override
                 public void onApiReceived(String url) {
                     EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_API_URL_CHANGE, url));

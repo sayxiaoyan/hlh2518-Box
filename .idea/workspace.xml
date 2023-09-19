@@ -13,15 +13,15 @@
   <component name="ChangeListManager">
     <list default="true" id="cf75d9e0-7211-4967-8db1-8455e1be07ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/output-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/event/RefreshEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/event/RefreshEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/HawkConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/HawkConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_store_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_store_api.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/InputRequestProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/InputRequestProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/version.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +51,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="KEY_STORE_PATH" value="D:\Android app\hshekey.jks" />
@@ -96,6 +103,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.github.tvbox.osc.bean" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="J:\heyin\Box-main\app\src\main\res\drawable" />
       <recent name="J:\heyin\Box-main\app" />
@@ -104,6 +114,7 @@
       <recent name="J:\heyin\Box-main\app\src\main\java\com\github\tvbox\osc\server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.tvbox.osc.bean" />
       <recent name="com.github.tvbox.osc.util.js" />
     </key>
   </component>
