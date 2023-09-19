@@ -49,7 +49,7 @@ public class ApiDialog extends BaseDialog {
     public ApiDialog(@NonNull @NotNull Context context) {
         super(context);
         setContentView(R.layout.dialog_api);
-        setCanceledOnTouchOutside(true);
+        setCanceledOnTouchOutside(false);
         ivQRCode = findViewById(R.id.ivQRCode);
         tvAddress = findViewById(R.id.tvAddress);
         inputApi = findViewById(R.id.input);
@@ -73,7 +73,7 @@ public class ApiDialog extends BaseDialog {
                 } else if (newApi.startsWith("./")) {
                     newApi = newApi.replace("./", "clan://localhost/");
                 }
-                if (!newApi.isEmpty()) {
+                /*if (!newApi.isEmpty()) {
                     ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
                     ArrayList<String> nameHistory = Hawk.get(HawkConfig.API_NAME_HISTORY, new ArrayList<>());
                     HashMap<String, String> map = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
@@ -92,6 +92,33 @@ public class ApiDialog extends BaseDialog {
                         listener.onchange(newApi);
                     }
                     if (map.size() > 30) {
+                        map.remove(nameHistory.get(30));
+                        nameHistory.remove(30);
+                    }
+                    Hawk.put(HawkConfig.API_NAME_HISTORY, nameHistory);
+                    Hawk.put(HawkConfig.API_MAP, map);
+                    dismiss();
+                }
+                 */
+                if (!newApi.isEmpty()) {
+                    ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+                    ArrayList<String> nameHistory = Hawk.get(HawkConfig.API_NAME_HISTORY, new ArrayList<>());
+                    HashMap<String, String> map = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
+                    if (!history.contains(newApi))
+                        history.add(0, newApi);
+                    if (history.size() > 20)
+                        history.remove(20);
+                    Hawk.put(HawkConfig.API_HISTORY, history);
+                    listener.onchange(newApi);
+                    if(!map.containsValue(newApi)){
+                        Hawk.put(HawkConfig.API_URL, newApi);
+                        Hawk.put(HawkConfig.API_NAME, newApi);
+                        nameHistory.add(0,newApi);
+                        map.put(newApi, newApi);
+
+                        listener.onchange(newApi);
+                    }
+                    if(map.size()>30){
                         map.remove(nameHistory.get(30));
                         nameHistory.remove(30);
                     }

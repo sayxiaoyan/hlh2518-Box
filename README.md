@@ -16,6 +16,8 @@
     }
 
 更新日志：
+24、
+App启动时清理荐片下载缓存
 23、
 update about_dialog add websocket动态实时日志使用说明
 22、
