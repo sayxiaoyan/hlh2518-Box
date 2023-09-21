@@ -3,12 +3,17 @@ package com.github.tvbox.osc.util.js;
 import android.content.Context;
 
 import com.github.catvod.crawler.Spider;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.quickjs.JSArray;
 import com.github.tvbox.quickjs.JSModule;
 import com.github.tvbox.quickjs.JSObject;
 
+import org.json.JSONArray;
+
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class SpiderJS extends Spider {
@@ -18,6 +23,7 @@ public class SpiderJS extends Spider {
     private String js;
     private JSObject jsObject = null;
     private JSEngine.JSThread jsThread = null;
+
 
     public SpiderJS(String key, String js, String ext) {
         this.key = key;
@@ -143,5 +149,45 @@ public class SpiderJS extends Spider {
     @Override
     public String searchContent(String key, boolean quick) {
         return postFunc("search", key, quick);
+    }
+
+    public Object[] proxyInvoke(Map<String, String> params) {
+        checkLoaderJS();
+        try {
+            return jsThread.post((ctx, globalThis) -> {
+                try {
+                    JSObject o = ctx.createNewJSObject();
+                    if (params != null) {
+                        for (String s : params.keySet()) {
+                            o.setProperty(s, params.get(s));
+                        }
+                    }
+                    JSONArray opt = new JSONArray(((JSArray) jsObject.getJSFunction("proxy").call(new Object[]{o})).stringify());
+                    Object[] result = new Object[3];
+                    result[0] = opt.opt(0);
+                    result[1] = opt.opt(1);
+                    Object obj = opt.opt(2);
+                    ByteArrayInputStream baos;
+                    if (obj instanceof JSONArray) {
+                        JSONArray json = (JSONArray) obj;
+                        byte[] b = new byte[json.length()];
+                        for (int i = 0; i < json.length(); i++) {
+                            b[i] = (byte) json.optInt(i);
+                        }
+                        baos = new ByteArrayInputStream(b);
+                    } else {
+                        baos = new ByteArrayInputStream(opt.opt(2).toString().getBytes());
+                    }
+                    result[2] = baos;
+                    return result;
+                } catch (Throwable throwable) {
+                    LOG.e(throwable);
+                    return new Object[0];
+                }
+            });
+        } catch (Throwable throwable) {
+            LOG.e(throwable);
+            return new Object[0];
+        }
     }
 }

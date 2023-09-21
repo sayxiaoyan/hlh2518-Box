@@ -79,7 +79,8 @@
                             android:shadowRadius="3"
                             android:textColor="@color/color_FFFFFF"
                             android:textColorHint="@color/color_FFFFFF_50"
-                            android:textSize="@dimen/ts_22" />
+                            android:textSize="@dimen/ts_22"
+                            tools:ignore="TouchTargetSizeCheck" />
 
                         <LinearLayout
                             android:id="@+id/apiHistory"
@@ -128,7 +129,8 @@
                             android:shadowRadius="3"
                             android:textColor="@color/color_FFFFFF"
                             android:textColorHint="@color/color_FFFFFF_50"
-                            android:textSize="@dimen/ts_22" />
+                            android:textSize="@dimen/ts_22"
+                            tools:ignore="TouchTargetSizeCheck" />
 
                         <LinearLayout
                             android:id="@+id/liveHistory"
@@ -177,7 +179,8 @@
                             android:shadowRadius="3"
                             android:textColor="@color/color_FFFFFF"
                             android:textColorHint="@color/color_FFFFFF_50"
-                            android:textSize="@dimen/ts_22" />
+                            android:textSize="@dimen/ts_22"
+                            tools:ignore="TouchTargetSizeCheck" />
 
                         <LinearLayout
                             android:id="@+id/EPGHistory"

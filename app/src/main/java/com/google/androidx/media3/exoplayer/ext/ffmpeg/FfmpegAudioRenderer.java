@@ -38,6 +38,7 @@ import androidx.media3.exoplayer.audio.DecoderAudioRenderer;
 import androidx.media3.exoplayer.audio.DefaultAudioSink;
 
 
+@SuppressWarnings("deprecation")
 @UnstableApi
 /**
  * Decodes and renders audio using FFmpeg.

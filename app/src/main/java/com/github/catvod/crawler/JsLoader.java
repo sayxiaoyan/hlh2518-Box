@@ -1,8 +1,10 @@
 package com.github.catvod.crawler;
 
 import com.github.tvbox.osc.base.App;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.js.SpiderJS;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class JsLoader {
@@ -20,5 +22,19 @@ public class JsLoader {
             th.printStackTrace();
         }
         return new SpiderNull();
+    }
+
+    private volatile String recentJarKey = "";
+
+    public Object[] proxyInvoke(Map<String, String> params) {
+        try {
+            SpiderJS proxyFun = (SpiderJS) spiders.get(recentJarKey);
+            if (proxyFun != null) {
+                return proxyFun.proxyInvoke(params);
+            }
+        } catch (Throwable th) {
+            LOG.e("proxyInvoke", th);
+        }
+        return null;
     }
 }

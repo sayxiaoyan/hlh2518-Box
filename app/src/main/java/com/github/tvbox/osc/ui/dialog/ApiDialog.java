@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.event.InputMsgEvent;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.server.ControlManager;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
@@ -45,6 +46,16 @@ public class ApiDialog extends BaseDialog {
     private final EditText inputLive;
     private final EditText inputEPG;
     OnListener listener = null;
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInputMsgEvent(InputMsgEvent inputMsgEvent) {
+        /*View vFocus = SearchActivity.this.getWindow().getDecorView().findFocus();
+        if (vFocus.getTag() == etSearch) {
+            ((EditText) vFocus).setText(inputMsgEvent.getText());
+        }*/
+        inputApi.setFocusableInTouchMode(true);
+        inputApi.requestFocus();
+        inputApi.setText(inputMsgEvent.getText());
+    }
 
     public ApiDialog(@NonNull @NotNull Context context) {
         super(context);
@@ -263,7 +274,11 @@ public class ApiDialog extends BaseDialog {
         });
         refreshQRCode();
     }
-
+    private void refreshQRCode() {
+        String address = ControlManager.get().getAddress(false);
+        tvAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
+        ivQRCode.setImageBitmap(QRCodeGen.generateBitmap(address, AutoSizeUtils.mm2px(getContext(), 300), AutoSizeUtils.mm2px(getContext(), 300)));
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refresh(RefreshEvent event) {
         if (event.type == RefreshEvent.TYPE_API_URL_CHANGE) {
@@ -277,11 +292,7 @@ public class ApiDialog extends BaseDialog {
         }
     }
 
-    private void refreshQRCode() {
-        String address = ControlManager.get().getAddress(false);
-        tvAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
-        ivQRCode.setImageBitmap(QRCodeGen.generateBitmap(address, AutoSizeUtils.mm2px(getContext(), 300), AutoSizeUtils.mm2px(getContext(), 300)));
-    }
+
 
     public void setOnListener(OnListener listener) {
         this.listener = listener;

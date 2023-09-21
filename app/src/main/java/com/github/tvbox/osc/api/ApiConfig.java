@@ -22,6 +22,7 @@ import com.github.tvbox.osc.util.AES;
 import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
 import com.github.tvbox.osc.util.HawkConfig;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.MD5;
 import com.github.tvbox.osc.util.VideoParseRuler;
 import com.google.gson.Gson;
@@ -33,6 +34,7 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
 import com.undcover.freedom.pyramid.PythonLoader;
+import com.undcover.freedom.pyramid.TxtSubscribe;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -698,6 +700,22 @@ public class ApiConfig {
             e.printStackTrace();
         }
         //pyramid-add-end
+        try {
+            String doStr = (String) param.get("do");
+            if (doStr.equals("live")) {
+                String type = (String) param.get("type");
+                if (type.equals("txt")) {
+                    String ext = (String) param.get("ext");
+                    ext = new String(Base64.decode(ext, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), "UTF-8");
+                    return TxtSubscribe.load(ext);
+                }
+            }
+            if (doStr.equals("js")) {
+                return jsLoader.proxyInvoke(param);
+            }
+        } catch (Exception e) {
+            LOG.e("proxyLocal", e);
+        }
 
         return jarLoader.proxyInvoke(param);
     }

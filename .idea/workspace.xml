@@ -12,16 +12,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf75d9e0-7211-4967-8db1-8455e1be07ff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/JSThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/output-metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/InputRequestProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/InputRequestProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/SpiderJS.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/SpiderJS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/OkHttpDataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/version.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,8 +99,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;android-custom-viewJ:/heyin/Box-main/app/src/main/java/xyz/doikki/videoplayer/player/BaseVideoView.java_SELECTED&quot;: &quot;BaseVideoView&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;J:/heyin/Box-main/app/src/main/res/drawable&quot;,
+    &quot;last_opened_file_path&quot;: &quot;J:/heyin/drpyboxd-master&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   },
@@ -114,8 +123,9 @@
       <recent name="J:\heyin\Box-main\app\src\main\java\com\github\tvbox\osc\server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.github.tvbox.osc.bean" />
+      <recent name="com.github.tvbox.osc.util" />
       <recent name="com.github.tvbox.osc.util.js" />
+      <recent name="com.github.tvbox.osc.bean" />
     </key>
   </component>
   <component name="RunManager">

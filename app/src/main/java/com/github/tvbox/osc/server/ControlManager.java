@@ -57,6 +57,7 @@ public class ControlManager {
         }
         do {
             mServer = new RemoteServer(RemoteServer.serverPort, mContext);
+            mServer.setNoCORS(true);
             mServer.setDataReceiver(new DataReceiver() {
                 @Override
                 public void onTextReceived(String text) {
